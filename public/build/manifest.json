@@ -1,0 +1,26 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-BniO7sbP.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/filament-auth.css": {
+    "file": "assets/filament-auth-B4qquYgl.css",
+    "src": "resources/css/filament-auth.css",
+    "isEntry": true,
+    "name": "filament-auth",
+    "names": [
+      "filament-auth.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-9cVxjKrn.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}
