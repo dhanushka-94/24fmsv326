@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Auth\Login;
+use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -26,13 +28,17 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(Login::class)
             ->brandName('24 Frames Admin')
-            ->brandLogo(asset(config('frames.logo')))
+            ->font('DM Sans', 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700;800&display=swap')
+            ->brandLogo(asset(config('frames.logo_white')))
+            ->darkModeBrandLogo(asset(config('frames.logo_white')))
             ->favicon(asset(config('frames.favicon')))
             ->brandLogoHeight('2rem')
+            ->darkMode(condition: true, isForced: true)
+            ->defaultThemeMode(ThemeMode::Dark)
             ->colors([
-                'primary' => Color::Red,
+                'primary' => Color::hex('#ff4d3d'),
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

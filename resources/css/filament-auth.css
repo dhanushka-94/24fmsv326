@@ -1,0 +1,326 @@
+@import 'tailwindcss';
+
+@source '../views/filament/**/*.blade.php';
+@source '../../app/Filament/**/*.php';
+
+@theme {
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Shell ─────────────────────────────────────────────── */
+
+.frames-auth-body {
+    background: #080808 !important;
+    color: #f4f0ea !important;
+}
+
+.frames-auth-shell {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #080808;
+    color: #f4f0ea;
+    font-family: var(--font-sans);
+}
+
+.frames-auth-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.045;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+}
+
+.frames-auth-grid {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background-image:
+        linear-gradient(to right, rgba(244, 240, 234, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(244, 240, 234, 0.04) 1px, transparent 1px);
+    background-size: 72px 72px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
+}
+
+.frames-auth-shape {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    border: 1px solid rgba(244, 240, 234, 0.12);
+}
+
+.frames-auth-shape--one {
+    top: 10%;
+    right: 6%;
+    width: 96px;
+    height: 96px;
+    animation: frames-auth-float 12s ease-in-out infinite;
+}
+
+.frames-auth-shape--two {
+    bottom: 14%;
+    left: 8%;
+    width: 56px;
+    height: 56px;
+    background: #ff4d3d;
+    border: none;
+    animation: frames-auth-float 9s ease-in-out infinite reverse;
+}
+
+@keyframes frames-auth-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+.frames-auth-top {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.25rem 1.5rem 0;
+}
+
+.frames-auth-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(244, 240, 234, 0.65);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.frames-auth-back:hover {
+    color: #ff4d3d;
+}
+
+.frames-auth-main {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem 3rem;
+}
+
+.frames-auth-panel {
+    width: 100%;
+    max-width: 28rem;
+}
+
+.frames-auth-footer {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem 1.75rem;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(244, 240, 234, 0.35);
+}
+
+.frames-auth-footer-dot {
+    width: 4px;
+    height: 4px;
+    background: #ff4d3d;
+}
+
+/* ── Card ──────────────────────────────────────────────── */
+
+.frames-auth-card {
+    position: relative;
+    border: 2px solid rgba(244, 240, 234, 0.1);
+    background: rgba(17, 17, 17, 0.88);
+    padding: 2rem 1.5rem;
+    backdrop-filter: blur(8px);
+}
+
+.frames-auth-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 24px;
+    height: 24px;
+    border-top: 3px solid #ff4d3d;
+    border-left: 3px solid #ff4d3d;
+}
+
+@media (min-width: 640px) {
+    .frames-auth-card {
+        padding: 2.5rem 2rem;
+    }
+}
+
+.frames-auth-brand {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.frames-auth-logo-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    transition: opacity 0.2s ease;
+}
+
+.frames-auth-logo-link:hover {
+    opacity: 0.9;
+}
+
+.frames-auth-label {
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: #ff4d3d;
+}
+
+.frames-auth-title {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #f4f0ea;
+    line-height: 1.1;
+}
+
+.frames-auth-subtitle {
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    color: #9a9590;
+}
+
+/* ── Logo animation (from site) ────────────────────────── */
+
+.site-logo-stack {
+    width: 100%;
+}
+
+.site-logo-inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1024 / 207;
+}
+
+.site-logo-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.site-logo-animate .site-logo-white {
+    animation: logo-white-fade 8s ease-in-out infinite;
+}
+
+@keyframes logo-white-fade {
+    0%, 42% { opacity: 1; }
+    50%, 92% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* ── Filament form overrides ───────────────────────────── */
+
+.frames-auth-form .fi-fo-field-wrp-label span,
+.frames-auth-form .fi-fo-field-wrp-label label {
+    font-family: var(--font-display) !important;
+    font-size: 0.625rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.28em !important;
+    text-transform: uppercase !important;
+    color: rgba(244, 240, 234, 0.55) !important;
+}
+
+.frames-auth-form .fi-input-wrp {
+    border-radius: 0 !important;
+    border: 2px solid rgba(244, 240, 234, 0.15) !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+}
+
+.frames-auth-form .fi-input-wrp:focus-within {
+    border-color: #ff4d3d !important;
+    box-shadow: none !important;
+    --tw-ring-color: transparent !important;
+}
+
+.frames-auth-form .fi-input-wrp.fi-invalid {
+    border-color: #ff4d3d !important;
+}
+
+.frames-auth-form .fi-input {
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #f4f0ea !important;
+    font-size: 0.875rem !important;
+}
+
+.frames-auth-form .fi-input::placeholder {
+    color: rgba(244, 240, 234, 0.3) !important;
+}
+
+.frames-auth-form .fi-fo-checkbox label {
+    color: #c8c4be !important;
+    font-size: 0.8125rem !important;
+}
+
+.frames-auth-form .fi-checkbox-input {
+    border-radius: 0 !important;
+    border-color: rgba(244, 240, 234, 0.25) !important;
+    background: transparent !important;
+}
+
+.frames-auth-form .fi-checkbox-input:checked {
+    background-color: #ff4d3d !important;
+    border-color: #ff4d3d !important;
+}
+
+.frames-auth-form .fi-ac-btn-action.fi-btn {
+    border-radius: 0 !important;
+    border: 2px solid #ff4d3d !important;
+    background: #ff4d3d !important;
+    color: #080808 !important;
+    font-family: var(--font-display) !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase !important;
+    min-height: 3rem;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.frames-auth-form .fi-ac-btn-action.fi-btn:hover {
+    background: transparent !important;
+    color: #ff4d3d !important;
+}
+
+.frames-auth-form .fi-fo-field-wrp-helper-text {
+    color: #9a9590 !important;
+}
+
+.frames-auth-form .fi-fo-field-wrp-error-message {
+    color: #ff6b5f !important;
+    font-size: 0.75rem !important;
+}
