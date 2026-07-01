@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
+use App\Support\Frames;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -24,21 +25,31 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
+        $logoWhite = Frames::brandingUrl('logo_white');
+
         return $panel
             ->default()
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
             ->brandName('24 Frames Admin')
-            ->font('DM Sans', 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700;800&display=swap')
-            ->brandLogo(asset(config('frames.logo_white')))
-            ->darkModeBrandLogo(asset(config('frames.logo_white')))
-            ->favicon(asset(config('frames.favicon')))
+            ->font(
+                'DM Sans',
+                'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&family=Syne:wght@500;600;700&display=swap',
+            )
+            ->brandLogo($logoWhite)
+            ->darkModeBrandLogo($logoWhite)
+            ->favicon(Frames::brandingUrl('favicon'))
             ->brandLogoHeight('2rem')
             ->darkMode(condition: true, isForced: true)
             ->defaultThemeMode(ThemeMode::Dark)
             ->colors([
                 'primary' => Color::hex('#ff4d3d'),
+                'gray' => Color::hex('#1a1a1a'),
+            ])
+            ->viteTheme([
+                'resources/css/filament-admin.css',
+                'resources/css/filament-auth.css',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeamMemberResource\Pages;
 use App\Models\TeamMember;
+use App\Support\Frames;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -18,7 +19,11 @@ class TeamMemberResource extends Resource
 
     protected static ?string $navigationGroup = 'Content';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?string $navigationLabel = 'Our Team';
+
+    protected static ?string $modelLabel = 'team member';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
     {
@@ -35,7 +40,24 @@ class TeamMemberResource extends Resource
                     ->default('production')
                     ->required(),
                 Forms\Components\Textarea::make('bio')->rows(3)->columnSpanFull(),
-                Forms\Components\TextInput::make('photo')->url()->maxLength(255),
+                Forms\Components\TextInput::make('photo')
+                    ->label('Photo URL')
+                    ->url()
+                    ->maxLength(2048),
+                Forms\Components\FileUpload::make('photo_upload')
+                    ->label('Upload photo')
+                    ->image()
+                    ->disk('public')
+                    ->directory('team')
+                    ->visibility('public')
+                    ->imageEditor()
+                    ->dehydrated(false)
+                    ->afterStateUpdated(function ($state, Forms\Set $set): void {
+                        if (filled($state)) {
+                            $path = is_array($state) ? ($state[0] ?? null) : $state;
+                            $set('photo', $path);
+                        }
+                    }),
                 Forms\Components\TextInput::make('imdb')->url()->label('IMDb URL')->maxLength(255),
                 Forms\Components\TextInput::make('instagram')->url()->maxLength(255),
                 Forms\Components\TextInput::make('linkedin')->url()->maxLength(255),
@@ -48,7 +70,10 @@ class TeamMemberResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('photo')->label('Photo')->circular(),
+                Tables\Columns\ImageColumn::make('photo')
+                    ->label('Photo')
+                    ->getStateUsing(fn (TeamMember $record): ?string => Frames::mediaUrl($record->photo))
+                    ->circular(),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('role')->searchable(),
                 Tables\Columns\TextColumn::make('department')->badge(),
@@ -57,8 +82,10 @@ class TeamMemberResource extends Resource
                 Tables\Columns\TextColumn::make('updated_at')->dateTime()->sortable(),
             ])
             ->defaultSort('sort_order')
+            ->reorderable('sort_order')
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

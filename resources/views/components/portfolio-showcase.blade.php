@@ -5,7 +5,7 @@
     @open-video.window="open($event.detail)"
     @keydown.escape.window="close()"
 >
-    <div class="portfolio-stack space-y-16">
+    <div class="portfolio-stack space-y-20 lg:space-y-28">
         @forelse ($items as $index => $item)
             @php
                 $embedUrl = null;
@@ -31,9 +31,9 @@
                         class="portfolio-thumb relative block w-full overflow-hidden"
                     >
                 @endif
-                    @if ($item->thumbnail_url)
+                    @if ($item->thumbnailSrc())
                         <img
-                            src="{{ $item->thumbnail_url }}"
+                            src="{{ $item->thumbnailSrc() }}"
                             alt="{{ $item->title }}"
                             class="h-[50vh] min-h-[280px] w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-[60vh] lg:h-[70vh]"
                             loading="lazy"
@@ -49,13 +49,13 @@
                             <i data-lucide="play" class="size-7 text-white"></i>
                         </span>
                     </div>
-                    <div class="absolute bottom-0 left-0 p-6 sm:p-10">
+                    <div class="absolute bottom-0 left-0 p-6 sm:p-10 lg:p-12">
                         @if ($item->category)
-                            <p class="mb-2 text-[10px] uppercase tracking-[0.3em] text-[#c9a962]">{{ $item->category }}</p>
+                            <p class="role-label mb-3 !text-base sm:!text-lg">{{ $item->category }}</p>
                         @endif
-                        <h3 class="text-2xl font-semibold text-white sm:text-3xl lg:text-4xl">{{ $item->title }}</h3>
+                        <h3 class="portfolio-feature-title">{{ $item->title }}</h3>
                         @if ($item->description)
-                            <p class="mt-2 max-w-2xl text-sm text-white/70">{{ $item->description }}</p>
+                            <p class="mt-3 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{{ $item->description }}</p>
                         @endif
                     </div>
                 @if ($embedUrl)

@@ -1,13 +1,13 @@
 @props(['directors' => [], 'title' => null])
 
-<section class="space-y-8">
+<section class="space-y-10">
     @if ($title)
-        <h2 class="reveal section-label text-center sm:text-left">{{ $title }}</h2>
+        <h2 class="reveal section-heading text-center sm:text-left">{{ $title }}</h2>
     @endif
-    <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-3 lg:gap-4">
+    <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:gap-6">
         @foreach ($directors as $director)
             <article class="reveal director-card group overflow-hidden">
-                <div class="director-photo aspect-[3/4] overflow-hidden bg-[#111111]">
+                <div class="director-photo aspect-[3/4] overflow-hidden border border-[#f4f0ea]/10 bg-[#111111]">
                     @if (!empty($director['photo']))
                         <img
                             src="{{ $director['photo'] }}"
@@ -17,7 +17,7 @@
                         />
                     @endif
                 </div>
-                <p class="mt-3 text-center text-[11px] font-medium uppercase tracking-[0.22em] text-white/85 sm:text-xs">{{ $director['name'] }}</p>
+                <p class="mt-4 text-center font-display text-sm font-medium uppercase tracking-[0.14em] text-[#f4f0ea]/90 sm:text-base">{{ $director['name'] }}</p>
             </article>
         @endforeach
     </div>

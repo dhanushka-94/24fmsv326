@@ -3,7 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\GalleryItem;
+use App\Models\Client;
+use App\Models\Director;
 use App\Models\PortfolioItem;
+use App\Models\SiteSetting;
 use App\Models\TeamMember;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -157,6 +160,34 @@ class ContentSeeder extends Seeder
                 array_merge($item, ['is_published' => true])
             );
         }
+
+        foreach (config('frames.brands', []) as $index => $name) {
+            Client::updateOrCreate(
+                ['name' => $name],
+                ['sort_order' => $index, 'is_published' => true]
+            );
+        }
+
+        foreach (config('frames.directors', []) as $index => $director) {
+            Director::updateOrCreate(
+                ['name' => $director['name']],
+                [
+                    'photo' => $director['photo'] ?? null,
+                    'sort_order' => $index,
+                    'is_published' => true,
+                ]
+            );
+        }
+
+        foreach ([
+            'logo_white' => '/images/24frames-logo-white.png',
+            'logo_red' => '/images/24frames-logo-red.png',
+            'favicon' => '/images/24frames-logo-red.png',
+        ] as $key => $path) {
+            SiteSetting::set($key, SiteSetting::get($key) ?: $path);
+        }
+
+        SiteSetting::ensureBrandingDefaults();
 
         User::updateOrCreate(
             ['email' => 'admin@24frames.lk'],

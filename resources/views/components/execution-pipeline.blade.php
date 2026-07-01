@@ -1,12 +1,12 @@
 @props(['stages' => [], 'title' => null, 'subtitle' => null])
 
 <section class="pipeline-views space-y-10" x-data="{ active: 0 }">
-    <div class="reveal space-y-3">
+    <div class="reveal space-y-4">
         @if ($title)
-            <h2 class="section-label">{{ $title }}</h2>
+            <h2 class="section-heading">{{ $title }}</h2>
         @endif
         @if ($subtitle)
-            <p class="font-display text-xl font-bold uppercase tracking-wide text-[#f4f0ea] sm:text-2xl">{{ $subtitle }}</p>
+            <p class="text-lead max-w-3xl">{{ $subtitle }}</p>
         @endif
     </div>
 

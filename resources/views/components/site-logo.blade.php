@@ -4,6 +4,8 @@
 ])
 
 @php
+    use App\Support\Frames;
+
     $sizes = [
         'sm' => 'h-8 sm:h-9',
         'md' => 'h-10 sm:h-11',
@@ -22,14 +24,14 @@
     ];
     $sizeClass = $sizes[$size] ?? $sizes['md'];
     $widthClass = $widths[$size] ?? $widths['md'];
-    $logoWhite = config('frames.logo_white', config('frames.logo'));
-    $logoRed = config('frames.logo_red', config('frames.logo'));
+    $logoWhite = Frames::brandingUrl('logo_white');
+    $logoRed = Frames::brandingUrl('logo_red');
 @endphp
 
 <span {{ $attributes->merge(['class' => "site-logo-stack inline-block {$widthClass}"]) }}>
     <span class="site-logo-inner {{ $sizeClass }} {{ $animate ? 'site-logo-animate' : '' }}">
         <img
-            src="{{ asset($logoRed) }}"
+            src="{{ $logoRed }}"
             alt=""
             aria-hidden="true"
             class="site-logo-layer site-logo-red"
@@ -38,7 +40,7 @@
             decoding="async"
         />
         <img
-            src="{{ asset($logoWhite) }}"
+            src="{{ $logoWhite }}"
             alt="24 Frames — Art House For Film"
             class="site-logo-layer site-logo-white"
             width="640"

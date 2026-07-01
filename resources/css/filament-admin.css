@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+
+@source '../../vendor/filament/filament/resources/views/**/*.blade.php';
+@source '../../app/Filament/**/*.php';
+@source '../views/filament/**/*.blade.php';
+
+@theme {
+    --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── 24 Frames admin panel theme ───────────────────────── */
+
+.fi-body {
+    background: #080808 !important;
+}
+
+.fi-sidebar {
+    background: #0c0c0c !important;
+    border-right: 1px solid rgba(244, 240, 234, 0.08) !important;
+}
+
+.fi-sidebar-header {
+    border-bottom: 1px solid rgba(244, 240, 234, 0.08) !important;
+}
+
+.fi-topbar {
+    background: rgba(8, 8, 8, 0.92) !important;
+    border-bottom: 1px solid rgba(244, 240, 234, 0.08) !important;
+    backdrop-filter: blur(8px);
+}
+
+.fi-main {
+    background: #080808 !important;
+}
+
+.fi-simple-main,
+.fi-section,
+.fi-ta-ctn,
+.fi-fo-component-ctn,
+.fi-wi-stats-overview-stat,
+.fi-ta-header-toolbar {
+    border-radius: 0 !important;
+}
+
+.fi-section,
+.fi-ta-ctn,
+.fi-wi-stats-overview-stat {
+    border: 1px solid rgba(244, 240, 234, 0.1) !important;
+    background: #111111 !important;
+    box-shadow: none !important;
+}
+
+.fi-sidebar-item-label,
+.fi-sidebar-group-label {
+    font-family: var(--font-display) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    font-size: 0.7rem !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background: rgba(255, 77, 61, 0.12) !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label {
+    color: #ff8a7a !important;
+}
+
+.fi-btn.fi-btn-color-primary {
+    border-radius: 0 !important;
+    font-family: var(--font-display) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+}
+
+.fi-ta-header-cell {
+    font-family: var(--font-display) !important;
+    font-size: 0.65rem !important;
+    letter-spacing: 0.2em !important;
+    text-transform: uppercase !important;
+}
+
+.fi-header-heading {
+    font-family: var(--font-display) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+}
+
+.fi-input-wrp {
+    border-radius: 0 !important;
+}
+
+.fi-fo-field-wrp-label span,
+.fi-fo-field-wrp-label label {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+}
+
+.fi-logo {
+    filter: brightness(1.05);
+}
+
+.fi-main-ctn {
+    background:
+        linear-gradient(to right, rgba(244, 240, 234, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(244, 240, 234, 0.02) 1px, transparent 1px),
+        #080808 !important;
+    background-size: 72px 72px, 72px 72px, auto !important;
+}
+
+.fi-ta-row:hover {
+    background: rgba(255, 77, 61, 0.04) !important;
+}
+
+.fi-dropdown-panel {
+    border-radius: 0 !important;
+    border: 1px solid rgba(244, 240, 234, 0.12) !important;
+    background: #111111 !important;
+}
+
+.fi-fo-section-header-heading {
+    font-family: var(--font-display) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+}
+
+.fi-wi-stats-overview-stat-value {
+    font-family: var(--font-display) !important;
+    color: #ff8a7a !important;
+}
+
+.fi-fo-tabs-item-active {
+    border-color: #ff4d3d !important;
+    color: #ff8a7a !important;
+}
+
+.fi-pagination-item-button.fi-active {
+    background: #ff4d3d !important;
+    border-color: #ff4d3d !important;
+}
+
+.fi-ta-empty-state-heading {
+    font-family: var(--font-display) !important;
+}
+
+.fi-ta-reorder-handle button {
+    color: #ff8a7a !important;
+}

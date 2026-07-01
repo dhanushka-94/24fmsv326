@@ -31,7 +31,8 @@ class SiteTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('ABOUT 24');
+        $response->assertSee('ABOUT');
+        $response->assertSee('Operational Edge');
         $response->assertSee('Founded in 2008');
     }
 

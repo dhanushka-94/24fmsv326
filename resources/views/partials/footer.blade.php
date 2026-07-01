@@ -1,4 +1,4 @@
-<footer class="relative border-t-2 border-[#f4f0ea]/10">
+<footer class="relative border-t-2 border-[#f4f0ea]/10 reveal reveal-slow">
     <div class="relative z-10 mx-auto flex max-w-7xl flex-col gap-8 px-6 py-12 sm:flex-row sm:items-end sm:justify-between sm:px-8 lg:px-12">
         <div class="space-y-5">
             <a href="{{ route('home') }}" class="inline-flex transition-opacity hover:opacity-80">

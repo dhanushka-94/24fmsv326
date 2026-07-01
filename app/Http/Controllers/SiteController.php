@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Director;
 use App\Models\PortfolioItem;
 use App\Models\TeamMember;
 use Illuminate\View\View;
@@ -11,21 +13,21 @@ class SiteController extends Controller
     public function home(): View
     {
         return view('pages.home', array_merge($this->shared(), [
-            'brands' => config('frames.brands', []),
+            'brands' => $this->clientNames(),
         ]));
     }
 
     public function about(): View
     {
         return view('pages.home', array_merge($this->shared(), [
-            'brands' => config('frames.brands', []),
+            'brands' => $this->clientNames(),
         ]));
     }
 
     public function services(): View
     {
         return view('pages.services', array_merge($this->shared(), [
-            'directors' => config('frames.directors', []),
+            'directors' => $this->directorCards(),
             'pipeline' => config('frames.pipeline', []),
         ]));
     }
@@ -44,13 +46,33 @@ class SiteController extends Controller
     {
         return view('pages.portfolio', array_merge($this->shared(), [
             'portfolio' => PortfolioItem::published()->get(),
-            'brands' => config('frames.brands', []),
+            'brands' => $this->clientNames(),
         ]));
     }
 
     public function contact(): View
     {
         return view('pages.contact', $this->shared());
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function clientNames(): array
+    {
+        $names = Client::published()->pluck('name')->all();
+
+        return $names !== [] ? $names : config('frames.brands', []);
+    }
+
+    /**
+     * @return list<array{name: string, photo: string|null}>
+     */
+    private function directorCards(): array
+    {
+        $directors = Director::published()->get()->map->toDisplayArray()->all();
+
+        return $directors !== [] ? $directors : config('frames.directors', []);
     }
 
     /**

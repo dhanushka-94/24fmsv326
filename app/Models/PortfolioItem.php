@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Support\Frames;
 use Illuminate\Database\Eloquent\Model;
 
 class PortfolioItem extends Model
@@ -27,5 +28,10 @@ class PortfolioItem extends Model
     public function scopePublished($query)
     {
         return $query->where('is_published', true)->orderBy('sort_order');
+    }
+
+    public function thumbnailSrc(): ?string
+    {
+        return Frames::mediaUrl($this->thumbnail_url);
     }
 }

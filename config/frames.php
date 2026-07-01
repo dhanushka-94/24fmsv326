@@ -108,12 +108,12 @@ return [
 
     'portfolio' => [
         'headline' => 'Proven on the global stage. Executed with absolute precision.',
-        'intro' => 'Our reel represents over two decades of uncompromising visual storytelling. From navigating the massive logistical complexities of national TVCs to pioneering agile, AI-driven digital campaigns, explore how we bring world-class cinematic standards to every format.',
+        'intro' => 'Since 2008, our reel has grown into a catalogue of uncompromising visual storytelling. From navigating the logistical complexity of national TVCs to pioneering agile, AI-driven digital campaigns, explore how we bring world-class cinematic standards to every format.',
     ],
 
     'team' => [
-        'title' => 'THE CORE TEAM',
-        'subtitle' => 'Built by the best. Driven by precision.',
+        'title' => 'OUR TEAM',
+        'subtitle' => 'Built by the best. Driven by precision. Meet the specialists behind every frame.',
         'departments' => [
             'direction' => 'Direction',
             'production' => 'Production & Operations',

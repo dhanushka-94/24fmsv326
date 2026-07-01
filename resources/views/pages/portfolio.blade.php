@@ -15,8 +15,9 @@
     />
 
     <main class="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-12 lg:pt-20">
+        <p class="reveal section-label mb-10 lg:mb-14">Selected work</p>
         <x-portfolio-showcase :items="$portfolio" />
-        <x-client-marquee :brands="$brands" class="mt-20" />
+        <x-client-marquee :brands="$brands" class="mt-24" />
     </main>
 </x-page-shell>
 @endsection
