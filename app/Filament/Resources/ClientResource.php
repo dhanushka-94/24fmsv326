@@ -32,6 +32,14 @@ class ClientResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->placeholder('e.g. Unilever'),
+                Forms\Components\FileUpload::make('logo')
+                    ->label('Logo')
+                    ->image()
+                    ->directory('clients')
+                    ->disk('public')
+                    ->imageEditor()
+                    ->maxSize(2048)
+                    ->helperText('PNG or SVG with transparent background works best.'),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
                     ->default(0)
@@ -46,6 +54,12 @@ class ClientResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('logo')
+                    ->label('Logo')
+                    ->disk('public')
+                    ->visibility('public')
+                    ->square()
+                    ->defaultImageUrl(fn () => null),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('sort_order')->sortable(),
                 Tables\Columns\IconColumn::make('is_published')->boolean()->label('Published'),

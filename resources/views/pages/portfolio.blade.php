@@ -4,20 +4,20 @@
 @section('description', 'Selected films, commercials, and motion work from 24 Frames — Sri Lanka production company.')
 
 @section('content')
-@php $portfolioCopy = config('frames.portfolio'); @endphp
+@php
+    use App\Support\AccentText;
+
+    $portfolioCopy = config('frames.portfolio');
+    $portfolioSubheading = AccentText::highlight($portfolioCopy['headline'], ['Proven', 'Executed', 'precision']);
+@endphp
 <x-page-shell>
     <x-page-hero
-        label="Portfolio"
-        index="03"
-        :quote="$portfolioCopy['headline']"
-        title="Work That<br>Travels"
-        :description="$portfolioCopy['intro']"
+        title="Portfolio"
+        :subheading-html="$portfolioSubheading"
     />
 
     <main class="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-12 lg:pt-20">
-        <p class="reveal section-label mb-10 lg:mb-14">Selected work</p>
         <x-portfolio-showcase :items="$portfolio" />
-        <x-client-marquee :brands="$brands" class="mt-24" />
     </main>
 </x-page-shell>
 @endsection

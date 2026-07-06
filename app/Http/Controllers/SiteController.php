@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Client;
 use App\Models\Director;
 use App\Models\PortfolioItem;
 use App\Models\TeamMember;
@@ -12,15 +11,13 @@ class SiteController extends Controller
 {
     public function home(): View
     {
-        return view('pages.home', array_merge($this->shared(), [
-            'brands' => $this->clientNames(),
-        ]));
+        return view('pages.home', $this->shared());
     }
 
     public function about(): View
     {
-        return view('pages.home', array_merge($this->shared(), [
-            'brands' => $this->clientNames(),
+        return view('pages.about', array_merge($this->shared(), [
+            'aboutCopy' => config('frames.about', []),
         ]));
     }
 
@@ -46,23 +43,12 @@ class SiteController extends Controller
     {
         return view('pages.portfolio', array_merge($this->shared(), [
             'portfolio' => PortfolioItem::published()->get(),
-            'brands' => $this->clientNames(),
         ]));
     }
 
     public function contact(): View
     {
         return view('pages.contact', $this->shared());
-    }
-
-    /**
-     * @return list<string>
-     */
-    private function clientNames(): array
-    {
-        $names = Client::published()->pluck('name')->all();
-
-        return $names !== [] ? $names : config('frames.brands', []);
     }
 
     /**

@@ -5,15 +5,16 @@
 
 @section('content')
 @php
+    use App\Support\AccentText;
+
     $services = config('frames.services');
     $serviceImages = $sampleImages['services'] ?? [];
+    $servicesSubheading = AccentText::highlight($services['headline'], ['Big', 'Small', 'Shoot-ready.']);
 @endphp
 <x-page-shell>
     <x-page-hero
-        label="Services"
-        index="02"
-        :quote="$services['headline']"
-        title="Full-Service<br>Production"
+        title="Services"
+        :subheading-html="$servicesSubheading"
     />
 
     <main class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pb-20 pt-16 sm:px-6 lg:gap-28 lg:px-12 lg:pt-20">

@@ -22,6 +22,8 @@
 
         @include('partials.footer')
 
+        <x-client-marquee :clients="$siteClients ?? collect()" />
+
         <x-floating-actions />
     </div>
 </div>

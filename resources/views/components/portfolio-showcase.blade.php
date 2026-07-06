@@ -5,22 +5,23 @@
     @open-video.window="open($event.detail)"
     @keydown.escape.window="close()"
 >
-    <div class="portfolio-stack space-y-20 lg:space-y-28">
+    <div class="portfolio-grid">
         @forelse ($items as $index => $item)
             @php
                 $embedUrl = null;
                 if ($item->youtube_url && preg_match('/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/', $item->youtube_url, $matches)) {
                     $embedUrl = "https://www.youtube.com/embed/{$matches[1]}?autoplay=1&rel=0";
                 }
+                $featured = $index === 0;
             @endphp
             <article
-                class="reveal portfolio-feature group"
+                class="reveal portfolio-card group {{ $featured ? 'portfolio-card--featured' : '' }}"
                 data-portfolio-index="{{ $index }}"
             >
                 @if ($embedUrl)
                     <button
                         type="button"
-                        class="portfolio-thumb relative block w-full overflow-hidden text-left"
+                        class="portfolio-thumb relative block h-full w-full overflow-hidden text-left"
                         @click="open({ url: @js($embedUrl), title: @js($item->title) })"
                     >
                 @else
@@ -28,34 +29,36 @@
                         href="{{ $item->youtube_url }}"
                         target="_blank"
                         rel="noreferrer"
-                        class="portfolio-thumb relative block w-full overflow-hidden"
+                        class="portfolio-thumb relative block h-full w-full overflow-hidden"
                     >
                 @endif
-                    @if ($item->thumbnailSrc())
-                        <img
-                            src="{{ $item->thumbnailSrc() }}"
-                            alt="{{ $item->title }}"
-                            class="h-[50vh] min-h-[280px] w-full object-cover transition duration-700 group-hover:scale-[1.03] sm:h-[60vh] lg:h-[70vh]"
-                            loading="lazy"
-                        />
-                    @else
-                        <div class="flex h-[50vh] min-h-[280px] items-center justify-center bg-white/5 sm:h-[60vh] lg:h-[70vh]">
-                            <i data-lucide="play" class="size-12 text-white/40"></i>
-                        </div>
-                    @endif
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
-                    <div class="absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100">
-                        <span class="flex size-16 items-center justify-center rounded-full border border-white/40 bg-black/50 backdrop-blur-sm">
-                            <i data-lucide="play" class="size-7 text-white"></i>
-                        </span>
-                    </div>
-                    <div class="absolute bottom-0 left-0 p-6 sm:p-10 lg:p-12">
-                        @if ($item->category)
-                            <p class="role-label mb-3 !text-base sm:!text-lg">{{ $item->category }}</p>
+                    <div class="portfolio-card-media">
+                        @if ($item->thumbnailSrc())
+                            <img
+                                src="{{ $item->thumbnailSrc() }}"
+                                alt="{{ $item->title }}"
+                                class="portfolio-card-img"
+                                loading="lazy"
+                            />
+                        @else
+                            <div class="flex h-full min-h-[220px] items-center justify-center bg-white/5">
+                                <i data-lucide="play" class="size-10 text-white/40"></i>
+                            </div>
                         @endif
-                        <h3 class="portfolio-feature-title">{{ $item->title }}</h3>
-                        @if ($item->description)
-                            <p class="mt-3 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{{ $item->description }}</p>
+                        <div class="portfolio-card-overlay"></div>
+                        <div class="portfolio-card-play">
+                            <span class="flex size-14 items-center justify-center rounded-full border border-white/40 bg-black/50 backdrop-blur-sm">
+                                <i data-lucide="play" class="size-6 text-white"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="portfolio-card-body">
+                        @if ($item->category)
+                            <p class="role-label mb-2">{{ $item->category }}</p>
+                        @endif
+                        <h3 class="portfolio-card-title" data-animate-text>{{ $item->title }}</h3>
+                        @if ($item->description && $featured)
+                            <p class="portfolio-card-desc">{{ $item->description }}</p>
                         @endif
                     </div>
                 @if ($embedUrl)
@@ -65,7 +68,7 @@
                 @endif
             </article>
         @empty
-            <p class="text-sm text-muted">No portfolio items published yet.</p>
+            <p class="col-span-full text-sm text-muted">No portfolio items published yet.</p>
         @endforelse
     </div>
 

@@ -5,15 +5,16 @@
 
 @section('content')
 @php
+    use App\Support\AccentText;
+
     $teamCopy = config('frames.team');
     $departments = $teamCopy['departments'];
+    $teamSubheading = AccentText::highlight($teamCopy['subtitle'], ['best', 'precision']);
 @endphp
 <x-page-shell>
     <x-page-hero
-        label="Our Team"
-        index="04"
-        :title="'The Core<br>Team'"
-        :description="$teamCopy['subtitle']"
+        title="Our Team"
+        :subheading-html="$teamSubheading"
     />
 
     <main class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pb-20 pt-16 sm:px-6 lg:gap-24 lg:px-12 lg:pt-20">

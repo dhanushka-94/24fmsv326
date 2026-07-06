@@ -9,6 +9,7 @@
     --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
+    --font-script: 'Allura', cursive;
     --color-art-ink: #f4f0ea;
     --color-art-muted: #a8a39d;
     --color-art-accent: #ff4d3d;
@@ -21,6 +22,19 @@
     html {
         @apply scroll-smooth font-sans antialiased;
         background: #080808;
+    }
+
+    html.has-client-bar,
+    body.has-client-bar {
+        --client-bar-height: 3.75rem;
+        padding-bottom: var(--client-bar-height);
+    }
+
+    @media (min-width: 640px) {
+        html.has-client-bar,
+        body.has-client-bar {
+            --client-bar-height: 4.25rem;
+        }
     }
 
     html.site-loading {
@@ -227,7 +241,12 @@
     }
 
     .floating-actions {
-        @apply fixed right-4 bottom-4 z-50 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6;
+        @apply fixed right-4 z-[70] flex flex-col items-end gap-3 sm:right-6;
+        bottom: calc(var(--client-bar-height, 1rem) + 1rem);
+    }
+
+    body:not(.has-client-bar) .floating-actions {
+        @apply bottom-4 sm:bottom-6;
     }
 
     .fab {
@@ -383,6 +402,18 @@
     .art-quote {
         font-family: var(--font-serif);
         @apply text-2xl font-medium italic leading-snug tracking-[0.01em] text-[#f4f0ea] sm:text-3xl lg:text-4xl;
+    }
+
+    .hero-tagline {
+        @apply not-italic;
+    }
+
+    .hero-quote-accent {
+        font-family: var(--font-script);
+        @apply relative inline-block align-baseline text-[#ff4d3d] not-italic;
+        font-size: 1.45em;
+        line-height: 0.95;
+        text-shadow: 0 0 28px rgba(255, 77, 61, 0.35);
     }
 
     .text-drift {
@@ -770,7 +801,39 @@
     }
 
     .social-icon-btn {
-        @apply inline-flex size-11 items-center justify-center border-2 border-[#f4f0ea]/20 text-[#f4f0ea]/70 transition hover:border-[#ff4d3d] hover:bg-[#ff4d3d] hover:text-[#080808];
+        @apply inline-flex size-12 items-center justify-center rounded-full border border-[#f4f0ea]/15 text-[#f4f0ea]/70 transition duration-200;
+    }
+
+    .social-icon-btn:hover {
+        @apply border-[#ff4d3d] bg-[#ff4d3d] text-[#080808] -translate-y-0.5;
+    }
+
+    .social-icon-btn--accent {
+        @apply border-[#ff4d3d]/40 bg-transparent text-[#ff4d3d];
+    }
+
+    .social-icon-btn--accent:hover {
+        @apply border-[#ff4d3d] bg-[#ff4d3d] text-[#080808] shadow-[0_10px_28px_rgba(255,77,61,0.28)];
+    }
+
+    .social-icon-btn--lg {
+        @apply size-14;
+    }
+
+    .social-icons-row {
+        @apply flex flex-wrap items-center justify-center gap-4;
+    }
+
+    .social-icons-row--lg {
+        @apply gap-5;
+    }
+
+    .social-icon-svg {
+        @apply size-5 shrink-0;
+    }
+
+    .social-icon-svg--lg {
+        @apply size-6;
     }
 
     .portfolio-thumb {
@@ -885,9 +948,22 @@
         animation: fade-drift 16s ease-in-out infinite;
     }
 
+    .page-hero-label {
+        @apply text-sm font-semibold uppercase tracking-[0.28em] text-[#ff4d3d] sm:text-base;
+    }
+
     .page-hero-title {
         font-family: var(--font-display);
-        @apply text-balance text-3xl font-bold uppercase leading-[0.95] tracking-[-0.01em] text-[#f4f0ea] sm:text-4xl lg:text-[2.75rem];
+        @apply text-balance text-5xl font-bold uppercase leading-[0.9] tracking-[-0.03em] text-[#f4f0ea] sm:text-6xl lg:text-7xl xl:text-8xl;
+    }
+
+    .page-hero-subheading {
+        font-family: var(--font-serif);
+        @apply max-w-3xl text-xl font-medium italic leading-snug text-[#f4f0ea]/90 sm:text-2xl lg:text-3xl;
+    }
+
+    .page-hero-subheading.hero-tagline {
+        @apply not-italic;
     }
 
     .page-hero-quote {
@@ -896,16 +972,367 @@
     }
 
     .page-hero-quote.text-drift,
+    .page-hero-subheading.text-drift,
     .page-hero .text-drift {
         animation: text-drift 12s ease-in-out infinite;
     }
 
     .page-hero-desc {
-        @apply max-w-xl border-l-[3px] border-[#ff4d3d] pl-4 text-sm leading-relaxed text-[#c8c4be] sm:pl-5 sm:text-base;
+        @apply max-w-2xl text-base leading-relaxed text-[#c8c4be] sm:text-lg;
+    }
+
+    .client-carousel-full,
+    .client-carousel-fixed {
+        @apply border-t border-[#f4f0ea]/10 bg-[#080808]/95 backdrop-blur-md;
+    }
+
+    .client-carousel-fixed {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 65;
+        width: 100%;
+        padding: 0.65rem 0;
+    }
+
+    @media (min-width: 640px) {
+        .client-carousel-fixed {
+            padding: 0.85rem 0;
+        }
+    }
+
+    .client-carousel-full {
+        @apply relative border-y border-[#f4f0ea]/10 bg-[#0a0a0a] py-12 sm:py-16;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+    }
+
+    .client-carousel-header {
+        @apply mx-auto mb-8 max-w-7xl px-4 text-center sm:px-6 lg:mb-10 lg:px-12;
+    }
+
+    .client-carousel-tagline {
+        font-family: var(--font-serif);
+        @apply mt-2 text-lg italic text-[#f4f0ea]/75 sm:text-xl;
+    }
+
+    .client-carousel-viewport {
+        @apply overflow-hidden;
+    }
+
+    .client-carousel-track {
+        display: flex;
+        width: max-content;
+        align-items: center;
+        gap: 3.5rem;
+        padding: 0.5rem 0;
+        animation: marquee-scroll 50s linear infinite;
+    }
+
+    .client-carousel-item {
+        @apply flex shrink-0 items-center justify-center px-2;
+        min-width: 8rem;
+    }
+
+    .client-carousel-logo {
+        @apply h-10 w-auto max-w-[9rem] object-contain opacity-70 grayscale transition duration-300 sm:h-12 sm:max-w-[11rem];
+        filter: brightness(0) invert(1);
+    }
+
+    .client-carousel-item:hover .client-carousel-logo {
+        @apply opacity-100;
+        filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(255, 77, 61, 0.35));
+    }
+
+    .client-carousel-name {
+        font-family: var(--font-display);
+        @apply whitespace-nowrap text-lg font-semibold uppercase tracking-[0.14em] text-[#f4f0ea]/60 transition-colors sm:text-xl;
+    }
+
+    .client-carousel-item:hover .client-carousel-name {
+        @apply text-[#f4f0ea];
+    }
+
+    .pipeline-flow-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+        align-items: stretch;
+    }
+
+    .pipeline-timeline {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.25rem;
+        position: relative;
+    }
+
+    .pipeline-timeline::before {
+        content: '';
+        position: absolute;
+        top: 1.35rem;
+        left: 12%;
+        right: 12%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #ff4d3d 15%, rgba(244, 240, 234, 0.25) 50%, #ff4d3d 85%, transparent);
+        z-index: 0;
+    }
+
+    .pipeline-timeline-node {
+        @apply relative z-10 flex flex-col items-center gap-3 text-center;
+    }
+
+    .pipeline-timeline-badge {
+        font-family: var(--font-display);
+        @apply flex size-11 items-center justify-center rounded-full border-2 border-[#ff4d3d] bg-[#080808] text-sm font-bold text-[#ff4d3d];
+    }
+
+    .pipeline-timeline-label {
+        font-family: var(--font-display);
+        @apply text-xs font-semibold uppercase tracking-[0.12em] text-[#f4f0ea]/80;
+    }
+
+    .pipeline-flow-card-inner {
+        @apply flex h-full flex-col border border-[#f4f0ea]/12 bg-[#111111] p-6 transition duration-300;
+    }
+
+    .pipeline-flow-card:hover .pipeline-flow-card-inner {
+        @apply border-[#ff4d3d]/45 -translate-y-0.5 shadow-[0_12px_32px_rgba(0,0,0,0.4)];
+    }
+
+    .pipeline-flow-title {
+        font-family: var(--font-display);
+        @apply mb-5 border-b border-[#f4f0ea]/10 pb-4 text-base font-semibold uppercase tracking-[0.1em] text-[#f4f0ea];
+    }
+
+    .pipeline-flow-list {
+        @apply flex flex-col gap-3 text-sm leading-relaxed text-[#d4d0ca] sm:text-base;
+    }
+
+    .pipeline-flow-list li {
+        @apply relative pl-4 before:absolute before:left-0 before:top-[0.55em] before:size-1.5 before:rounded-full before:bg-[#ff4d3d];
+    }
+
+    .pipeline-flow-list--compact {
+        @apply px-5 pb-5 pt-1;
+    }
+
+    .pipeline-accordion {
+        @apply overflow-hidden border border-[#f4f0ea]/12 bg-[#111111];
+    }
+
+    .pipeline-accordion-open {
+        @apply border-[#ff4d3d]/40;
+    }
+
+    .pipeline-accordion-trigger {
+        @apply flex w-full items-center gap-4 px-4 py-4 text-left sm:px-5;
+    }
+
+    .pipeline-accordion-badge {
+        font-family: var(--font-display);
+        @apply flex size-9 shrink-0 items-center justify-center rounded-full border border-[#ff4d3d]/60 text-xs font-bold text-[#ff4d3d];
+    }
+
+    .pipeline-accordion-title {
+        font-family: var(--font-display);
+        @apply flex-1 text-sm font-semibold uppercase tracking-[0.1em] text-[#f4f0ea];
+    }
+
+    .pipeline-accordion-icon {
+        @apply text-[#f4f0ea]/50 transition-transform duration-300;
+    }
+
+    .pipeline-accordion-open .pipeline-accordion-icon {
+        @apply rotate-180 text-[#ff4d3d];
+    }
+
+    .portfolio-grid {
+        display: grid;
+        gap: 1.25rem;
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    @media (min-width: 768px) {
+        .portfolio-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+    }
+
+    .portfolio-card {
+        @apply overflow-hidden border border-[#f4f0ea]/10 bg-[#111111] transition duration-300;
+    }
+
+    .portfolio-card:hover {
+        @apply border-[#ff4d3d]/35;
+    }
+
+    .portfolio-card--featured {
+        grid-column: 1 / -1;
+    }
+
+    .portfolio-card-media {
+        @apply relative aspect-[16/10] overflow-hidden;
+    }
+
+    .portfolio-card--featured .portfolio-card-media {
+        @apply aspect-[21/9] sm:aspect-[2.4/1];
+    }
+
+    .portfolio-card-img {
+        @apply h-full w-full object-cover transition duration-700 group-hover:scale-[1.04];
+    }
+
+    .portfolio-card-overlay {
+        @apply absolute inset-0 bg-gradient-to-t from-black via-black/25 to-transparent;
+    }
+
+    .portfolio-card-play {
+        @apply absolute inset-0 flex items-center justify-center opacity-0 transition group-hover:opacity-100;
+    }
+
+    .portfolio-card-body {
+        @apply space-y-2 p-5 sm:p-6;
+    }
+
+    .portfolio-card-title {
+        font-family: var(--font-display);
+        @apply text-xl font-semibold uppercase tracking-wide text-[#f4f0ea] sm:text-2xl;
+    }
+
+    .portfolio-card-desc {
+        @apply mt-2 max-w-3xl text-base leading-relaxed text-[#c8c4be] sm:text-lg;
     }
 
     .contact-detail-card {
         @apply border-2 border-[#f4f0ea]/12 bg-[#111111]/90 p-5 transition-colors duration-200 hover:border-[#ff4d3d]/35 sm:p-6;
+    }
+
+    .contact-page {
+        @apply space-y-10 lg:space-y-12;
+    }
+
+    .contact-layout {
+        display: grid;
+        gap: 1.5rem;
+        align-items: start;
+    }
+
+    @media (min-width: 1024px) {
+        .contact-layout {
+            grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+            gap: 2rem;
+        }
+    }
+
+    .contact-form {
+        @apply space-y-8 p-6 sm:p-8 lg:p-10;
+    }
+
+    .contact-form-title,
+    .contact-aside-title {
+        font-family: var(--font-display);
+        @apply mt-2 text-2xl font-semibold uppercase tracking-wide text-[#f4f0ea] sm:text-3xl;
+    }
+
+    .contact-field-label {
+        @apply text-xs font-semibold uppercase tracking-[0.22em] text-[#f4f0ea]/55;
+    }
+
+    .contact-form-actions {
+        @apply flex flex-col gap-3 border-t border-[#f4f0ea]/10 pt-6;
+    }
+
+    .contact-form-status {
+        @apply text-sm text-[#ff4d3d];
+    }
+
+    .contact-aside {
+        @apply border border-[#f4f0ea]/12 bg-[#0d0d0d] p-6 sm:p-8;
+    }
+
+    .site-footer {
+        @apply relative border-t border-[#f4f0ea]/10 bg-[#080808];
+    }
+
+    .site-footer-inner {
+        @apply mx-auto flex max-w-7xl flex-col gap-4 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-6 lg:px-12;
+    }
+
+    .site-footer-start {
+        @apply flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-5;
+    }
+
+    .site-footer-end {
+        @apply flex flex-col items-start gap-3 sm:items-end sm:gap-2;
+    }
+
+    .site-footer-logo {
+        @apply inline-flex shrink-0 transition-opacity hover:opacity-80;
+    }
+
+    .site-footer-logo .site-logo-stack {
+        @apply max-w-[8.5rem] sm:max-w-[9.5rem];
+    }
+
+    .site-footer-logo .site-logo-inner {
+        @apply h-7 sm:h-8;
+    }
+
+    .site-footer-copy {
+        @apply text-[0.65rem] uppercase tracking-[0.24em] text-[#f4f0ea]/38 sm:text-[0.7rem];
+    }
+
+    .site-footer-credit {
+        @apply text-[0.65rem] leading-relaxed text-[#f4f0ea]/42 sm:text-xs;
+    }
+
+    .site-footer-credit-link {
+        @apply text-[#f4f0ea]/55 underline decoration-[#ff4d3d] underline-offset-[3px] transition-colors hover:text-[#f4f0ea];
+    }
+
+    .site-footer .social-icon-btn {
+        @apply size-9;
+    }
+
+    .site-footer .social-icon-svg {
+        @apply size-4;
+    }
+
+    .site-footer .social-icons-row {
+        @apply justify-start sm:justify-end;
+    }
+
+    .contact-info-stack {
+        @apply mt-8 space-y-0 divide-y divide-[#f4f0ea]/10;
+    }
+
+    .contact-info-item {
+        @apply flex gap-4 py-6 first:pt-0 last:pb-0;
+    }
+
+    .contact-info-item--social .contact-info-body {
+        @apply space-y-4;
+    }
+
+    .contact-info-icon {
+        @apply mt-0.5 flex size-11 shrink-0 items-center justify-center border border-[#ff4d3d]/35 bg-[#ff4d3d]/10 text-[#ff4d3d];
+    }
+
+    .contact-info-label {
+        @apply text-xs font-semibold uppercase tracking-[0.22em] text-[#ff4d3d];
+    }
+
+    .contact-info-value {
+        @apply mt-2 text-base leading-relaxed text-[#e8e4de] sm:text-lg;
+    }
+
+    .contact-info-link {
+        @apply block text-[#f4f0ea] transition-colors hover:text-[#ff4d3d];
     }
 
     .portfolio-feature-title {
@@ -932,6 +1359,7 @@
         .ken-burns-bg,
         .marquee-track,
         .marquee-item,
+        .client-carousel-track,
         .art-shape,
         .art-ambient-shape,
         .art-grain,

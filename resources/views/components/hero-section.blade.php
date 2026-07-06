@@ -3,6 +3,7 @@
 @php
     $bgUrl = $background ?? asset(config('frames.hero_background', '/images/hero-background.png'));
     $heroQuote = $quote ?? config('frames.hero.quote', 'Crafting Stories, Frame by Frame');
+    $heroIntro = config('frames.hero.intro');
     $youtubeId = config('frames.hero.youtube_id');
 @endphp
 
@@ -28,15 +29,15 @@
 
     <div class="relative z-10 mx-auto w-full max-w-7xl px-4 pb-14 pt-28 sm:px-6 sm:pb-16 sm:pt-32 lg:px-12 lg:py-24">
         <div class="reveal reveal-slow max-w-3xl space-y-7" data-stagger>
-            <p class="art-quote text-drift text-animate-loop" data-stagger-item data-animate-loop="true">{{ $heroQuote }}</p>
+            <p class="art-quote hero-tagline text-drift text-animate-loop" data-stagger-item data-animate-loop="true" aria-label="{{ $heroQuote }}">
+                Crafting <span class="hero-quote-accent">Stories</span>, Frame by <span class="hero-quote-accent">Frame</span>
+            </p>
             <hr class="hero-divider" data-stagger-item>
             <h1 class="sr-only">24 Frames — Art House For Film</h1>
             <div data-stagger-item>
                 <x-site-logo size="xl" class="max-w-none" />
             </div>
-            <p class="max-w-xl text-lead" data-stagger-item>
-                Sri Lanka’s premier full-service motion picture production house — built for international agencies and global brands.
-            </p>
+            <p class="max-w-2xl text-lead" data-stagger-item>{{ $heroIntro }}</p>
             <div class="flex flex-wrap gap-3 pt-1" data-stagger-item>
                 <a href="{{ route('portfolio') }}" class="btn btn-lg btn-primary">View Work</a>
                 <a href="{{ route('contact') }}" class="btn btn-lg btn-outline">Contact</a>

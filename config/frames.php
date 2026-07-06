@@ -21,6 +21,7 @@ return [
 
     'hero' => [
         'quote' => 'Crafting Stories, Frame by Frame',
+        'intro' => 'Founded in 2008, 24 Frames is Sri Lanka’s premier full-service motion picture production house. Built for international agencies and global brands — we provide absolute clarity under pressure, from concept to final cut.',
         'youtube_id' => 'ea8vmaaqFxE',
         'youtube_start' => 10,
     ],
@@ -106,6 +107,18 @@ return [
         ],
     ],
 
+    'about' => [
+        'title' => 'About Us',
+        'headline' => 'Stories need precision. We deliver.',
+        'intro' => 'Sri Lanka’s premier motion picture production house — built to take productions from concept to final cut with clarity, control, and craft.',
+        'paragraphs' => [
+            'Founded in 2008, 24 Frames is a full-service motion picture production company based in Sri Lanka. We specialize in delivering high-quality commercials, films, documentaries, television, and digital content from concept to final cut.',
+            'With a strong blend of global experience and local insight, we are built for seamless production across all scales. What sets us apart is clarity under pressure — we manage complex productions with confidence, ensuring smooth execution at every stage.',
+            'Backed by a trusted network of global partners and acclaimed directors, we assemble teams tailored to each project, creatively and technically. Smart budgets. Top talent. No compromises.',
+        ],
+        'closing' => 'Let’s make something unforgettable.',
+    ],
+
     'portfolio' => [
         'headline' => 'Proven on the global stage. Executed with absolute precision.',
         'intro' => 'Since 2008, our reel has grown into a catalogue of uncompromising visual storytelling. From navigating the logistical complexity of national TVCs to pioneering agile, AI-driven digital campaigns, explore how we bring world-class cinematic standards to every format.',
@@ -124,16 +137,14 @@ return [
     'contact' => [
         'headline' => 'Share your vision. We\'ll handle the rest.',
         'pitch' => 'From initial planning to the final wrap, let\'s build something unforgettable together.',
-        'address' => '04, Park Circus, Colombo 05, Sri Lanka',
+        'address' => '04 1/1, Park Circus, Park Road, Colombo 5, Sri Lanka',
         'phones' => ['+94 77 292 3983', '+94 11 236 7237'],
         'whatsapp' => '+94714245192',
         'email' => '24frames.lk@gmail.com',
         'social' => [
-            ['label' => 'Instagram', 'icon' => 'instagram', 'url' => 'https://www.instagram.com/24framesco_?igsh=MTN2ZjljZGIyMWNvMw=='],
-            ['label' => 'LinkedIn', 'icon' => 'linkedin', 'url' => 'https://www.linkedin.com/company/24frameslk/'],
-            ['label' => 'TikTok', 'icon' => 'music-2', 'url' => 'https://www.tiktok.com/@24framesproductions?_r=1&_t=ZS-97Rhf5DiPH3'],
-            ['label' => 'YouTube', 'icon' => 'youtube', 'url' => 'https://youtube.com/@24framessrilanka'],
             ['label' => 'Facebook', 'icon' => 'facebook', 'url' => 'https://www.facebook.com/share/18NgLsu98S/?mibextid=wwXIfr'],
+            ['label' => 'YouTube', 'icon' => 'youtube', 'url' => 'https://youtube.com/@24framessrilanka'],
+            ['label' => 'X', 'icon' => 'x', 'url' => 'https://x.com/24frameslk'],
         ],
     ],
 

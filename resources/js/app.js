@@ -95,6 +95,8 @@ Alpine.start();
 const TEXT_ANIMATE_SELECTOR = [
     '.art-quote',
     '.page-hero-title',
+    '.page-hero-label',
+    '.page-hero-subheading',
     '.page-hero-quote',
     '.about-title',
     '.section-heading',
@@ -109,7 +111,11 @@ const AUTO_REVEAL_SELECTOR = [
     'main .pipeline-panel',
     'main .director-card',
     'main .portfolio-feature',
+    'main .portfolio-card',
     'main .contact-detail-card',
+    'main .contact-form',
+    'main .contact-aside',
+    'main .site-footer',
     'main form.card-surface',
     'main .brand-showcase-header',
 ].join(',');

@@ -26,14 +26,41 @@ class SiteTest extends TestCase
         }
     }
 
-    public function test_home_page_shows_about_content(): void
+    public function test_about_page_shows_content(): void
+    {
+        $response = $this->get('/about');
+
+        $response->assertOk();
+        $response->assertSee('About Us');
+        $response->assertSee('Founded in 2008');
+        $response->assertSee('Let’s make something unforgettable.');
+    }
+
+    public function test_contact_page_shows_updated_address(): void
+    {
+        $response = $this->get('/contact');
+
+        $response->assertOk();
+        $response->assertSee('04 1/1, Park Circus, Park Road, Colombo 5, Sri Lanka');
+    }
+
+    public function test_home_page_shows_hero_content(): void
     {
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('ABOUT');
-        $response->assertSee('Operational Edge');
-        $response->assertSee('Founded in 2008');
+        $response->assertSee('Stories');
+        $response->assertSee('Frame by Frame');
+        $response->assertSee('View Work');
+        $response->assertDontSee('Operational Edge');
+        $response->assertDontSee('ABOUT');
+    }
+
+    public function test_client_carousel_appears_on_all_pages(): void
+    {
+        foreach (['/', '/about', '/services', '/portfolio', '/contact'] as $url) {
+            $this->get($url)->assertOk()->assertSee('aria-label="Our clients"', false);
+        }
     }
 
     public function test_team_page_shows_grouped_members(): void

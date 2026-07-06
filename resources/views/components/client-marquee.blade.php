@@ -1,25 +1,30 @@
-@props(['brands' => []])
+@props(['clients' => []])
 
-@if (count($brands))
-    <section {{ $attributes->merge(['class' => 'brand-showcase']) }}>
-        <div class="brand-showcase-header reveal">
-            <p class="section-label">Our Clients</p>
-            <p class="brand-showcase-title text-drift text-animate-loop" data-animate-loop="true">Trusted by global and local brands</p>
-        </div>
-
-        <div class="marquee-section">
-            <div class="marquee-track">
-                <div class="marquee-content">
-                    @foreach (array_merge($brands, $brands) as $brand)
-                        <span class="marquee-item">{{ $brand }}</span>
+@if ($clients->count())
+    <aside
+        {{ $attributes->merge(['class' => 'client-carousel-fixed']) }}
+        aria-label="Our clients"
+    >
+        <div class="client-carousel-viewport">
+            <div class="client-carousel-track">
+                @foreach ([1, 2] as $loopPass)
+                    @foreach ($clients as $client)
+                        <div class="client-carousel-item">
+                            @if ($client->logoUrl())
+                                <img
+                                    src="{{ $client->logoUrl() }}"
+                                    alt="{{ $loopPass === 1 ? $client->name : '' }}"
+                                    class="client-carousel-logo"
+                                    loading="lazy"
+                                    decoding="async"
+                                />
+                            @else
+                                <span class="client-carousel-name">{{ $client->name }}</span>
+                            @endif
+                        </div>
                     @endforeach
-                </div>
-                <div class="marquee-content" aria-hidden="true">
-                    @foreach (array_merge($brands, $brands) as $brand)
-                        <span class="marquee-item">{{ $brand }}</span>
-                    @endforeach
-                </div>
+                @endforeach
             </div>
         </div>
-    </section>
+    </aside>
 @endif

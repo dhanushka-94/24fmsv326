@@ -1,31 +1,46 @@
 @extends('layouts.site')
 
-@section('title', 'About | 24 Frames')
-@section('description', 'Learn about 24 Frames — Sri Lanka’s motion picture production house since 2004.')
+@section('title', 'About Us | 24 Frames')
+@section('description', config('frames.about.intro', 'Learn about 24 Frames — Sri Lanka’s motion picture production house since 2008.'))
 
 @section('content')
+@php
+    use App\Support\AccentText;
+
+    $aboutSubheading = AccentText::highlight($aboutCopy['headline'] ?? 'Stories need precision. We deliver.', ['precision', 'deliver']);
+@endphp
 <x-page-shell>
-    <main class="mx-auto flex max-w-4xl flex-col gap-8 px-6 pb-20 pt-28 sm:px-8 lg:px-12">
-        <header class="space-y-3">
-            <p class="section-label">About 24Frames</p>
-            <h1 class="hero-display text-4xl sm:text-5xl">Stories need precision.<br><span class="text-accent-strong">We deliver.</span></h1>
-            <p class="max-w-2xl text-sm text-muted sm:text-base">
-                Sri Lanka’s premier motion pictures production house — built to take productions from concept to final cut with clarity, control, and craft.
-            </p>
-        </header>
+    <x-page-hero
+        title="About Us"
+        :subheading-html="$aboutSubheading"
+    />
 
-        @if (!empty($sampleImages['about_banner']))
-            <div class="card-surface overflow-hidden">
-                <img src="{{ $sampleImages['about_banner'] }}" alt="24 Frames production studio" class="h-48 w-full object-cover sm:h-64" loading="lazy" />
+    <main class="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-12 lg:pt-20">
+        <div class="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
+            @if (!empty($sampleImages['about_banner']))
+                <div class="reveal reveal-slow card-surface overflow-hidden lg:sticky lg:top-28 lg:self-start">
+                    <img
+                        src="{{ $sampleImages['about_banner'] }}"
+                        alt="24 Frames production"
+                        class="h-56 w-full object-cover sm:h-72 lg:h-full lg:min-h-[28rem]"
+                        loading="lazy"
+                    />
+                </div>
+            @endif
+
+            <div class="reveal reveal-slow space-y-6" data-stagger>
+                @foreach ($aboutCopy['paragraphs'] ?? [] as $paragraph)
+                    <p class="text-body" data-stagger-item>{{ $paragraph }}</p>
+                @endforeach
+                @if (!empty($aboutCopy['closing']))
+                    <p class="role-label pt-4" data-stagger-item>{{ $aboutCopy['closing'] }}</p>
+                @endif
+                <div class="flex flex-wrap gap-3 pt-4" data-stagger-item>
+                    <a href="{{ route('services') }}" class="btn btn-lg btn-outline">Our Services</a>
+                    <a href="{{ route('contact') }}" class="btn btn-lg btn-primary">Get in Touch</a>
+                </div>
             </div>
-        @endif
-
-        <section class="space-y-4 text-sm leading-relaxed text-body sm:text-base">
-            <p>Founded in 2004, 24 Frames is a full-service motion picture production company based in Sri Lanka. We specialize in delivering high-quality commercials, films, documentaries, television, and digital content from concept to final cut.</p>
-            <p>With a strong blend of global experience and local insight, we are built for seamless production across all scales. What sets us apart is clarity under pressure. We manage complex productions with confidence, ensuring smooth execution at every stage.</p>
-            <p>Backed by a trusted network of global partners and acclaimed directors, we assemble teams tailored to each project — creatively and technically. Smart budgets. Top talent. No compromises.</p>
-            <p class="pt-2 text-sm font-medium uppercase tracking-[0.22em] text-muted">Let’s make something unforgettable.</p>
-        </section>
+        </div>
     </main>
 </x-page-shell>
 @endsection
