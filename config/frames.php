@@ -27,6 +27,8 @@ return [
     ],
 
     'home' => [
+        'trusted_line' => 'Trusted by over 1000+ industry leading brands',
+        'create_line' => 'We Create Ads.',
         'about_headline' => 'ABOUT 24',
         'quote' => 'Stories need precision. We deliver.',
         'main_copy' => 'Founded in 2008, 24 Frames is Sri Lanka’s premier full-service motion picture production house. We don\'t just supply equipment and crew; we provide absolute clarity under pressure. Backed by a trusted network of global partners and acclaimed directors, we build bespoke teams tailored to fit your exact brief creatively and technically.',
@@ -111,12 +113,12 @@ return [
         'title' => 'About Us',
         'headline' => 'Stories need precision. We deliver.',
         'intro' => 'Sri Lanka’s premier motion picture production house — built to take productions from concept to final cut with clarity, control, and craft.',
-        'paragraphs' => [
-            'Founded in 2008, 24 Frames is a full-service motion picture production company based in Sri Lanka. We specialize in delivering high-quality commercials, films, documentaries, television, and digital content from concept to final cut.',
-            'With a strong blend of global experience and local insight, we are built for seamless production across all scales. What sets us apart is clarity under pressure — we manage complex productions with confidence, ensuring smooth execution at every stage.',
-            'Backed by a trusted network of global partners and acclaimed directors, we assemble teams tailored to each project, creatively and technically. Smart budgets. Top talent. No compromises.',
+        'body_lines' => [
+            'Founded in 2008, 24 Frames is Sri Lanka’s premier full-service motion picture production house.',
+            'We don\'t just supply equipment and crew; we provide absolute clarity under pressure.',
+            'Backed by a trusted network of global partners and acclaimed directors,',
+            'we build bespoke teams tailored to fit your exact brief creatively and technically.',
         ],
-        'closing' => 'Let’s make something unforgettable.',
     ],
 
     'portfolio' => [

@@ -10,6 +10,7 @@
     --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
     --font-serif: 'Cormorant Garamond', ui-serif, Georgia, serif;
     --font-script: 'Allura', cursive;
+    --font-source: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
     --color-art-ink: #f4f0ea;
     --color-art-muted: #a8a39d;
     --color-art-accent: #ff4d3d;
@@ -430,6 +431,19 @@
         animation: line-breathe 8s ease-in-out infinite;
     }
 
+    .hero-bottom-copy {
+        font-family: var(--font-source);
+        @apply mx-auto max-w-4xl space-y-2;
+    }
+
+    .hero-bottom-line {
+        @apply text-2xl font-normal tracking-tight text-white sm:text-3xl lg:text-4xl;
+    }
+
+    .hero-bottom-line .hero-ads-word {
+        @apply font-bold;
+    }
+
     .nav-link {
         font-family: var(--font-sans);
         @apply relative text-sm font-medium uppercase tracking-[0.14em] text-[#f4f0ea]/60 transition-all duration-200 hover:text-[#f4f0ea] lg:text-base;
@@ -730,6 +744,59 @@
 
     .about-title-num {
         @apply text-[#ff4d3d];
+    }
+
+    .about-page {
+        @apply relative min-h-[calc(100dvh-4rem)] px-4 pb-24 pt-28 sm:px-6 sm:pt-32 lg:px-12;
+    }
+
+    .about-page-body {
+        @apply relative mx-auto flex max-w-3xl flex-col items-center px-4 py-16 text-center sm:py-20 lg:py-24;
+    }
+
+    .about-page-body::before {
+        content: '';
+        position: absolute;
+        inset: -4rem -2rem 0;
+        z-index: -1;
+        background: radial-gradient(ellipse 80% 60% at 50% 55%, rgba(255, 255, 255, 0.06) 0%, transparent 68%);
+        pointer-events: none;
+    }
+
+    .about-page-title {
+        font-family: var(--font-display);
+        @apply mb-12 flex flex-wrap items-end justify-center gap-3 sm:mb-14 sm:gap-4;
+    }
+
+    .about-page-about {
+        @apply text-4xl font-bold uppercase leading-none tracking-[-0.02em] text-white sm:text-5xl;
+    }
+
+    .about-page-num {
+        @apply inline-flex items-end leading-none;
+        font-size: clamp(4.5rem, 14vw, 8.5rem);
+        font-weight: 700;
+        letter-spacing: -0.04em;
+    }
+
+    .about-page-two {
+        @apply text-white;
+    }
+
+    .about-page-four {
+        color: #ff4d3d;
+        text-shadow:
+            0 2px 0 rgba(0, 0, 0, 0.45),
+            0 0 28px rgba(255, 77, 61, 0.35);
+    }
+
+    .about-page-copy {
+        font-family: var(--font-source);
+        @apply space-y-1 text-base font-normal leading-[1.6] text-white sm:text-lg;
+    }
+
+    .about-page-copy p {
+        @apply text-pretty;
     }
 
     .about-edge-panel {

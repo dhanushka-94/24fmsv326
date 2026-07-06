@@ -31,9 +31,10 @@ class SiteTest extends TestCase
         $response = $this->get('/about');
 
         $response->assertOk();
-        $response->assertSee('About Us');
+        $response->assertSee('ABOUT');
         $response->assertSee('Founded in 2008');
-        $response->assertSee('Let’s make something unforgettable.');
+        $response->assertSee('absolute clarity under pressure');
+        $response->assertSee('bespoke teams tailored');
     }
 
     public function test_contact_page_shows_updated_address(): void
@@ -49,11 +50,11 @@ class SiteTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('Stories');
-        $response->assertSee('Frame by Frame');
-        $response->assertSee('View Work');
-        $response->assertDontSee('Operational Edge');
-        $response->assertDontSee('ABOUT');
+        $response->assertSee('Trusted by over 1000+ industry leading brands');
+        $response->assertSee('We Create');
+        $response->assertSee('Ads.');
+        $response->assertDontSee('Crafting Stories, Frame by Frame');
+        $response->assertDontSee('Founded in 2008, 24 Frames is Sri Lanka');
     }
 
     public function test_client_carousel_appears_on_all_pages(): void
