@@ -29,6 +29,7 @@ return [
     'home' => [
         'trusted_line' => 'Trusted by over 1000+ industry leading brands',
         'create_line' => 'We Create Ads.',
+        'create_words' => ['Ads.', 'Documentaries', 'Films', 'AI Contents', 'Reels'],
         'about_headline' => 'ABOUT 24',
         'quote' => 'Stories need precision. We deliver.',
         'main_copy' => 'Founded in 2008, 24 Frames is Sri Lanka’s premier full-service motion picture production house. We don\'t just supply equipment and crew; we provide absolute clarity under pressure. Backed by a trusted network of global partners and acclaimed directors, we build bespoke teams tailored to fit your exact brief creatively and technically.',
@@ -57,7 +58,7 @@ return [
         'roster_intro' => 'We maintain strong, collaborative relationships with an extensive network of Sri Lanka\'s most celebrated directors. From high-octane action and emotional storytelling to sleek digital pacing, we match the perfect directorial mind to your specific brief.',
         'directors_title' => 'The Minds Behind the Lens',
         'pipeline_title' => 'THE EXECUTION PIPELINE',
-        'pipeline_subtitle' => 'Built for seamless production, from concept to final cut.',
+        'pipeline_subtitle' => 'Built for seamless Production, from concept to Final cut.',
         'roster_card_title' => 'The Directorial Roster',
     ],
 

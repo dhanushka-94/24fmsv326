@@ -3,17 +3,18 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Pages\Auth\Login;
+use App\Filament\Pages\Dashboard;
 use App\Support\Frames;
 use Filament\Enums\ThemeMode;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages;
+use Filament\Navigation\NavigationGroup;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets;
+use Filament\Support\Enums\MaxWidth;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -32,20 +33,38 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(Login::class)
-            ->brandName('24 Frames Admin')
+            ->brandName('24 Frames')
             ->font(
                 'DM Sans',
-                'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&family=Syne:wght@500;600;700&display=swap',
+                'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Syne:wght@500;600;700&display=swap',
             )
             ->brandLogo($logo)
-            ->darkModeBrandLogo($logo)
             ->favicon(Frames::brandingUrl('favicon'))
-            ->brandLogoHeight('2rem')
-            ->darkMode(condition: true, isForced: true)
-            ->defaultThemeMode(ThemeMode::Dark)
+            ->brandLogoHeight('2.25rem')
+            ->darkMode(false)
+            ->defaultThemeMode(ThemeMode::Light)
+            ->sidebarCollapsibleOnDesktop()
+            ->sidebarWidth('17rem')
+            ->maxContentWidth(MaxWidth::Full)
+            ->spa()
             ->colors([
                 'primary' => Color::hex('#ff4d3d'),
-                'gray' => Color::hex('#1a1a1a'),
+                'gray' => Color::hex('#64748b'),
+                'success' => Color::hex('#4ade80'),
+                'warning' => Color::hex('#fbbf24'),
+                'danger' => Color::hex('#f87171'),
+                'info' => Color::hex('#60a5fa'),
+            ])
+            ->navigationGroups([
+                NavigationGroup::make('Content')
+                    ->icon('heroicon-o-photo')
+                    ->collapsible(),
+                NavigationGroup::make('Inbox')
+                    ->icon('heroicon-o-inbox')
+                    ->collapsible(),
+                NavigationGroup::make('Settings')
+                    ->icon('heroicon-o-cog-6-tooth')
+                    ->collapsible(),
             ])
             ->viteTheme([
                 'resources/css/filament-admin.css',
@@ -54,12 +73,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-                Widgets\AccountWidget::class,
-            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

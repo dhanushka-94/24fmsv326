@@ -3,7 +3,6 @@
 namespace App\Filament\Pages;
 
 use App\Models\SiteSetting;
-use App\Support\Frames;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -43,6 +42,7 @@ class ManageBranding extends Page implements HasForms
             ->schema([
                 Forms\Components\Section::make('Site logo')
                     ->description('Upload the master 24 Frames logo used across the website and admin panel.')
+                    ->icon('heroicon-o-photo')
                     ->schema([
                         Forms\Components\FileUpload::make('logo')
                             ->label('Site logo')
@@ -52,26 +52,29 @@ class ManageBranding extends Page implements HasForms
                             ->visibility('public')
                             ->imageEditor()
                             ->helperText('Recommended: PNG on black background, 1024px wide.'),
+                        Forms\Components\ViewField::make('preview_logo')
+                            ->label('Current logo')
+                            ->view('filament.forms.branding-preview')
+                            ->viewData(['key' => 'logo', 'label' => 'Site logo', 'variant' => 'logo']),
+                    ])
+                    ->columns(1),
+                Forms\Components\Section::make('Favicon')
+                    ->description('Small icon shown in browser tabs and bookmarks.')
+                    ->icon('heroicon-o-globe-alt')
+                    ->schema([
                         Forms\Components\FileUpload::make('favicon')
                             ->label('Favicon')
                             ->image()
                             ->disk('public')
                             ->directory('branding')
                             ->visibility('public')
-                            ->helperText('Browser tab icon. Defaults to the site logo if not set.'),
+                            ->helperText('Square PNG works best. Defaults to the site logo if not set.'),
+                        Forms\Components\ViewField::make('preview_favicon')
+                            ->label('Current favicon')
+                            ->view('filament.forms.branding-preview')
+                            ->viewData(['key' => 'favicon', 'label' => 'Favicon', 'variant' => 'favicon']),
                     ])
                     ->columns(1),
-                Forms\Components\Section::make('Current preview')
-                    ->schema([
-                        Forms\Components\Placeholder::make('preview_logo')
-                            ->label('Site logo')
-                            ->content(fn (): string => $this->previewLine('logo')),
-                        Forms\Components\Placeholder::make('preview_favicon')
-                            ->label('Favicon')
-                            ->content(fn (): string => $this->previewLine('favicon')),
-                    ])
-                    ->columns(2)
-                    ->collapsed(),
             ])
             ->statePath('data');
     }
@@ -99,14 +102,6 @@ class ManageBranding extends Page implements HasForms
             ->body('Logo changes are live on the website.')
             ->success()
             ->send();
-    }
-
-    protected function previewLine(string $key): string
-    {
-        $path = SiteSetting::get($key, config("frames.{$key}"));
-        $url = Frames::mediaUrl($path);
-
-        return $url ? $url : '—';
     }
 
     private function uploadableSetting(string $key): ?string

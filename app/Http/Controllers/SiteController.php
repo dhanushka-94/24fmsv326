@@ -32,17 +32,52 @@ class SiteController extends Controller
     public function team(): View
     {
         $teamMembers = TeamMember::published()->get();
+        $departmentLabels = config('frames.team.departments', []);
+        $departmentOrder = array_keys($departmentLabels);
+
+        $teamByDepartment = $teamMembers
+            ->groupBy('department')
+            ->sortKeysUsing(function (string $a, string $b) use ($departmentOrder): int {
+                $posA = array_search($a, $departmentOrder, true);
+                $posB = array_search($b, $departmentOrder, true);
+
+                if ($posA === false && $posB === false) {
+                    return strcmp($a, $b);
+                }
+
+                if ($posA === false) {
+                    return 1;
+                }
+
+                if ($posB === false) {
+                    return -1;
+                }
+
+                return $posA <=> $posB;
+            });
 
         return view('pages.team', array_merge($this->shared(), [
             'teamMembers' => $teamMembers,
-            'teamByDepartment' => $teamMembers->groupBy('department'),
+            'teamByDepartment' => $teamByDepartment,
+            'departmentLabels' => $departmentLabels,
         ]));
     }
 
     public function portfolio(): View
     {
+        $portfolio = PortfolioItem::published()->orderBy('sort_order')->get();
+        $featured = PortfolioItem::query()
+            ->where('is_published', true)
+            ->orderByDesc('created_at')
+            ->orderByDesc('id')
+            ->first();
+        $gridItems = $featured
+            ? $portfolio->where('id', '!=', $featured->id)->values()
+            : $portfolio;
+
         return view('pages.portfolio', array_merge($this->shared(), [
-            'portfolio' => PortfolioItem::published()->get(),
+            'portfolio' => $gridItems,
+            'featuredPortfolio' => $featured,
         ]));
     }
 

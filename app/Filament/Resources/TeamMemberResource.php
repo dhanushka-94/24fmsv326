@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TeamMemberResource\Pages;
 use App\Models\TeamMember;
-use App\Support\Frames;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -31,33 +30,22 @@ class TeamMemberResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')->required()->maxLength(255),
                 Forms\Components\TextInput::make('role')->required()->maxLength(255),
-                Forms\Components\Select::make('department')
-                    ->options([
-                        'direction' => 'Direction',
-                        'production' => 'Production & Operations',
-                        'post' => 'Post-Production & Innovation',
-                    ])
-                    ->default('production')
-                    ->required(),
+                Forms\Components\TextInput::make('department')
+                    ->required()
+                    ->maxLength(255)
+                    ->placeholder('e.g. production')
+                    ->helperText('Use direction, production, or post so members appear in the correct team section.'),
                 Forms\Components\Textarea::make('bio')->rows(3)->columnSpanFull(),
-                Forms\Components\TextInput::make('photo')
-                    ->label('Photo URL')
-                    ->url()
-                    ->maxLength(2048),
-                Forms\Components\FileUpload::make('photo_upload')
-                    ->label('Upload photo')
+                Forms\Components\FileUpload::make('photo')
+                    ->label('Photo')
                     ->image()
                     ->disk('public')
                     ->directory('team')
                     ->visibility('public')
                     ->imageEditor()
-                    ->dehydrated(false)
-                    ->afterStateUpdated(function ($state, Forms\Set $set): void {
-                        if (filled($state)) {
-                            $path = is_array($state) ? ($state[0] ?? null) : $state;
-                            $set('photo', $path);
-                        }
-                    }),
+                    ->maxSize(4096)
+                    ->helperText('Upload a portrait photo. Use department keys: direction, production, or post.')
+                    ->formatStateUsing(fn (?string $state): ?string => TeamMember::isStoredUpload($state) ? $state : null),
                 Forms\Components\TextInput::make('imdb')->url()->label('IMDb URL')->maxLength(255),
                 Forms\Components\TextInput::make('instagram')->url()->maxLength(255),
                 Forms\Components\TextInput::make('linkedin')->url()->maxLength(255),
@@ -72,7 +60,10 @@ class TeamMemberResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('photo')
                     ->label('Photo')
-                    ->getStateUsing(fn (TeamMember $record): ?string => Frames::mediaUrl($record->photo))
+                    ->disk('public')
+                    ->visibility('public')
+                    ->getStateUsing(fn (TeamMember $record): ?string => TeamMember::isStoredUpload($record->photo) ? $record->photo : null)
+                    ->defaultImageUrl(fn (TeamMember $record): ?string => $record->photoUrl())
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('role')->searchable(),

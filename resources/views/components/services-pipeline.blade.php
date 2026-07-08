@@ -1,14 +1,30 @@
 @props(['stages' => [], 'title' => null, 'subtitle' => null])
 
+@php
+    use App\Support\AccentText;
+
+    $pipelineTagline = $subtitle
+        ? AccentText::highlight($subtitle, ['Production', 'Final cut'], 'page-tagline-accent')
+        : null;
+
+    $formatPipelineItem = static function (string $item): string {
+        if (! str_starts_with($item, 'AI') || ! str_contains($item, ':')) {
+            return e($item);
+        }
+
+        [$label, $body] = explode(':', $item, 2);
+
+        return '<strong class="services-pipeline-item-label">'.e($label).':</strong>'.e($body);
+    };
+@endphp
+
 <section {{ $attributes->merge(['class' => 'services-pipeline reveal space-y-10 lg:space-y-14']) }}>
     <div class="space-y-4">
         @if ($title)
             <h2 class="services-section-title">{{ $title }}</h2>
         @endif
-        @if ($subtitle)
-            <p class="services-pipeline-subtitle">
-                Built for seamless <span class="services-script-accent">Production</span>, from concept to <span class="services-script-accent">Final cut.</span>
-            </p>
+        @if ($pipelineTagline)
+            <p class="page-tagline">{!! $pipelineTagline !!}</p>
         @endif
     </div>
 
@@ -18,7 +34,7 @@
                 <h3 class="services-pipeline-phase">{{ strtoupper($stage['title']) }}</h3>
                 <ul class="services-pipeline-list">
                     @foreach ($stage['items'] as $item)
-                        <li @class(['services-pipeline-item--highlight' => str_starts_with($item, 'AI')])>{{ $item }}</li>
+                        <li>{!! $formatPipelineItem($item) !!}</li>
                     @endforeach
                 </ul>
             </article>

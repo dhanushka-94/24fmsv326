@@ -1,14 +1,6 @@
 @props(['title' => null, 'description' => null, 'anchored' => false])
 
-<div {{ $attributes->merge(['class' => 'bloom-surface art-canvas relative min-h-screen'.($anchored ? ' page-shell--anchored' : '')]) }}>
-    <div class="art-grain pointer-events-none" aria-hidden="true"></div>
-    <div class="art-grid pointer-events-none" aria-hidden="true"></div>
-    <div class="art-ambient" aria-hidden="true">
-        <span class="art-ambient-shape art-ambient-shape--one"></span>
-        <span class="art-ambient-shape art-ambient-shape--two"></span>
-        <span class="art-ambient-shape art-ambient-shape--three"></span>
-    </div>
-
+<div {{ $attributes->merge(['class' => 'site-shell relative min-h-screen'.($anchored ? ' page-shell--anchored' : '')]) }}>
     @if (request()->routeIs('home') && config('frames.loader.enabled', true) && config('frames.hero.youtube_id'))
         <x-logo-loader />
     @endif
@@ -20,9 +12,9 @@
             {{ $slot }}
         </div>
 
-        @include('partials.footer')
-
-        <x-client-marquee :clients="$siteClients ?? collect()" />
+        @if ($showClientCarousel ?? false)
+            <x-client-marquee :clients="$siteClients ?? collect()" />
+        @endif
 
         <x-floating-actions />
     </div>

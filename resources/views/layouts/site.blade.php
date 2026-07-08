@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full {{ ($siteClients ?? collect())->count() ? 'has-client-bar' : '' }}">
+<html lang="en" class="h-full {{ ($showClientCarousel ?? false) ? 'has-client-bar' : '' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,7 +22,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('head')
 </head>
-<body class="min-h-full flex flex-col bg-black text-white {{ ($siteClients ?? collect())->count() ? 'has-client-bar' : '' }}" @yield('body-attrs')>
+<body class="min-h-full flex flex-col bg-black text-white {{ ($showClientCarousel ?? false) ? 'has-client-bar' : '' }}" @yield('body-attrs')>
     @yield('content')
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', () => lucide.createIcons());</script>

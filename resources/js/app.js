@@ -81,12 +81,70 @@ Alpine.data('videoTheater', () => ({
         this.title = payload?.title || '';
         this.active = Boolean(this.url);
         document.body.style.overflow = this.active ? 'hidden' : '';
+
+        this.$nextTick(() => {
+            if (window.lucide) {
+                window.lucide.createIcons();
+            }
+        });
     },
     close() {
         this.active = false;
         this.url = '';
         this.title = '';
         document.body.style.overflow = '';
+    },
+}));
+
+Alpine.data('heroVideoBackground', () => ({
+    ready: false,
+    fallbackTimer: null,
+    init() {
+        this.fallbackTimer = window.setTimeout(() => {
+            this.ready = true;
+        }, 3500);
+    },
+    onReady() {
+        window.setTimeout(() => {
+            this.ready = true;
+            if (this.fallbackTimer) {
+                clearTimeout(this.fallbackTimer);
+                this.fallbackTimer = null;
+            }
+        }, 700);
+    },
+}));
+
+Alpine.data('heroCreateRotator', (words = ['Ads.', 'Documentaries', 'Films', 'AI Contents', 'Reels']) => ({
+    words,
+    index: 0,
+    leaving: false,
+    timer: null,
+    get current() {
+        return this.words[this.index] ?? 'Ads.';
+    },
+    get upcoming() {
+        return this.words[(this.index + 1) % this.words.length] ?? 'Ads.';
+    },
+    init() {
+        this.timer = window.setInterval(() => this.rotate(), 3000);
+    },
+    destroy() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    },
+    rotate() {
+        if (this.leaving || this.words.length < 2) {
+            return;
+        }
+
+        this.leaving = true;
+
+        window.setTimeout(() => {
+            this.index = (this.index + 1) % this.words.length;
+            this.leaving = false;
+        }, 520);
     },
 }));
 

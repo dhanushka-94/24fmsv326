@@ -37,4 +37,15 @@ class TeamMember extends Model
     {
         return Frames::mediaUrl($this->photo);
     }
+
+    public static function isStoredUpload(?string $path): bool
+    {
+        if ($path === null || $path === '') {
+            return false;
+        }
+
+        return ! str_starts_with($path, 'http://')
+            && ! str_starts_with($path, 'https://')
+            && ! str_starts_with($path, '/');
+    }
 }

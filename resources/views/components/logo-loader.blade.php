@@ -23,7 +23,7 @@
         </div>
 
         <div
-            class="logo-loader-reveal relative z-10 w-[min(92vw,44rem)] px-4 sm:w-[min(88vw,52rem)]"
+            class="logo-loader-reveal relative z-10 w-[min(78vw,32rem)] px-4 sm:w-[min(72vw,36rem)]"
             :class="leaving && 'logo-loader-exit'"
         >
             <x-site-logo size="loader" class="w-full" />

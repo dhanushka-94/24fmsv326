@@ -17,8 +17,8 @@
         <div class="portfolio-page-inner page-content mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-12 lg:pb-24">
             <x-portfolio-showcase
                 :items="$portfolio"
+                :featured="$featuredPortfolio"
                 :intro="$portfolioCopy['intro']"
-                :showreel-youtube-id="$portfolioCopy['showreel_youtube_id'] ?? config('frames.hero.youtube_id')"
             />
         </div>
     </main>

@@ -50,6 +50,8 @@
                             <p class="contact-form-status">{{ session('status') }}</p>
                         @endif
                     </div>
+
+                    <x-contact-credits />
                 </form>
 
                 <aside class="contact-aside reveal">

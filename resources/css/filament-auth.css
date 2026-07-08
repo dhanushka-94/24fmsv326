@@ -11,8 +11,8 @@
 /* ── Shell ─────────────────────────────────────────────── */
 
 .frames-auth-body {
-    background: #080808 !important;
-    color: #f4f0ea !important;
+    background: #f8fafc !important;
+    color: #1e293b !important;
 }
 
 .frames-auth-shell {
@@ -21,19 +21,13 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: #080808;
-    color: #f4f0ea;
+    background: #f8fafc;
+    color: #1e293b;
     font-family: var(--font-sans);
 }
 
 .frames-auth-grain {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    opacity: 0.045;
-    pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
+    display: none;
 }
 
 .frames-auth-grid {
@@ -42,8 +36,8 @@
     z-index: 0;
     pointer-events: none;
     background-image:
-        linear-gradient(to right, rgba(244, 240, 234, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(244, 240, 234, 0.04) 1px, transparent 1px);
+        linear-gradient(to right, rgba(148, 163, 184, 0.15) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.15) 1px, transparent 1px);
     background-size: 72px 72px;
     mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black, transparent);
 }
@@ -52,7 +46,7 @@
     position: fixed;
     pointer-events: none;
     z-index: 0;
-    border: 1px solid rgba(244, 240, 234, 0.12);
+    border: 1px solid rgba(255, 77, 61, 0.2);
 }
 
 .frames-auth-shape--one {
@@ -70,6 +64,7 @@
     height: 56px;
     background: #ff4d3d;
     border: none;
+    opacity: 0.85;
     animation: frames-auth-float 9s ease-in-out infinite reverse;
 }
 
@@ -95,7 +90,7 @@
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: rgba(244, 240, 234, 0.65);
+    color: #64748b;
     text-decoration: none;
     transition: color 0.2s ease;
 }
@@ -131,7 +126,7 @@
     font-weight: 600;
     letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: rgba(244, 240, 234, 0.35);
+    color: #94a3b8;
 }
 
 .frames-auth-footer-dot {
@@ -144,10 +139,11 @@
 
 .frames-auth-card {
     position: relative;
-    border: 2px solid rgba(244, 240, 234, 0.1);
-    background: rgba(17, 17, 17, 0.88);
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
     padding: 2rem 1.5rem;
-    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+    border-radius: 0.5rem;
 }
 
 .frames-auth-card::before {
@@ -159,6 +155,7 @@
     height: 24px;
     border-top: 3px solid #ff4d3d;
     border-left: 3px solid #ff4d3d;
+    border-radius: 0.5rem 0 0 0;
 }
 
 @media (min-width: 640px) {
@@ -179,7 +176,7 @@
 }
 
 .frames-auth-logo-link:hover {
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
 .frames-auth-label {
@@ -198,63 +195,51 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: #f4f0ea;
+    color: #0f172a;
     line-height: 1.1;
 }
 
 .frames-auth-subtitle {
     margin-top: 0.75rem;
     font-size: 0.875rem;
-    color: #9a9590;
+    color: #64748b;
 }
 
-/* ── Logo animation (from site) ────────────────────────── */
+/* ── Logo on white login ───────────────────────────────── */
 
-.site-logo-stack {
-    width: 100%;
+.frames-auth-shell .site-logo {
+    mix-blend-mode: normal;
+    filter: brightness(0) saturate(100%);
 }
 
-.site-logo {
-    display: block;
-    width: 100%;
-    aspect-ratio: 1024 / 207;
-    object-fit: contain;
-    object-position: center;
-}
-
-.site-logo-animate {
-    animation: logo-white-fade 8s ease-in-out infinite;
-}
-
-@keyframes logo-white-fade {
-    0%, 42% { opacity: 1; }
-    50%, 92% { opacity: 0; }
-    100% { opacity: 1; }
+.frames-auth-shell .site-logo-animate {
+    animation: none;
+    opacity: 1;
 }
 
 /* ── Filament form overrides ───────────────────────────── */
 
 .frames-auth-form .fi-fo-field-wrp-label span,
 .frames-auth-form .fi-fo-field-wrp-label label {
-    font-family: var(--font-display) !important;
-    font-size: 0.625rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.28em !important;
-    text-transform: uppercase !important;
-    color: rgba(244, 240, 234, 0.55) !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    color: #334155 !important;
 }
 
 .frames-auth-form .fi-input-wrp {
-    border-radius: 0 !important;
-    border: 2px solid rgba(244, 240, 234, 0.15) !important;
-    background: transparent !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid #cbd5e1 !important;
+    background: #ffffff !important;
     box-shadow: none !important;
     --tw-ring-color: transparent !important;
 }
 
 .frames-auth-form .fi-input-wrp:focus-within {
     border-color: #ff4d3d !important;
-    box-shadow: none !important;
+    box-shadow: 0 0 0 3px rgba(255, 77, 61, 0.15) !important;
     --tw-ring-color: transparent !important;
 }
 
@@ -263,25 +248,25 @@
 }
 
 .frames-auth-form .fi-input {
-    border-radius: 0 !important;
+    border-radius: 0.5rem !important;
     background: transparent !important;
-    color: #f4f0ea !important;
+    color: #1e293b !important;
     font-size: 0.875rem !important;
 }
 
 .frames-auth-form .fi-input::placeholder {
-    color: rgba(244, 240, 234, 0.3) !important;
+    color: #94a3b8 !important;
 }
 
 .frames-auth-form .fi-fo-checkbox label {
-    color: #c8c4be !important;
+    color: #475569 !important;
     font-size: 0.8125rem !important;
 }
 
 .frames-auth-form .fi-checkbox-input {
-    border-radius: 0 !important;
-    border-color: rgba(244, 240, 234, 0.25) !important;
-    background: transparent !important;
+    border-radius: 0.25rem !important;
+    border-color: #cbd5e1 !important;
+    background: #ffffff !important;
 }
 
 .frames-auth-form .fi-checkbox-input:checked {
@@ -290,29 +275,30 @@
 }
 
 .frames-auth-form .fi-ac-btn-action.fi-btn {
-    border-radius: 0 !important;
-    border: 2px solid #ff4d3d !important;
+    border-radius: 0.5rem !important;
+    border: 1px solid #ff4d3d !important;
     background: #ff4d3d !important;
-    color: #080808 !important;
-    font-family: var(--font-display) !important;
-    font-size: 0.7rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.18em !important;
-    text-transform: uppercase !important;
-    min-height: 3rem;
+    color: #ffffff !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    min-height: 2.75rem;
     transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .frames-auth-form .fi-ac-btn-action.fi-btn:hover {
-    background: transparent !important;
-    color: #ff4d3d !important;
+    background: #e03e2f !important;
+    border-color: #e03e2f !important;
+    color: #ffffff !important;
 }
 
 .frames-auth-form .fi-fo-field-wrp-helper-text {
-    color: #9a9590 !important;
+    color: #94a3b8 !important;
 }
 
 .frames-auth-form .fi-fo-field-wrp-error-message {
-    color: #ff6b5f !important;
+    color: #dc2626 !important;
     font-size: 0.75rem !important;
 }

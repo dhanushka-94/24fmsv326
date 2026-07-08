@@ -16,4 +16,13 @@ class EditTeamMember extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (blank($data['photo'] ?? null) && filled($this->record->photo)) {
+            $data['photo'] = $this->record->photo;
+        }
+
+        return $data;
+    }
 }

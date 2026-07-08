@@ -34,4 +34,47 @@ class PortfolioItem extends Model
     {
         return Frames::mediaUrl($this->thumbnail_url);
     }
+
+    public function youtubeId(): ?string
+    {
+        if (! $this->youtube_url) {
+            return null;
+        }
+
+        if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|live\/|watch\?v=))([A-Za-z0-9_-]{11})/', $this->youtube_url, $matches)) {
+            return $matches[1];
+        }
+
+        if (preg_match('/^[A-Za-z0-9_-]{11}$/', trim($this->youtube_url))) {
+            return trim($this->youtube_url);
+        }
+
+        return null;
+    }
+
+    public function embedUrl(bool $autoplay = true): ?string
+    {
+        $id = $this->youtubeId();
+
+        if (! $id) {
+            return null;
+        }
+
+        $query = $autoplay ? '?autoplay=1&rel=0' : '?rel=0';
+
+        return "https://www.youtube.com/embed/{$id}{$query}";
+    }
+
+    public function heroThumbnailSrc(): ?string
+    {
+        if ($thumbnail = $this->thumbnailSrc()) {
+            return $thumbnail;
+        }
+
+        if ($id = $this->youtubeId()) {
+            return "https://img.youtube.com/vi/{$id}/maxresdefault.jpg";
+        }
+
+        return null;
+    }
 }

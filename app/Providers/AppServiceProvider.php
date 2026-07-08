@@ -33,7 +33,13 @@ class AppServiceProvider extends ServiceProvider
     private function registerViewComposers(): void
     {
         View::composer(['layouts.site', 'components.page-shell'], function ($view): void {
-            $view->with('siteClients', SiteContent::publishedClients());
+            $clients = SiteContent::publishedClients();
+
+            $view->with('siteClients', $clients);
+            $view->with(
+                'showClientCarousel',
+                $clients->isNotEmpty() && ! request()->routeIs('services', 'team', 'contact'),
+            );
         });
     }
 

@@ -7,146 +7,775 @@
 @theme {
     --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
+
+    --frames-bg: #f8fafc;
+    --frames-surface: #ffffff;
+    --frames-surface-raised: #f1f5f9;
+    --frames-sidebar: #ffffff;
+    --frames-text: #1e293b;
+    --frames-text-muted: #64748b;
+    --frames-text-subtle: #94a3b8;
+    --frames-text-heading: #0f172a;
+    --frames-text-accent: #e03e2f;
+    --frames-border: #e2e8f0;
+    --frames-border-strong: #cbd5e1;
+    --frames-primary: #ff4d3d;
+    --frames-primary-soft: #e03e2f;
+    --frames-primary-glow: rgba(255, 77, 61, 0.08);
+    --frames-radius: 0.5rem;
 }
 
-/* ── 24 Frames admin panel theme ───────────────────────── */
+/* ── Base ──────────────────────────────────────────────── */
 
 .fi-body {
-    background: #080808 !important;
+    background: var(--frames-bg) !important;
+    color: var(--frames-text) !important;
+    font-size: 0.9375rem !important;
+    -webkit-font-smoothing: antialiased;
 }
 
+.fi-main,
+.fi-main-ctn {
+    background: var(--frames-bg) !important;
+}
+
+.fi-main-ctn {
+    background-image:
+        radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 77, 61, 0.06), transparent 55%),
+        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px) !important;
+    background-size: auto, 64px 64px, 64px 64px !important;
+}
+
+/* ── Sidebar ───────────────────────────────────────────── */
+
 .fi-sidebar {
-    background: #0c0c0c !important;
-    border-right: 1px solid rgba(244, 240, 234, 0.08) !important;
+    background: var(--frames-sidebar) !important;
+    border-right: 1px solid var(--frames-border) !important;
+    box-shadow: 1px 0 0 rgba(15, 23, 42, 0.04) !important;
 }
 
 .fi-sidebar-header {
-    border-bottom: 1px solid rgba(244, 240, 234, 0.08) !important;
+    border-bottom: 1px solid var(--frames-border) !important;
+    padding-block: 1rem !important;
 }
+
+.fi-sidebar-item-button {
+    border-radius: var(--frames-radius) !important;
+    padding: 0.7rem 0.85rem !important;
+    margin-inline: 0.35rem !important;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.fi-sidebar-item-label {
+    font-family: var(--font-sans) !important;
+    font-size: 0.875rem !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    color: var(--frames-text-muted) !important;
+}
+
+.fi-sidebar-group-label {
+    font-family: var(--font-display) !important;
+    font-size: 0.6875rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: var(--frames-text-subtle) !important;
+    padding-top: 0.5rem !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-button {
+    background: var(--frames-primary-glow) !important;
+    box-shadow: inset 3px 0 0 var(--frames-primary);
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-label {
+    color: var(--frames-primary-soft) !important;
+    font-weight: 600 !important;
+}
+
+.fi-sidebar-item-button:hover {
+    background: #f8fafc !important;
+}
+
+.fi-sidebar-item-button:hover .fi-sidebar-item-label {
+    color: var(--frames-text) !important;
+}
+
+.fi-sidebar-nav-groups {
+    gap: 0.35rem !important;
+}
+
+.fi-sidebar-item-icon {
+    color: var(--frames-text-subtle) !important;
+}
+
+.fi-sidebar-item-active .fi-sidebar-item-icon {
+    color: var(--frames-primary) !important;
+}
+
+/* ── Top bar ───────────────────────────────────────────── */
 
 .fi-topbar {
-    background: rgba(8, 8, 8, 0.92) !important;
-    border-bottom: 1px solid rgba(244, 240, 234, 0.08) !important;
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.92) !important;
+    border-bottom: 1px solid var(--frames-border) !important;
+    backdrop-filter: blur(10px);
 }
 
-.fi-main {
-    background: #080808 !important;
+.fi-topbar nav,
+.fi-topbar .fi-icon-btn {
+    color: var(--frames-text-muted) !important;
 }
 
-.fi-simple-main,
+.fi-topbar .fi-icon-btn {
+    border-radius: var(--frames-radius) !important;
+}
+
+/* ── Page headers ──────────────────────────────────────── */
+
+.fi-header-heading {
+    font-family: var(--font-display) !important;
+    font-size: 1.65rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    color: var(--frames-text-heading) !important;
+}
+
+.fi-header-subheading {
+    font-size: 0.9375rem !important;
+    line-height: 1.55 !important;
+    color: var(--frames-text-muted) !important;
+    max-width: none;
+}
+
+.fi-breadcrumbs-item-label {
+    color: var(--frames-text-subtle) !important;
+    font-size: 0.8125rem !important;
+}
+
+.fi-breadcrumbs-item-label:hover {
+    color: var(--frames-primary-soft) !important;
+}
+
+/* ── Cards & sections ──────────────────────────────────── */
+
 .fi-section,
 .fi-ta-ctn,
-.fi-fo-component-ctn,
 .fi-wi-stats-overview-stat,
-.fi-ta-header-toolbar {
-    border-radius: 0 !important;
+.fi-fo-component-ctn,
+.fi-dropdown-panel {
+    border-radius: var(--frames-radius) !important;
 }
 
 .fi-section,
 .fi-ta-ctn,
 .fi-wi-stats-overview-stat {
-    border: 1px solid rgba(244, 240, 234, 0.1) !important;
-    background: #111111 !important;
-    box-shadow: none !important;
+    border: 1px solid var(--frames-border) !important;
+    background: var(--frames-surface) !important;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
 }
 
-.fi-sidebar-item-label,
-.fi-sidebar-group-label {
+.fi-section-header {
+    padding-block: 1rem 0.75rem !important;
+}
+
+.fi-section-header-heading {
     font-family: var(--font-display) !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-    font-size: 0.7rem !important;
-}
-
-.fi-sidebar-item-active .fi-sidebar-item-button {
-    background: rgba(255, 77, 61, 0.12) !important;
-}
-
-.fi-sidebar-item-active .fi-sidebar-item-label {
-    color: #ff8a7a !important;
-}
-
-.fi-btn.fi-btn-color-primary {
-    border-radius: 0 !important;
-    font-family: var(--font-display) !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.12em !important;
-    text-transform: uppercase !important;
-}
-
-.fi-ta-header-cell {
-    font-family: var(--font-display) !important;
-    font-size: 0.65rem !important;
-    letter-spacing: 0.2em !important;
-    text-transform: uppercase !important;
-}
-
-.fi-header-heading {
-    font-family: var(--font-display) !important;
+    font-size: 1rem !important;
     font-weight: 700 !important;
-    letter-spacing: 0.04em !important;
-    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+    text-transform: none !important;
+    color: var(--frames-text-heading) !important;
 }
 
-.fi-input-wrp {
-    border-radius: 0 !important;
+.fi-section-header-description {
+    font-size: 0.875rem !important;
+    color: var(--frames-text-muted) !important;
+    line-height: 1.5 !important;
 }
+
+.fi-section-header-icon {
+    color: var(--frames-primary) !important;
+}
+
+.fi-section-content {
+    padding-top: 0.25rem !important;
+}
+
+/* ── Forms ─────────────────────────────────────────────── */
 
 .fi-fo-field-wrp-label span,
 .fi-fo-field-wrp-label label {
-    font-size: 0.7rem !important;
-    letter-spacing: 0.14em !important;
-    text-transform: uppercase !important;
+    font-family: var(--font-sans) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    color: var(--frames-text-heading) !important;
 }
 
-.fi-logo {
-    filter: brightness(1.05);
+.fi-fo-field-wrp-helper-text {
+    font-size: 0.8125rem !important;
+    color: var(--frames-text-subtle) !important;
+    line-height: 1.45 !important;
 }
 
-.fi-main-ctn {
-    background:
-        linear-gradient(to right, rgba(244, 240, 234, 0.02) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(244, 240, 234, 0.02) 1px, transparent 1px),
-        #080808 !important;
-    background-size: 72px 72px, 72px 72px, auto !important;
+.fi-input-wrp {
+    border-radius: var(--frames-radius) !important;
+    border: 1px solid var(--frames-border-strong) !important;
+    background: #ffffff !important;
+    min-height: 2.75rem;
 }
 
-.fi-ta-row:hover {
-    background: rgba(255, 77, 61, 0.04) !important;
+.fi-input-wrp:focus-within {
+    border-color: var(--frames-primary) !important;
+    box-shadow: 0 0 0 3px rgba(255, 77, 61, 0.15) !important;
 }
 
-.fi-dropdown-panel {
-    border-radius: 0 !important;
-    border: 1px solid rgba(244, 240, 234, 0.12) !important;
-    background: #111111 !important;
+.fi-input,
+.fi-select-input,
+.fi-textarea {
+    font-size: 0.9375rem !important;
+    color: var(--frames-text) !important;
 }
 
-.fi-fo-section-header-heading {
-    font-family: var(--font-display) !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.06em !important;
+.fi-input::placeholder,
+.fi-textarea::placeholder {
+    color: var(--frames-text-subtle) !important;
 }
 
-.fi-wi-stats-overview-stat-value {
-    font-family: var(--font-display) !important;
-    color: #ff8a7a !important;
+.fi-fo-tabs-item {
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
 }
 
 .fi-fo-tabs-item-active {
-    border-color: #ff4d3d !important;
-    color: #ff8a7a !important;
+    border-color: var(--frames-primary) !important;
+    color: var(--frames-primary-soft) !important;
 }
 
-.fi-pagination-item-button.fi-active {
-    background: #ff4d3d !important;
-    border-color: #ff4d3d !important;
+.fi-fo-file-upload-panel {
+    border-radius: var(--frames-radius) !important;
+    border: 1px dashed var(--frames-border-strong) !important;
+    background: var(--frames-surface-raised) !important;
+}
+
+.fi-fo-file-upload-panel:hover {
+    border-color: var(--frames-primary) !important;
+    background: var(--frames-primary-glow) !important;
+}
+
+/* ── Buttons ───────────────────────────────────────────── */
+
+.fi-btn {
+    border-radius: var(--frames-radius) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    min-height: 2.5rem;
+}
+
+.fi-btn.fi-btn-color-primary {
+    font-family: var(--font-sans) !important;
+    box-shadow: 0 1px 2px rgba(255, 77, 61, 0.25);
+}
+
+.fi-btn.fi-btn-size-lg {
+    min-height: 2.85rem;
+    padding-inline: 1.25rem !important;
+    font-size: 0.9375rem !important;
+}
+
+/* Dark buttons + light text (backend request) */
+
+:root {
+    --frames-btn-bg: #0b0f19;
+    --frames-btn-bg-hover: #121a2a;
+    --frames-btn-border: rgba(15, 23, 42, 0.55);
+    --frames-btn-text: #f8fafc;
+}
+
+.fi-btn,
+.fi-btn:visited {
+    background: var(--frames-btn-bg) !important;
+    border-color: var(--frames-btn-border) !important;
+    color: var(--frames-btn-text) !important;
+}
+
+.fi-btn:hover,
+.fi-btn:focus,
+.fi-btn:focus-visible {
+    background: var(--frames-btn-bg-hover) !important;
+    color: var(--frames-btn-text) !important;
+}
+
+.fi-btn .fi-btn-label,
+.fi-btn svg,
+.fi-btn .fi-icon {
+    color: var(--frames-btn-text) !important;
+}
+
+/* Keep primary accent but still dark button */
+.fi-btn.fi-btn-color-primary {
+    border-color: rgba(255, 77, 61, 0.55) !important;
+    box-shadow: 0 6px 22px rgba(255, 77, 61, 0.15) !important;
+}
+
+/* Table action buttons */
+.fi-ta-actions .fi-btn,
+.fi-ta-actions .fi-icon-btn,
+.fi-topbar .fi-icon-btn {
+    background: var(--frames-btn-bg) !important;
+    border: 1px solid var(--frames-btn-border) !important;
+    color: var(--frames-btn-text) !important;
+}
+
+.fi-ta-actions .fi-icon-btn:hover,
+.fi-topbar .fi-icon-btn:hover {
+    background: var(--frames-btn-bg-hover) !important;
+}
+
+/* ── Tables ────────────────────────────────────────────── */
+
+.fi-ta-header-cell {
+    font-family: var(--font-sans) !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em !important;
+    text-transform: uppercase !important;
+    color: var(--frames-text-muted) !important;
+    background: var(--frames-surface-raised) !important;
+}
+
+.fi-ta-cell {
+    font-size: 0.9rem !important;
+    color: var(--frames-text) !important;
+    padding-block: 0.85rem !important;
+}
+
+.fi-ta-text-item {
+    color: var(--frames-text) !important;
+}
+
+.fi-ta-text-item.fi-color-gray {
+    color: var(--frames-text-muted) !important;
+}
+
+.fi-ta-row:nth-child(even) {
+    background: #f8fafc !important;
+}
+
+.fi-ta-row:hover {
+    background: var(--frames-primary-glow) !important;
+}
+
+.fi-ta-empty-state {
+    padding-block: 2.5rem !important;
 }
 
 .fi-ta-empty-state-heading {
     font-family: var(--font-display) !important;
+    font-size: 1.1rem !important;
+    text-transform: none !important;
+    color: var(--frames-text-heading) !important;
+}
+
+.fi-ta-empty-state-description {
+    color: var(--frames-text-muted) !important;
+}
+
+.fi-ta-header-toolbar {
+    border-radius: var(--frames-radius) var(--frames-radius) 0 0 !important;
+    padding: 0.75rem 1rem !important;
+    background: var(--frames-surface) !important;
+}
+
+.fi-ta-search-field .fi-input-wrp {
+    min-height: 2.5rem;
+}
+
+/* ── Badges & stats ────────────────────────────────────── */
+
+.fi-badge {
+    border-radius: 999px !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    padding-inline: 0.55rem !important;
+}
+
+.fi-wi-stats-overview-stat {
+    padding: 1.1rem 1.15rem !important;
+    background: var(--frames-surface) !important;
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    border-color: rgba(255, 77, 61, 0.35) !important;
+    box-shadow: 0 4px 16px rgba(255, 77, 61, 0.08) !important;
+    transform: translateY(-1px);
+}
+
+.fi-wi-stats-overview-stat-label {
+    font-size: 0.8125rem !important;
+    font-weight: 600 !important;
+    color: var(--frames-text-muted) !important;
+    text-transform: none !important;
+}
+
+.fi-wi-stats-overview-stat-value {
+    font-family: var(--font-display) !important;
+    font-size: 1.85rem !important;
+    color: var(--frames-primary) !important;
+}
+
+.fi-wi-stats-overview-stat-description,
+.fi-wi-stats-overview-stat-description-icon {
+    font-size: 0.8125rem !important;
+    color: var(--frames-text-subtle) !important;
+}
+
+.fi-wi-stats-overview-stat-chart {
+    color: var(--frames-primary) !important;
+}
+
+/* ── Notifications & modals ────────────────────────────── */
+
+.fi-no-notification {
+    border-radius: var(--frames-radius) !important;
+    border: 1px solid var(--frames-border) !important;
+    background: var(--frames-surface) !important;
+}
+
+.fi-modal-window {
+    border-radius: calc(var(--frames-radius) + 2px) !important;
+    border: 1px solid var(--frames-border) !important;
+    background: var(--frames-surface) !important;
+}
+
+.fi-dropdown-panel {
+    border: 1px solid var(--frames-border) !important;
+    background: var(--frames-surface) !important;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
+}
+
+/* ── Pagination ────────────────────────────────────────── */
+
+.fi-pagination-item-button.fi-active {
+    background: var(--frames-primary) !important;
+    border-color: var(--frames-primary) !important;
+}
+
+.fi-pagination-item-button {
+    border-radius: var(--frames-radius) !important;
+}
+
+/* ── Logo (dark on white admin) ────────────────────────── */
+
+.fi-logo {
+    mix-blend-mode: normal !important;
+    filter: brightness(0) saturate(100%) !important;
+}
+
+/* ── Dashboard quick actions ───────────────────────────── */
+
+.frames-quick-actions {
+    display: grid;
+    gap: 0.65rem;
+}
+
+.frames-quick-action {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--frames-border);
+    border-radius: var(--frames-radius);
+    background: var(--frames-surface-raised);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.frames-quick-action:hover {
+    border-color: rgba(255, 77, 61, 0.4);
+    background: var(--frames-primary-glow);
+    box-shadow: 0 4px 12px rgba(255, 77, 61, 0.08);
+    transform: translateX(2px);
+}
+
+.frames-quick-action-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--frames-radius);
+    background: rgba(255, 77, 61, 0.1);
+    color: var(--frames-primary);
+    flex-shrink: 0;
+}
+
+.frames-quick-action-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    min-width: 0;
+    flex: 1;
+}
+
+.frames-quick-action-label {
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--frames-text-heading);
+}
+
+.frames-quick-action-desc {
+    font-size: 0.8125rem;
+    color: var(--frames-text-muted);
+    line-height: 1.4;
+}
+
+.frames-quick-action-chevron {
+    color: var(--frames-primary);
+    flex-shrink: 0;
+}
+
+/* ── Branding page ─────────────────────────────────────── */
+
+.frames-branding-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 5.5rem;
+    padding: 1rem;
+    border: 1px solid var(--frames-border);
+    border-radius: var(--frames-radius);
+    background: #0f172a;
+}
+
+.frames-branding-preview--favicon {
+    min-height: 4rem;
+    max-width: 8rem;
+    background: var(--frames-surface-raised);
+}
+
+.frames-branding-preview-image {
+    max-width: 100%;
+    max-height: 4.5rem;
+    object-fit: contain;
+}
+
+.frames-branding-preview--favicon .frames-branding-preview-image {
+    max-height: 2.5rem;
+    max-width: 2.5rem;
+}
+
+.frames-branding-preview-empty {
+    font-size: 0.875rem;
+    color: var(--frames-text-subtle);
+}
+
+.frames-form-actions {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 0.25rem;
+}
+
+/* ── Navigation badge ──────────────────────────────────── */
+
+.fi-sidebar-item-badge-ctn .fi-badge {
+    font-weight: 700;
+}
+
+/* ── Widget spacing ────────────────────────────────────── */
+
+.fi-wi-widget:not(.fi-wi-stats-overview) .fi-ta-ctn {
+    border-top: none;
+}
+
+.fi-wi-widget .fi-section-header {
+    border-bottom: 1px solid var(--frames-border);
+    margin-bottom: 0.5rem;
+}
+
+.fi-wi-widget .fi-ta-header-heading {
+    color: var(--frames-text-heading) !important;
+}
+
+.fi-wi-widget .fi-ta-header-description {
+    color: var(--frames-text-muted) !important;
 }
 
 .fi-ta-reorder-handle button {
-    color: #ff8a7a !important;
+    color: var(--frames-primary) !important;
+}
+
+.fi-brand {
+    color: var(--frames-text-heading) !important;
+}
+
+/* ── Full width + responsive layout ────────────────────── */
+
+.fi-layout,
+.fi-main-ctn {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.fi-main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    padding-inline: clamp(0.75rem, 2.5vw, 2rem) !important;
+}
+
+.fi-page,
+.fi-page > section,
+.fi-page > div,
+.fi-wi-widget,
+.fi-section,
+.fi-ta-ctn,
+.fi-fo-component-ctn {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.fi-page-header-main-ctn {
+    width: 100% !important;
+}
+
+.fi-wi-stats-overview-stats-ctn {
+    grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr)) !important;
+    gap: 1rem !important;
+}
+
+.fi-dashboard-page .fi-header {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+}
+
+.fi-dashboard-page .fi-header > div:first-child {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.fi-dashboard-page .fi-header-subheading {
+    max-width: 100% !important;
+}
+
+.fi-dashboard-page .fi-wi {
+    width: 100% !important;
+    justify-items: stretch !important;
+    align-items: stretch !important;
+}
+
+.fi-dashboard-page .fi-wi-widget {
+    width: 100% !important;
+    min-width: 0 !important;
+    justify-self: stretch !important;
+}
+
+.fi-dashboard-page .fi-wi-stats-overview,
+.fi-dashboard-page .fi-wi-stats-overview-stats-ctn {
+    width: 100% !important;
+    justify-items: stretch !important;
+}
+
+.fi-dashboard-page .fi-wi-stats-overview-stats-ctn {
+    grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
+}
+
+@media (min-width: 640px) {
+    .fi-dashboard-page .fi-wi-stats-overview-stats-ctn {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .fi-dashboard-page .fi-wi-stats-overview-stats-ctn {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+}
+
+@media (min-width: 1280px) {
+    .fi-dashboard-page .fi-wi-stats-overview-stats-ctn {
+        grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    }
+}
+
+.fi-dashboard-page .fi-wi-stats-overview-stat {
+    text-align: left !important;
+}
+
+.fi-dashboard-page .fi-section-header,
+.fi-dashboard-page .fi-section-content,
+.fi-dashboard-page .frames-quick-actions {
+    width: 100% !important;
+}
+
+.fi-dashboard-page .fi-ta-table {
+    min-width: 0 !important;
+}
+
+.fi-page-dashboard .fi-wi-widget {
+    min-width: 0;
+}
+
+.fi-ta-ctn {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.fi-ta-table {
+    width: 100%;
+    min-width: 36rem;
+}
+
+.fi-ta-header-toolbar,
+.fi-ta-header {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.fi-fo-component-ctn .fi-fo-field-wrp {
+    min-width: 0;
+}
+
+@media (max-width: 1023px) {
+    .fi-sidebar-item-button {
+        margin-inline: 0.15rem !important;
+    }
+
+    .fi-header-heading {
+        font-size: 1.35rem !important;
+    }
+
+    .fi-wi-stats-overview-stat-value {
+        font-size: 1.5rem !important;
+    }
+}
+
+@media (max-width: 639px) {
+    .fi-main {
+        padding-inline: 0.75rem !important;
+    }
+
+    .fi-ta-cell {
+        padding-block: 0.65rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    .fi-btn {
+        min-height: 2.35rem;
+    }
+
+    .frames-quick-action {
+        padding: 0.75rem 0.85rem;
+    }
 }
