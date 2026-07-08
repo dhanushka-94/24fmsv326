@@ -37,7 +37,8 @@ class TeamMemberResource extends Resource
                     ->placeholder('e.g. production')
                     ->helperText('Use direction, production, or post so members appear in the correct team section.'),
                 Forms\Components\Textarea::make('bio')->rows(3)->columnSpanFull(),
-                Forms\Components\FileUpload::make('photo')
+                Forms\Components\Hidden::make('photo'),
+                Forms\Components\FileUpload::make('photo_upload')
                     ->label('Photo')
                     ->image()
                     ->disk('public')
@@ -45,10 +46,18 @@ class TeamMemberResource extends Resource
                     ->visibility('public')
                     ->imageEditor()
                     ->maxSize(4096)
-                    ->maxFiles(1)
+                    ->dehydrated(false)
                     ->helperText('Upload a portrait photo. Use department keys: direction, production, or post.')
-                    ->formatStateUsing(fn (?string $state): array => filled($state) && TeamMember::isStoredUpload($state) ? [$state] : [])
-                    ->dehydrateStateUsing(fn ($state): ?string => is_array($state) ? Arr::first($state) : $state),
+                    ->afterStateUpdated(function ($state, Forms\Set $set): void {
+                        if (blank($state)) {
+                            $set('photo', null);
+
+                            return;
+                        }
+
+                        $path = is_array($state) ? Arr::first($state) : $state;
+                        $set('photo', TeamMember::normalizePhotoPath($path));
+                    }),
                 Forms\Components\TextInput::make('imdb')->url()->label('IMDb URL')->maxLength(255),
                 Forms\Components\TextInput::make('instagram')->url()->maxLength(255),
                 Forms\Components\TextInput::make('linkedin')->url()->maxLength(255),
@@ -65,7 +74,7 @@ class TeamMemberResource extends Resource
                     ->label('Photo')
                     ->disk('public')
                     ->visibility('public')
-                    ->getStateUsing(fn (TeamMember $record): ?string => TeamMember::isStoredUpload($record->photo) ? $record->photo : null)
+                    ->getStateUsing(fn (TeamMember $record): ?string => $record->storedPhotoPath())
                     ->defaultImageUrl(fn (TeamMember $record): ?string => $record->photoUrl())
                     ->circular(),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),

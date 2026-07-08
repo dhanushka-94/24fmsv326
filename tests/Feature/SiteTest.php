@@ -213,4 +213,23 @@ class SiteTest extends TestCase
             ->assertOk()
             ->assertSee($url, false);
     }
+
+    public function test_team_page_shows_photo_saved_with_storage_prefix(): void
+    {
+        $member = TeamMember::query()->published()->first();
+        $member->update([
+            'photo' => '/storage/team/prefixed-portrait.jpg',
+            'department' => 'production',
+            'is_published' => true,
+        ]);
+
+        $url = $member->fresh()->photoUrl();
+
+        $this->assertNotNull($url);
+        $this->assertStringContainsString('storage/team/prefixed-portrait.jpg', $url);
+
+        $this->get('/team')
+            ->assertOk()
+            ->assertSee($url, false);
+    }
 }

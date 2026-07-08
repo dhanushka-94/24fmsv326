@@ -35,17 +35,61 @@ class TeamMember extends Model
 
     public function photoUrl(): ?string
     {
-        return Frames::mediaUrl($this->photo);
+        if (blank($this->photo)) {
+            return null;
+        }
+
+        $path = static::normalizePhotoPath($this->photo);
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return Frames::mediaUrl($path);
+    }
+
+    public function storedPhotoPath(): ?string
+    {
+        if (! static::isStoredUpload($this->photo)) {
+            return null;
+        }
+
+        return static::normalizePhotoPath($this->photo);
+    }
+
+    public static function normalizePhotoPath(?string $path): ?string
+    {
+        if ($path === null || $path === '') {
+            return null;
+        }
+
+        $path = trim($path);
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, '/storage/')) {
+            return ltrim(substr($path, strlen('/storage/')), '/');
+        }
+
+        if (str_starts_with($path, 'storage/')) {
+            return ltrim(substr($path, strlen('storage/')), '/');
+        }
+
+        return $path;
     }
 
     public static function isStoredUpload(?string $path): bool
     {
-        if ($path === null || $path === '') {
+        $normalized = static::normalizePhotoPath($path);
+
+        if ($normalized === null || $normalized === '') {
             return false;
         }
 
-        return ! str_starts_with($path, 'http://')
-            && ! str_starts_with($path, 'https://')
-            && ! str_starts_with($path, '/');
+        return ! str_starts_with($normalized, 'http://')
+            && ! str_starts_with($normalized, 'https://')
+            && ! str_starts_with($normalized, '/');
     }
 }
