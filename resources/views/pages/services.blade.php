@@ -8,45 +8,23 @@
     use App\Support\AccentText;
 
     $services = config('frames.services');
-    $serviceImages = $sampleImages['services'] ?? [];
-    $servicesSubheading = AccentText::highlight($services['headline'], ['Big', 'Small', 'Shoot-ready.']);
+    $servicesTagline = AccentText::highlight($services['headline'], ['Big', 'Small', 'Shoot-ready.'], 'page-tagline-accent');
 @endphp
 <x-page-shell>
-    <x-page-hero
-        title="Services"
-        :subheading-html="$servicesSubheading"
-    />
+    <x-page-tagline :tagline-html="$servicesTagline" :sr-title="'Services — '.$services['headline']" />
 
-    <main class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pb-20 pt-16 sm:px-6 lg:gap-28 lg:px-12 lg:pt-20">
-        <section class="grid gap-8 lg:grid-cols-3">
-            @foreach ($services['pillars'] as $pillar)
-                <article class="reveal card-surface group overflow-hidden">
-                    @if (!empty($serviceImages[$pillar['key']]))
-                        <div class="overflow-hidden">
-                            <img
-                                src="{{ $serviceImages[$pillar['key']] }}"
-                                alt="{{ $pillar['title'] }}"
-                                class="h-48 w-full object-cover transition duration-700 group-hover:scale-105"
-                                loading="lazy"
-                            />
-                        </div>
-                    @endif
-                    <div class="space-y-4 p-6 sm:p-8">
-                        <h2 class="section-heading text-xl sm:text-2xl">{{ $pillar['title'] }}</h2>
-                        <p class="text-body">{{ $pillar['body'] }}</p>
-                    </div>
-                </article>
-            @endforeach
-        </section>
+    <main class="services-page page-content mx-auto max-w-7xl space-y-20 px-4 pb-20 sm:px-6 lg:space-y-28 lg:px-12">
+        <x-services-blocks
+            :pillars="$services['pillars']"
+            :roster="['title' => 'The Directorial Roster', 'body' => $services['roster_intro']]"
+        />
 
-        <section class="reveal space-y-6 border-y border-white/10 py-14">
-            <h2 class="section-heading">The Directorial Roster</h2>
-            <p class="max-w-3xl text-body">{{ $services['roster_intro'] }}</p>
-        </section>
+        <x-services-director-grid
+            :directors="$directors"
+            :title="strtoupper($services['directors_title'])"
+        />
 
-        <x-director-grid :directors="$directors" :title="$services['directors_title']" />
-
-        <x-execution-pipeline
+        <x-services-pipeline
             :stages="$pipeline"
             :title="$services['pipeline_title']"
             :subtitle="$services['pipeline_subtitle']"

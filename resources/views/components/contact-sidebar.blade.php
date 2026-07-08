@@ -1,60 +1,36 @@
 @props(['contact', 'showSocial' => false])
 
+@php
+    $phones = $contact['phones'] ?? [];
+    $phoneLine = collect($phones)
+        ->map(fn (string $phone): string => '<a href="tel:'.preg_replace('/\s+/', '', $phone).'" class="contact-info-link">'.$phone.'</a>')
+        ->implode(' <span class="contact-info-separator">/</span> ');
+@endphp
+
 <div class="contact-info-stack">
-    <article class="contact-info-item reveal">
-        <span class="contact-info-icon" aria-hidden="true">
-            <i data-lucide="map-pin" class="size-5"></i>
-        </span>
-        <div class="contact-info-body">
-            <p class="contact-info-label">Address</p>
-            <p class="contact-info-value">{{ $contact['address'] }}</p>
-        </div>
-    </article>
+    <section class="contact-info-block reveal">
+        <h2 class="contact-info-heading">Get in touch</h2>
+        @if ($phoneLine !== '')
+            <p class="contact-info-line">{!! $phoneLine !!}</p>
+        @endif
+        <p class="contact-info-line">
+            <a href="mailto:{{ $contact['email'] }}" class="contact-info-link">{{ $contact['email'] }}</a>
+        </p>
+    </section>
 
-    <article class="contact-info-item reveal">
-        <span class="contact-info-icon" aria-hidden="true">
-            <i data-lucide="phone" class="size-5"></i>
-        </span>
-        <div class="contact-info-body">
-            <p class="contact-info-label">Phone</p>
-            <div class="contact-info-value space-y-1">
-                @foreach ($contact['phones'] as $phone)
-                    <a href="tel:{{ preg_replace('/\s+/', '', $phone) }}" class="contact-info-link">{{ $phone }}</a>
-                @endforeach
-            </div>
-            @if (!empty($contact['whatsapp']))
-                <a
-                    href="https://wa.me/{{ preg_replace('/\D/', '', $contact['whatsapp']) }}"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="contact-info-link mt-2 inline-flex items-center gap-2"
-                >
-                    <i data-lucide="message-circle" class="size-4 text-[#ff4d3d]"></i>
-                    WhatsApp {{ $contact['whatsapp'] }}
-                </a>
+    <section class="contact-info-block reveal">
+        <h2 class="contact-info-heading">Office</h2>
+        <p class="contact-info-line contact-info-address">
+            @if (! empty($contact['company']))
+                <span>{{ $contact['company'] }}</span>
             @endif
-        </div>
-    </article>
+            <span>{{ $contact['address'] }}</span>
+        </p>
+    </section>
 
-    <article class="contact-info-item reveal">
-        <span class="contact-info-icon" aria-hidden="true">
-            <i data-lucide="mail" class="size-5"></i>
-        </span>
-        <div class="contact-info-body">
-            <p class="contact-info-label">Email</p>
-            <a href="mailto:{{ $contact['email'] }}" class="contact-info-link contact-info-value">{{ $contact['email'] }}</a>
+    @if ($showSocial && ! empty($contact['social']))
+        <div class="contact-social reveal">
+            <x-social-icons :links="$contact['social']" variant="brand" size="lg" />
         </div>
-    </article>
-
-    @if ($showSocial && !empty($contact['social']))
-        <article class="contact-info-item contact-info-item--social reveal">
-            <span class="contact-info-icon" aria-hidden="true">
-                <i data-lucide="share-2" class="size-5"></i>
-            </span>
-            <div class="contact-info-body">
-                <p class="contact-info-label">Social</p>
-                <x-social-icons :links="$contact['social']" variant="accent" size="lg" />
-            </div>
-        </article>
     @endif
 </div>

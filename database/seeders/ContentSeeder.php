@@ -180,11 +180,12 @@ class ContentSeeder extends Seeder
         }
 
         foreach ([
-            'logo_white' => '/images/24frames-logo-white.png',
-            'logo_red' => '/images/24frames-logo-red.png',
-            'favicon' => '/images/24frames-logo-red.png',
+            'logo' => '/images/24frames-logo.png',
+            'logo_white' => '/images/24frames-logo.png',
+            'logo_red' => '/images/24frames-logo.png',
+            'favicon' => '/images/24frames-logo.png',
         ] as $key => $path) {
-            SiteSetting::set($key, SiteSetting::get($key) ?: $path);
+            SiteSetting::set($key, $path);
         }
 
         SiteSetting::ensureBrandingDefaults();

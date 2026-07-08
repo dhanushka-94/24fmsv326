@@ -1,10 +1,53 @@
-@props(['items' => []])
+@props([
+    'items' => [],
+    'intro' => null,
+    'showreelYoutubeId' => null,
+])
+
+@php
+    $showreelId = $showreelYoutubeId ?: config('frames.hero.youtube_id');
+    $showreelEmbed = $showreelId
+        ? "https://www.youtube.com/embed/{$showreelId}?autoplay=1&rel=0"
+        : null;
+    $showreelThumb = $showreelId
+        ? "https://img.youtube.com/vi/{$showreelId}/maxresdefault.jpg"
+        : null;
+@endphp
 
 <div
     x-data="videoTheater()"
     @open-video.window="open($event.detail)"
     @keydown.escape.window="close()"
+    class="portfolio-showcase"
 >
+    @if ($showreelEmbed)
+        <section class="portfolio-hero reveal">
+            <button
+                type="button"
+                class="portfolio-hero-media group"
+                @click="open({ url: @js($showreelEmbed), title: @js('Showreel') })"
+            >
+                @if ($showreelThumb)
+                    <img
+                        src="{{ $showreelThumb }}"
+                        alt="24 Frames showreel"
+                        class="portfolio-hero-img"
+                        loading="eager"
+                        decoding="async"
+                    />
+                @endif
+                <span class="portfolio-hero-overlay" aria-hidden="true"></span>
+                <span class="portfolio-hero-play" aria-hidden="true">
+                    <i data-lucide="play" class="size-7 text-white"></i>
+                </span>
+            </button>
+        </section>
+    @endif
+
+    @if ($intro)
+        <p class="portfolio-copy reveal">{{ $intro }}</p>
+    @endif
+
     <div class="portfolio-grid">
         @forelse ($items as $index => $item)
             @php
@@ -12,16 +55,12 @@
                 if ($item->youtube_url && preg_match('/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/', $item->youtube_url, $matches)) {
                     $embedUrl = "https://www.youtube.com/embed/{$matches[1]}?autoplay=1&rel=0";
                 }
-                $featured = $index === 0;
             @endphp
-            <article
-                class="reveal portfolio-card group {{ $featured ? 'portfolio-card--featured' : '' }}"
-                data-portfolio-index="{{ $index }}"
-            >
+            <article class="reveal portfolio-card group" data-portfolio-index="{{ $index }}">
                 @if ($embedUrl)
                     <button
                         type="button"
-                        class="portfolio-thumb relative block h-full w-full overflow-hidden text-left"
+                        class="portfolio-thumb portfolio-card-shell"
                         @click="open({ url: @js($embedUrl), title: @js($item->title) })"
                     >
                 @else
@@ -29,7 +68,7 @@
                         href="{{ $item->youtube_url }}"
                         target="_blank"
                         rel="noreferrer"
-                        class="portfolio-thumb relative block h-full w-full overflow-hidden"
+                        class="portfolio-thumb portfolio-card-shell"
                     >
                 @endif
                     <div class="portfolio-card-media">
@@ -41,26 +80,14 @@
                                 loading="lazy"
                             />
                         @else
-                            <div class="flex h-full min-h-[220px] items-center justify-center bg-white/5">
-                                <i data-lucide="play" class="size-10 text-white/40"></i>
-                            </div>
+                            <div class="portfolio-card-placeholder" aria-hidden="true"></div>
                         @endif
-                        <div class="portfolio-card-overlay"></div>
-                        <div class="portfolio-card-play">
-                            <span class="flex size-14 items-center justify-center rounded-full border border-white/40 bg-black/50 backdrop-blur-sm">
-                                <i data-lucide="play" class="size-6 text-white"></i>
-                            </span>
-                        </div>
+                        <span class="portfolio-card-overlay" aria-hidden="true"></span>
+                        <span class="portfolio-card-play" aria-hidden="true">
+                            <i data-lucide="play" class="size-5 text-white"></i>
+                        </span>
                     </div>
-                    <div class="portfolio-card-body">
-                        @if ($item->category)
-                            <p class="role-label mb-2">{{ $item->category }}</p>
-                        @endif
-                        <h3 class="portfolio-card-title" data-animate-text>{{ $item->title }}</h3>
-                        @if ($item->description && $featured)
-                            <p class="portfolio-card-desc">{{ $item->description }}</p>
-                        @endif
-                    </div>
+                    <span class="sr-only">{{ $item->title }}</span>
                 @if ($embedUrl)
                     </button>
                 @else
@@ -68,9 +95,18 @@
                 @endif
             </article>
         @empty
-            <p class="col-span-full text-sm text-muted">No portfolio items published yet.</p>
+            <p class="portfolio-empty">No portfolio items published yet.</p>
         @endforelse
     </div>
+
+    @if ($items->isNotEmpty())
+        <div class="portfolio-scroll-hint reveal" aria-hidden="true">
+            <span class="portfolio-scroll-mouse">
+                <i data-lucide="mouse" class="size-5"></i>
+                <i data-lucide="chevron-down" class="portfolio-scroll-arrow size-4"></i>
+            </span>
+        </div>
+    @endif
 
     <div
         x-show="active"
@@ -83,7 +119,7 @@
         </button>
         <div class="w-full max-w-6xl">
             <p class="mb-4 text-center text-sm uppercase tracking-[0.25em] text-white/60" x-text="title"></p>
-            <div class="aspect-video overflow-hidden bg-black shadow-2xl">
+            <div class="aspect-video overflow-hidden rounded-2xl bg-black shadow-2xl ring-1 ring-white/10">
                 <iframe
                     x-show="url"
                     class="h-full w-full"

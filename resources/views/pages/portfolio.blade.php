@@ -8,16 +8,19 @@
     use App\Support\AccentText;
 
     $portfolioCopy = config('frames.portfolio');
-    $portfolioSubheading = AccentText::highlight($portfolioCopy['headline'], ['Proven', 'Executed', 'precision']);
+    $portfolioTagline = AccentText::highlight($portfolioCopy['headline'], ['Proven', 'Executed', 'Precision'], 'page-tagline-accent');
 @endphp
 <x-page-shell>
-    <x-page-hero
-        title="Portfolio"
-        :subheading-html="$portfolioSubheading"
-    />
+    <main class="portfolio-page">
+        <x-page-tagline :tagline-html="$portfolioTagline" :sr-title="'Portfolio — '.$portfolioCopy['headline']" />
 
-    <main class="mx-auto max-w-7xl px-4 pb-20 pt-16 sm:px-6 lg:px-12 lg:pt-20">
-        <x-portfolio-showcase :items="$portfolio" />
+        <div class="portfolio-page-inner page-content mx-auto max-w-7xl px-4 pb-20 sm:px-6 lg:px-12 lg:pb-24">
+            <x-portfolio-showcase
+                :items="$portfolio"
+                :intro="$portfolioCopy['intro']"
+                :showreel-youtube-id="$portfolioCopy['showreel_youtube_id'] ?? config('frames.hero.youtube_id')"
+            />
+        </div>
     </main>
 </x-page-shell>
 @endsection

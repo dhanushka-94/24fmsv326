@@ -1,4 +1,4 @@
-@props(['label' => null, 'title', 'subheading' => null, 'subheadingHtml' => null, 'description' => null, 'compact' => false])
+@props(['label' => null, 'title' => null, 'subheading' => null, 'subheadingHtml' => null, 'description' => null, 'compact' => false])
 
 <section {{ $attributes->merge(['class' => 'page-hero relative overflow-hidden border-b border-[#f4f0ea]/10']) }}>
   <div class="absolute inset-0 ken-burns-bg opacity-25" style="background-image: url('{{ asset(config('frames.hero_background')) }}');" aria-hidden="true"></div>
@@ -9,7 +9,9 @@
       @if ($label)
         <p class="page-hero-label" data-stagger-item data-animate-text>{{ $label }}</p>
       @endif
-      <h1 class="page-hero-title" data-stagger-item data-animate-text>{{ $title }}</h1>
+      @if ($title)
+        <h1 class="page-hero-title" data-stagger-item data-animate-text>{{ $title }}</h1>
+      @endif
       @if ($subheadingHtml)
         <p class="page-hero-subheading hero-tagline text-drift text-animate-loop" data-stagger-item data-animate-loop="true">{!! $subheadingHtml !!}</p>
       @elseif ($subheading)

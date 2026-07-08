@@ -4,6 +4,7 @@
     @php
         $btnClass = match ($variant) {
             'accent' => 'social-icon-btn social-icon-btn--accent',
+            'brand' => 'social-icon-btn social-icon-btn--brand',
             default => 'social-icon-btn',
         };
         $sizeClass = $size === 'lg' ? 'social-icon-btn--lg' : '';
@@ -16,6 +17,7 @@
                 target="_blank"
                 rel="noreferrer"
                 class="{{ trim("{$btnClass} {$sizeClass}") }}"
+                @if ($variant === 'brand') data-social="{{ $link['icon'] ?? 'link' }}" @endif
                 aria-label="{{ $link['label'] }}"
                 title="{{ $link['label'] }}"
             >

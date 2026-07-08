@@ -44,7 +44,7 @@ class AppServiceProvider extends ServiceProvider
                 return;
             }
 
-            foreach (['logo_white', 'logo_red', 'favicon'] as $key) {
+            foreach (['logo', 'logo_white', 'logo_red', 'favicon'] as $key) {
                 $stored = SiteSetting::get($key);
 
                 if (! $stored) {
@@ -53,8 +53,6 @@ class AppServiceProvider extends ServiceProvider
 
                 config(["frames.{$key}" => SiteSetting::normalizeStoredPath($stored)]);
             }
-
-            config(['frames.logo' => config('frames.logo_white')]);
         } catch (\Throwable) {
             //
         }

@@ -31,10 +31,14 @@ class SiteTest extends TestCase
         $response = $this->get('/about');
 
         $response->assertOk();
-        $response->assertSee('ABOUT');
+        $response->assertSee('Stories need');
+        $response->assertSee('precision');
+        $response->assertSee('deliver');
+        $response->assertSee('About');
         $response->assertSee('Founded in 2008');
         $response->assertSee('absolute clarity under pressure');
         $response->assertSee('bespoke teams tailored');
+        $response->assertSee('about-logo-24.png', false);
     }
 
     public function test_contact_page_shows_updated_address(): void
@@ -42,7 +46,11 @@ class SiteTest extends TestCase
         $response = $this->get('/contact');
 
         $response->assertOk();
-        $response->assertSee('04 1/1, Park Circus, Park Road, Colombo 5, Sri Lanka');
+        $response->assertSee('Get in touch');
+        $response->assertSee('Office');
+        $response->assertSee('24frames (PVT) LTD.');
+        $response->assertSee('04 1/1, Park Circus, Park Road, Colombo 05, Sri Lanka');
+        $response->assertSee('From initial planning to the final wrap');
     }
 
     public function test_home_page_shows_hero_content(): void
@@ -70,7 +78,10 @@ class SiteTest extends TestCase
 
         $response->assertOk();
         $response->assertSee(TeamMember::first()->name);
-        $response->assertSee('Direction');
+        $response->assertSee('Built by the');
+        $response->assertSee('Precision.');
+        $response->assertSee('DIRECTION');
+        $response->assertSee('PRODUCTION &amp; OPERATIONS', false);
     }
 
     public function test_portfolio_page_shows_seeded_items(): void
@@ -78,7 +89,9 @@ class SiteTest extends TestCase
         $response = $this->get('/portfolio');
 
         $response->assertOk();
-        $response->assertSee(PortfolioItem::first()->title);
+        $response->assertSee('Proven on the global stage');
+        $response->assertSee('Our reel represents over two decades');
+        $response->assertSee(PortfolioItem::first()->title, false);
     }
 
     public function test_services_page_shows_pipeline(): void
@@ -87,7 +100,9 @@ class SiteTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('THE EXECUTION PIPELINE');
-        $response->assertSee('The Minds Behind the Lens');
+        $response->assertSee('THE MINDS BEHIND THE LENS');
+        $response->assertSee('Shoot-ready.');
+        $response->assertSee('Production &amp; Logistics', false);
     }
 
     public function test_contact_form_persists_submission(): void

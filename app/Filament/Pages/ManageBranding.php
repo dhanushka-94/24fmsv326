@@ -32,8 +32,7 @@ class ManageBranding extends Page implements HasForms
     public function mount(): void
     {
         $this->form->fill([
-            'logo_white' => $this->uploadableSetting('logo_white'),
-            'logo_red' => $this->uploadableSetting('logo_red'),
+            'logo' => $this->uploadableSetting('logo'),
             'favicon' => $this->uploadableSetting('favicon'),
         ]);
     }
@@ -42,42 +41,34 @@ class ManageBranding extends Page implements HasForms
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Site logos')
-                    ->description('Upload new logos for the public website. PNG with transparent background recommended.')
+                Forms\Components\Section::make('Site logo')
+                    ->description('Upload the master 24 Frames logo used across the website and admin panel.')
                     ->schema([
-                        Forms\Components\FileUpload::make('logo_white')
-                            ->label('White logo')
+                        Forms\Components\FileUpload::make('logo')
+                            ->label('Site logo')
                             ->image()
                             ->disk('public')
                             ->directory('branding')
                             ->visibility('public')
                             ->imageEditor()
-                            ->helperText('Used in the header and loader.'),
-                        Forms\Components\FileUpload::make('logo_red')
-                            ->label('Red logo')
-                            ->image()
-                            ->disk('public')
-                            ->directory('branding')
-                            ->visibility('public')
-                            ->imageEditor()
-                            ->helperText('Used for accents and animated crossfade.'),
+                            ->helperText('Recommended: PNG on black background, 1024px wide.'),
                         Forms\Components\FileUpload::make('favicon')
                             ->label('Favicon')
                             ->image()
                             ->disk('public')
                             ->directory('branding')
                             ->visibility('public')
-                            ->helperText('Browser tab icon — red logo works well.'),
+                            ->helperText('Browser tab icon. Defaults to the site logo if not set.'),
                     ])
                     ->columns(1),
                 Forms\Components\Section::make('Current preview')
                     ->schema([
-                        Forms\Components\Placeholder::make('preview_white')
-                            ->label('White logo')
-                            ->content(fn (): string => $this->previewLine('logo_white')),
-                        Forms\Components\Placeholder::make('preview_red')
-                            ->label('Red logo')
-                            ->content(fn (): string => $this->previewLine('logo_red')),
+                        Forms\Components\Placeholder::make('preview_logo')
+                            ->label('Site logo')
+                            ->content(fn (): string => $this->previewLine('logo')),
+                        Forms\Components\Placeholder::make('preview_favicon')
+                            ->label('Favicon')
+                            ->content(fn (): string => $this->previewLine('favicon')),
                     ])
                     ->columns(2)
                     ->collapsed(),
@@ -88,17 +79,17 @@ class ManageBranding extends Page implements HasForms
     public function save(): void
     {
         $data = $this->form->getState();
+        $logo = $this->normalizeUpload($data['logo'] ?? null);
+        $favicon = $this->normalizeUpload($data['favicon'] ?? null);
 
-        foreach (['logo_white', 'logo_red', 'favicon'] as $key) {
-            $value = $data[$key] ?? null;
-
-            if (is_array($value)) {
-                $value = $value[0] ?? null;
+        if (filled($logo)) {
+            foreach (['logo', 'logo_white', 'logo_red'] as $key) {
+                SiteSetting::set($key, $logo);
             }
+        }
 
-            if (filled($value)) {
-                SiteSetting::set($key, $value);
-            }
+        if (filled($favicon)) {
+            SiteSetting::set('favicon', $favicon);
         }
 
         SiteSetting::flushCache();
@@ -127,5 +118,14 @@ class ManageBranding extends Page implements HasForms
         }
 
         return $value;
+    }
+
+    private function normalizeUpload(mixed $value): ?string
+    {
+        if (is_array($value)) {
+            $value = $value[0] ?? null;
+        }
+
+        return filled($value) ? (string) $value : null;
     }
 }

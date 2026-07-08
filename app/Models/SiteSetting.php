@@ -58,15 +58,21 @@ class SiteSetting extends Model
         }
 
         $defaults = [
-            'logo_white' => '/images/24frames-logo-white.png',
-            'logo_red' => '/images/24frames-logo-red.png',
-            'favicon' => '/images/24frames-logo-red.png',
+            'logo' => '/images/24frames-logo.png',
+            'logo_white' => '/images/24frames-logo.png',
+            'logo_red' => '/images/24frames-logo.png',
+            'favicon' => '/images/24frames-logo.png',
+        ];
+
+        $legacyPaths = [
+            '/images/24frames-logo-white.png',
+            '/images/24frames-logo-red.png',
         ];
 
         foreach ($defaults as $key => $path) {
             $current = static::query()->where('key', $key)->value('value');
 
-            if (! $current) {
+            if (! $current || in_array($current, $legacyPaths, true)) {
                 static::set($key, $path);
 
                 continue;

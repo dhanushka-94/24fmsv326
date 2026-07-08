@@ -214,23 +214,15 @@
     width: 100%;
 }
 
-.site-logo-inner {
-    position: relative;
+.site-logo {
     display: block;
     width: 100%;
     aspect-ratio: 1024 / 207;
-}
-
-.site-logo-layer {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
     object-fit: contain;
     object-position: center;
 }
 
-.site-logo-animate .site-logo-white {
+.site-logo-animate {
     animation: logo-white-fade 8s ease-in-out infinite;
 }
 

@@ -1,6 +1,6 @@
-@props(['title' => null, 'description' => null])
+@props(['title' => null, 'description' => null, 'anchored' => false])
 
-<div {{ $attributes->merge(['class' => 'bloom-surface art-canvas relative min-h-screen']) }}>
+<div {{ $attributes->merge(['class' => 'bloom-surface art-canvas relative min-h-screen'.($anchored ? ' page-shell--anchored' : '')]) }}>
     <div class="art-grain pointer-events-none" aria-hidden="true"></div>
     <div class="art-grid pointer-events-none" aria-hidden="true"></div>
     <div class="art-ambient" aria-hidden="true">
@@ -13,10 +13,10 @@
         <x-logo-loader />
     @endif
 
-    <div class="site-chrome">
+    <div @class(['site-chrome', 'flex min-h-screen flex-col' => $anchored])>
         @include('partials.header')
 
-        <div class="relative z-10">
+        <div @class(['site-body relative z-10', 'flex flex-1 flex-col' => $anchored])>
             {{ $slot }}
         </div>
 

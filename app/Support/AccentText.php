@@ -9,7 +9,7 @@ class AccentText
      *
      * @param  list<string>  $words
      */
-    public static function highlight(string $text, array $words): string
+    public static function highlight(string $text, array $words, string $accentClass = 'hero-quote-accent'): string
     {
         $sorted = $words;
         usort($sorted, fn (string $a, string $b): int => strlen($b) <=> strlen($a));
@@ -27,7 +27,7 @@ class AccentText
                 continue;
             }
 
-            $accent = '<span class="hero-quote-accent">'.$word.'</span>';
+            $accent = '<span class="'.$accentClass.'">'.$word.'</span>';
             $result = mb_substr($result, 0, $position).$accent.mb_substr($result, $position + mb_strlen($word));
         }
 

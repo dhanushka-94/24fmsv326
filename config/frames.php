@@ -2,10 +2,10 @@
 
 return [
     'site_url' => 'https://www.24frames.lk',
-    'logo' => '/images/24frames-logo-white.png',
-    'logo_white' => '/images/24frames-logo-white.png',
-    'logo_red' => '/images/24frames-logo-red.png',
-    'favicon' => '/images/24frames-logo-red.png',
+    'logo' => '/images/24frames-logo.png',
+    'logo_white' => '/images/24frames-logo.png',
+    'logo_red' => '/images/24frames-logo.png',
+    'favicon' => '/images/24frames-logo.png',
     'hero_background' => '/images/hero-background.png',
 
     'loader' => [
@@ -58,6 +58,7 @@ return [
         'directors_title' => 'The Minds Behind the Lens',
         'pipeline_title' => 'THE EXECUTION PIPELINE',
         'pipeline_subtitle' => 'Built for seamless production, from concept to final cut.',
+        'roster_card_title' => 'The Directorial Roster',
     ],
 
     'directors' => [
@@ -112,23 +113,19 @@ return [
     'about' => [
         'title' => 'About Us',
         'headline' => 'Stories need precision. We deliver.',
-        'intro' => 'Sri Lanka’s premier motion picture production house — built to take productions from concept to final cut with clarity, control, and craft.',
-        'body_lines' => [
-            'Founded in 2008, 24 Frames is Sri Lanka’s premier full-service motion picture production house.',
-            'We don\'t just supply equipment and crew; we provide absolute clarity under pressure.',
-            'Backed by a trusted network of global partners and acclaimed directors,',
-            'we build bespoke teams tailored to fit your exact brief creatively and technically.',
-        ],
+        'logo' => '/images/about-logo-24.png',
+        'body' => "Founded in 2008, 24 Frames is Sri Lanka's premier full-service motion picture production house.\nWe don't just supply equipment and crew; we provide absolute clarity under pressure.\nBacked by a trusted network of global partners and acclaimed directors,\nwe build bespoke teams tailored to fit your exact brief creatively and technically.",
     ],
 
     'portfolio' => [
-        'headline' => 'Proven on the global stage. Executed with absolute precision.',
-        'intro' => 'Since 2008, our reel has grown into a catalogue of uncompromising visual storytelling. From navigating the logistical complexity of national TVCs to pioneering agile, AI-driven digital campaigns, explore how we bring world-class cinematic standards to every format.',
+        'headline' => 'Proven on the global stage. Executed with absolute Precision.',
+        'intro' => 'Our reel represents over two decades of uncompromising visual storytelling. From navigating the massive logistical complexities of national TVCs to pioneering agile, AI-driven digital campaigns, explore how we bring world-class cinematic standards to every format.',
+        'showreel_youtube_id' => 'ea8vmaaqFxE',
     ],
 
     'team' => [
         'title' => 'OUR TEAM',
-        'subtitle' => 'Built by the best. Driven by precision. Meet the specialists behind every frame.',
+        'subtitle' => 'Built by the best. Driven by Precision.',
         'departments' => [
             'direction' => 'Direction',
             'production' => 'Production & Operations',
@@ -137,9 +134,10 @@ return [
     ],
 
     'contact' => [
-        'headline' => 'Share your vision. We\'ll handle the rest.',
+        'headline' => 'Share your Vision. We\'ll handle the rest.',
         'pitch' => 'From initial planning to the final wrap, let\'s build something unforgettable together.',
-        'address' => '04 1/1, Park Circus, Park Road, Colombo 5, Sri Lanka',
+        'company' => '24frames (PVT) LTD.',
+        'address' => 'No: 04 1/1, Park Circus, Park Road, Colombo 05, Sri Lanka',
         'phones' => ['+94 77 292 3983', '+94 11 236 7237'],
         'whatsapp' => '+94714245192',
         'email' => '24frames.lk@gmail.com',

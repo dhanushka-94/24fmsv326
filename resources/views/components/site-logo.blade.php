@@ -1,6 +1,6 @@
 @props([
     'size' => 'md',
-    'animate' => true,
+    'animate' => false,
 ])
 
 @php
@@ -24,29 +24,17 @@
     ];
     $sizeClass = $sizes[$size] ?? $sizes['md'];
     $widthClass = $widths[$size] ?? $widths['md'];
-    $logoWhite = Frames::brandingUrl('logo_white');
-    $logoRed = Frames::brandingUrl('logo_red');
+    $logoUrl = Frames::brandingUrl('logo');
 @endphp
 
 <span {{ $attributes->merge(['class' => "site-logo-stack inline-block {$widthClass}"]) }}>
-    <span class="site-logo-inner {{ $sizeClass }} {{ $animate ? 'site-logo-animate' : '' }}">
-        <img
-            src="{{ $logoRed }}"
-            alt=""
-            aria-hidden="true"
-            class="site-logo-layer site-logo-red"
-            width="640"
-            height="160"
-            decoding="async"
-        />
-        <img
-            src="{{ $logoWhite }}"
-            alt="24 Frames — Art House For Film"
-            class="site-logo-layer site-logo-white"
-            width="640"
-            height="160"
-            loading="{{ in_array($size, ['xl', 'hero']) ? 'eager' : 'lazy' }}"
-            decoding="async"
-        />
-    </span>
+    <img
+        src="{{ $logoUrl }}"
+        alt="24 Frames — Art House For Film"
+        class="site-logo {{ $sizeClass }} {{ $animate ? 'site-logo-animate' : '' }}"
+        width="1024"
+        height="207"
+        loading="{{ in_array($size, ['xl', 'hero', 'loader']) ? 'eager' : 'lazy' }}"
+        decoding="async"
+    />
 </span>

@@ -25,7 +25,7 @@ class AdminPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
     {
-        $logoWhite = Frames::brandingUrl('logo_white');
+        $logo = Frames::brandingUrl('logo');
 
         return $panel
             ->default()
@@ -37,8 +37,8 @@ class AdminPanelProvider extends PanelProvider
                 'DM Sans',
                 'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600&family=Syne:wght@500;600;700&display=swap',
             )
-            ->brandLogo($logoWhite)
-            ->darkModeBrandLogo($logoWhite)
+            ->brandLogo($logo)
+            ->darkModeBrandLogo($logo)
             ->favicon(Frames::brandingUrl('favicon'))
             ->brandLogoHeight('2rem')
             ->darkMode(condition: true, isForced: true)

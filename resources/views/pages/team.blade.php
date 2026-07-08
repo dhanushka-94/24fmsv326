@@ -8,31 +8,30 @@
     use App\Support\AccentText;
 
     $teamCopy = config('frames.team');
+    $teamHeadline = $teamCopy['subtitle'] ?? 'Built by the best. Driven by Precision.';
+    $teamTagline = AccentText::highlight($teamHeadline, ['best', 'Precision'], 'page-tagline-accent');
     $departments = $teamCopy['departments'];
-    $teamSubheading = AccentText::highlight($teamCopy['subtitle'], ['best', 'precision']);
+    $departmentLayouts = [
+        'direction' => 'team-grid--single',
+        'production' => 'team-grid--triple',
+        'post' => 'team-grid--duo',
+    ];
 @endphp
 <x-page-shell>
-    <x-page-hero
-        title="Our Team"
-        :subheading-html="$teamSubheading"
-    />
+    <x-page-tagline :tagline-html="$teamTagline" :sr-title="'Our Team — '.$teamHeadline" />
 
-    <main class="mx-auto flex max-w-7xl flex-col gap-20 px-4 pb-20 pt-16 sm:px-6 lg:gap-24 lg:px-12 lg:pt-20">
+    <main class="team-page page-content mx-auto max-w-7xl space-y-16 px-4 pb-20 sm:px-6 lg:space-y-24 lg:px-12">
         @foreach ($departments as $key => $label)
             @php $members = $teamByDepartment[$key] ?? collect(); @endphp
             @if ($members->isNotEmpty())
-                <section class="space-y-10">
-                    <h2 class="reveal section-heading">{{ $label }}</h2>
-                    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <section class="team-department reveal">
+                    <h2 class="team-department-title">{{ strtoupper($label) }}</h2>
+                    <div class="team-grid {{ $departmentLayouts[$key] ?? 'team-grid--triple' }}">
                         @foreach ($members as $member)
-                            <x-team-card
-                                :role="$member->role"
+                            <x-team-profile-card
                                 :name="$member->name"
-                                :imdb="$member->imdb"
-                                :bio="$member->bio"
+                                :role="$member->role"
                                 :photo="$member->photoUrl()"
-                                :instagram="$member->instagram"
-                                :linkedin="$member->linkedin"
                             />
                         @endforeach
                     </div>
