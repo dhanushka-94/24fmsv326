@@ -19,7 +19,11 @@ class EditTeamMember extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        if (blank($data['photo'] ?? null) && filled($this->record->photo)) {
+        if (
+            blank($data['photo'] ?? null)
+            && filled($this->record->photo)
+            && ! TeamMember::isStoredUpload($this->record->photo)
+        ) {
             $data['photo'] = $this->record->photo;
         }
 

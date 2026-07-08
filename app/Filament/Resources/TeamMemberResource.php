@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Arr;
 
 class TeamMemberResource extends Resource
 {
@@ -44,8 +45,10 @@ class TeamMemberResource extends Resource
                     ->visibility('public')
                     ->imageEditor()
                     ->maxSize(4096)
+                    ->maxFiles(1)
                     ->helperText('Upload a portrait photo. Use department keys: direction, production, or post.')
-                    ->formatStateUsing(fn (?string $state): ?string => TeamMember::isStoredUpload($state) ? $state : null),
+                    ->formatStateUsing(fn (?string $state): array => filled($state) && TeamMember::isStoredUpload($state) ? [$state] : [])
+                    ->dehydrateStateUsing(fn ($state): ?string => is_array($state) ? Arr::first($state) : $state),
                 Forms\Components\TextInput::make('imdb')->url()->label('IMDb URL')->maxLength(255),
                 Forms\Components\TextInput::make('instagram')->url()->maxLength(255),
                 Forms\Components\TextInput::make('linkedin')->url()->maxLength(255),
