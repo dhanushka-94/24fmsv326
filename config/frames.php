@@ -141,7 +141,7 @@ return [
         'company' => '24frames (PVT) LTD.',
         'address' => 'No: 04 1/1, Park Circus, Park Road, Colombo 05, Sri Lanka',
         'phones' => ['+94 77 292 3983', '+94 11 236 7237'],
-        'whatsapp' => '+94714245192',
+        'whatsapp' => '+94770263149',
         'email' => '24frames.lk@gmail.com',
         'social' => [
             ['label' => 'TikTok', 'icon' => 'tiktok', 'url' => 'https://www.tiktok.com/@24framesproductions'],

@@ -1,5 +1,5 @@
 @php
-    $whatsapp = config('frames.contact.whatsapp', '+94714245192');
+    $whatsapp = config('frames.contact.whatsapp', '+94770263149');
     $whatsappDigits = preg_replace('/\D/', '', $whatsapp);
 @endphp
 
