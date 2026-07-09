@@ -525,8 +525,8 @@
 
     .hero-video-overlay {
         background:
-            linear-gradient(115deg, rgba(8, 8, 8, 0.72) 0%, rgba(8, 8, 8, 0.35) 50%, rgba(8, 8, 8, 0.2) 100%),
-            linear-gradient(to top, rgba(8, 8, 8, 0.85) 0%, transparent 40%);
+            linear-gradient(to bottom, rgba(8, 8, 8, 0.92) 0%, rgba(8, 8, 8, 0.45) 28%, transparent 50%),
+            linear-gradient(to top, rgba(8, 8, 8, 0.92) 0%, rgba(8, 8, 8, 0.45) 28%, transparent 50%);
     }
 
     .ken-burns-wrap {
@@ -828,6 +828,10 @@
 
     .social-icon-btn--brand[data-social='instagram'] {
         background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    }
+
+    .social-icon-btn--brand[data-social='tiktok'] {
+        @apply bg-[#010101] ring-1 ring-white/15;
     }
 
     .social-icon-btn--brand[data-social='linkedin'] {

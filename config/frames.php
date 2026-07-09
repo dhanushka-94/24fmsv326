@@ -144,9 +144,9 @@ return [
         'whatsapp' => '+94714245192',
         'email' => '24frames.lk@gmail.com',
         'social' => [
-            ['label' => 'Facebook', 'icon' => 'facebook', 'url' => 'https://www.facebook.com/share/18NgLsu98S/?mibextid=wwXIfr'],
-            ['label' => 'YouTube', 'icon' => 'youtube', 'url' => 'https://youtube.com/@24framessrilanka'],
-            ['label' => 'X', 'icon' => 'x', 'url' => 'https://x.com/24frameslk'],
+            ['label' => 'TikTok', 'icon' => 'tiktok', 'url' => 'https://www.tiktok.com/@24framesproductions'],
+            ['label' => 'Instagram', 'icon' => 'instagram', 'url' => 'https://www.instagram.com/24framesco_/'],
+            ['label' => 'Facebook', 'icon' => 'facebook', 'url' => 'https://www.facebook.com/24frames.srilanka'],
         ],
     ],
 
