@@ -13,7 +13,7 @@
     $aboutLogo = $aboutCopy['logo'] ?? '/images/about-logo-24.png';
 @endphp
 <x-page-shell anchored>
-    <div class="page-anchored-layout">
+    <div class="page-anchored-layout about-page">
         <x-page-tagline :tagline-html="$aboutTagline" sr-title="About 24 Frames — {{ $aboutHeadline }}" />
 
         <main class="about-showcase page-anchored-main">

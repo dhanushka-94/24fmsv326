@@ -138,7 +138,7 @@
                         class="h-full w-full"
                         :src="url"
                         title="Portfolio video"
-                        allow="autoplay; encrypted-media"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowfullscreen
                     ></iframe>
                 </div>

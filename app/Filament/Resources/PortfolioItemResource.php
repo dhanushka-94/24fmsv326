@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\PortfolioItemResource\Pages;
 use App\Models\PortfolioItem;
-use App\Support\Frames;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -34,8 +33,8 @@ class PortfolioItemResource extends Resource
                 Forms\Components\Textarea::make('description')->rows(3)->columnSpanFull(),
                 Forms\Components\TextInput::make('thumbnail_url')
                     ->label('Thumbnail URL')
-                    ->url()
-                    ->maxLength(2048),
+                    ->maxLength(2048)
+                    ->helperText('Optional external thumbnail URL, or upload a file below.'),
                 Forms\Components\FileUpload::make('thumbnail_upload')
                     ->label('Upload thumbnail')
                     ->image()
@@ -45,12 +44,19 @@ class PortfolioItemResource extends Resource
                     ->imageEditor()
                     ->dehydrated(false)
                     ->afterStateUpdated(function ($state, Forms\Set $set): void {
-                        if (filled($state)) {
-                            $path = is_array($state) ? ($state[0] ?? null) : $state;
-                            $set('thumbnail_url', $path);
+                        if (blank($state)) {
+                            return;
                         }
+
+                        $path = is_array($state) ? ($state[0] ?? null) : $state;
+                        $set('thumbnail_url', PortfolioItem::normalizeMediaPath($path));
                     }),
-                Forms\Components\TextInput::make('youtube_url')->url()->required()->label('YouTube URL'),
+                Forms\Components\TextInput::make('youtube_url')
+                    ->label('YouTube URL')
+                    ->required()
+                    ->maxLength(2048)
+                    ->helperText('Paste a YouTube video link: watch, youtu.be, shorts, or embed URL.')
+                    ->dehydrateStateUsing(fn (?string $state): ?string => PortfolioItem::normalizeYoutubeUrl($state)),
                 Forms\Components\TextInput::make('sort_order')->numeric()->default(0)->required(),
                 Forms\Components\Toggle::make('is_published')->default(true),
             ]);
@@ -62,7 +68,10 @@ class PortfolioItemResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('thumbnail_url')
                     ->label('Thumb')
-                    ->getStateUsing(fn (PortfolioItem $record): ?string => Frames::mediaUrl($record->thumbnail_url))
+                    ->disk('public')
+                    ->visibility('public')
+                    ->getStateUsing(fn (PortfolioItem $record): ?string => PortfolioItem::isStoredUpload($record->thumbnail_url) ? PortfolioItem::normalizeMediaPath($record->thumbnail_url) : null)
+                    ->defaultImageUrl(fn (PortfolioItem $record): ?string => $record->heroThumbnailSrc())
                     ->square(),
                 Tables\Columns\TextColumn::make('title')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('category'),

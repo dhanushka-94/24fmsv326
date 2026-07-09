@@ -1,7 +1,7 @@
 @props(['title' => null, 'description' => null, 'anchored' => false])
 
 <div {{ $attributes->merge(['class' => 'site-shell relative min-h-screen'.($anchored ? ' page-shell--anchored' : '')]) }}>
-    @if (request()->routeIs('home') && config('frames.loader.enabled', true) && config('frames.hero.youtube_id'))
+    @if (request()->routeIs('home') && config('frames.loader.enabled', true) && (config('frames.hero.video') || config('frames.hero.youtube_id')))
         <x-logo-loader />
     @endif
 

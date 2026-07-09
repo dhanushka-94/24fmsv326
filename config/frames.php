@@ -22,7 +22,8 @@ return [
     'hero' => [
         'quote' => 'Crafting Stories, Frame by Frame',
         'intro' => 'Founded in 2008, 24 Frames is Sri Lanka’s premier full-service motion picture production house. Built for international agencies and global brands — we provide absolute clarity under pressure, from concept to final cut.',
-        'youtube_id' => 'ea8vmaaqFxE',
+        'video' => '/videos/24frames-showreel.mp4',
+        'youtube_id' => null,
         'youtube_start' => 10,
     ],
 

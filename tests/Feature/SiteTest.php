@@ -140,6 +140,22 @@ class SiteTest extends TestCase
         $response->assertSee('portfolio-hero-media', false);
     }
 
+    public function test_portfolio_page_opens_player_for_share_style_youtube_url(): void
+    {
+        PortfolioItem::query()->create([
+            'title' => 'Share Link Reel',
+            'category' => 'Commercial',
+            'youtube_url' => 'https://www.youtube.com/watch?feature=share&v=dQw4w9WgXcQ',
+            'sort_order' => 0,
+            'is_published' => true,
+        ]);
+
+        $this->get('/portfolio')
+            ->assertOk()
+            ->assertSee('Share Link Reel', false)
+            ->assertSee('dQw4w9WgXcQ', false);
+    }
+
     public function test_services_page_shows_pipeline(): void
     {
         $response = $this->get('/services');

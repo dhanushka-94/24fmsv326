@@ -32,21 +32,84 @@ class PortfolioItem extends Model
 
     public function thumbnailSrc(): ?string
     {
-        return Frames::mediaUrl($this->thumbnail_url);
+        return Frames::mediaUrl(static::normalizeMediaPath($this->thumbnail_url));
+    }
+
+    public static function normalizeYoutubeUrl(?string $url): ?string
+    {
+        if ($url === null || trim($url) === '') {
+            return null;
+        }
+
+        $url = trim($url);
+
+        if (! str_starts_with($url, 'http://') && ! str_starts_with($url, 'https://')) {
+            $url = 'https://'.$url;
+        }
+
+        return $url;
+    }
+
+    public static function normalizeMediaPath(?string $path): ?string
+    {
+        if ($path === null || $path === '') {
+            return null;
+        }
+
+        $path = trim($path);
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, '/storage/')) {
+            return ltrim(substr($path, strlen('/storage/')), '/');
+        }
+
+        if (str_starts_with($path, 'storage/')) {
+            return ltrim(substr($path, strlen('storage/')), '/');
+        }
+
+        return $path;
+    }
+
+    public static function isStoredUpload(?string $path): bool
+    {
+        $normalized = static::normalizeMediaPath($path);
+
+        if ($normalized === null || $normalized === '') {
+            return false;
+        }
+
+        return ! str_starts_with($normalized, 'http://')
+            && ! str_starts_with($normalized, 'https://')
+            && ! str_starts_with($normalized, '/');
     }
 
     public function youtubeId(): ?string
     {
-        if (! $this->youtube_url) {
+        $raw = trim((string) $this->youtube_url);
+
+        if ($raw === '') {
             return null;
         }
 
-        if (preg_match('/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|shorts\/|live\/|watch\?v=))([A-Za-z0-9_-]{11})/', $this->youtube_url, $matches)) {
+        if (preg_match('/^[A-Za-z0-9_-]{11}$/', $raw)) {
+            return $raw;
+        }
+
+        $url = static::normalizeYoutubeUrl($raw);
+
+        if (! $url) {
+            return null;
+        }
+
+        if (preg_match('~(?:youtu\.be/|youtube\.com/(?:embed/|v/|shorts/|live/))([A-Za-z0-9_-]{11})~i', $url, $matches)) {
             return $matches[1];
         }
 
-        if (preg_match('/^[A-Za-z0-9_-]{11}$/', trim($this->youtube_url))) {
-            return trim($this->youtube_url);
+        if (preg_match('/[?&]v=([A-Za-z0-9_-]{11})/', $url, $matches)) {
+            return $matches[1];
         }
 
         return null;
@@ -67,8 +130,10 @@ class PortfolioItem extends Model
 
     public function heroThumbnailSrc(): ?string
     {
-        if ($thumbnail = $this->thumbnailSrc()) {
-            return $thumbnail;
+        if ($this->thumbnail_url) {
+            if ($thumbnail = $this->thumbnailSrc()) {
+                return $thumbnail;
+            }
         }
 
         if ($id = $this->youtubeId()) {

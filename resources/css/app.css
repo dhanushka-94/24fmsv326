@@ -384,8 +384,6 @@
     .hero-create-track {
         position: relative;
         display: inline-grid;
-        overflow: hidden;
-        height: 1.12em;
         min-width: 11ch;
         text-align: left;
         vertical-align: bottom;
@@ -393,22 +391,27 @@
 
     .hero-create-word {
         grid-area: 1 / 1;
-        transition: transform 0.52s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.52s ease;
-    }
-
-    .hero-create-word.is-out {
-        transform: translateY(-115%);
-        opacity: 0;
-    }
-
-    .hero-create-word.is-next {
-        transform: translateY(115%);
-        opacity: 0;
-    }
-
-    .hero-create-word.is-next.is-in {
-        transform: translateY(0);
         opacity: 1;
+        transition: opacity 0.45s ease;
+    }
+
+    .hero-create-word.is-fading {
+        opacity: 0;
+    }
+
+    .hero-video-media {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 56.25vw;
+        min-width: 177.78vh;
+        min-height: 100vh;
+        transform: translate(-50%, -50%) scale(1.42);
+        border: 0;
+        pointer-events: none;
+        object-fit: cover;
+        filter: contrast(1.08) saturate(0.85);
     }
 
     .nav-link {
@@ -1349,7 +1352,15 @@
     }
 
     .page-shell--anchored .about-showcase {
-        @apply w-full px-4 pb-8 sm:px-6 sm:pb-10 lg:px-12 lg:pb-12;
+        @apply w-full items-start justify-start px-4 pb-6 sm:px-6 sm:pb-8 lg:px-12 lg:pb-10;
+    }
+
+    .about-page .page-tagline-inner {
+        @apply pt-10 pb-2 sm:pt-12 sm:pb-3 lg:pt-14 lg:pb-4;
+    }
+
+    .page-anchored-main.about-showcase {
+        @apply justify-start pt-0;
     }
 
     .page-shell--anchored .contact-page {
@@ -1438,36 +1449,36 @@
     }
 
     .about-showcase {
-        @apply relative flex w-full items-center justify-center;
+        @apply relative flex w-full;
         background:
             radial-gradient(ellipse 80% 55% at 50% 42%, rgba(42, 42, 42, 0.55) 0%, transparent 68%),
             linear-gradient(180deg, #050505 0%, #0a0a0a 45%, #080808 100%);
     }
 
     .about-showcase-inner {
-        @apply mx-auto w-full max-w-5xl text-center;
+        @apply mx-auto w-full max-w-5xl py-2 text-center sm:py-4;
     }
 
     .about-showcase-brand {
-        @apply flex items-center justify-center gap-3 sm:gap-5 lg:gap-7;
+        @apply flex items-center justify-center gap-2 sm:gap-4 lg:gap-5;
     }
 
     .about-showcase-word {
         font-family: var(--font-display);
-        @apply text-5xl font-bold uppercase leading-none tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl xl:text-8xl;
+        @apply text-4xl font-bold uppercase leading-none tracking-[-0.03em] text-white sm:text-5xl lg:text-6xl xl:text-7xl;
     }
 
     .about-showcase-logo {
-        @apply h-[4.5rem] w-auto sm:h-28 md:h-32 lg:h-40 xl:h-[11rem];
+        @apply h-16 w-auto sm:h-24 md:h-28 lg:h-32 xl:h-36;
     }
 
     .about-showcase-copy {
-        @apply mx-auto mt-10 max-w-3xl space-y-4 sm:mt-14 lg:mt-16 lg:max-w-4xl lg:space-y-5;
+        @apply mx-auto mt-6 max-w-3xl space-y-2 sm:mt-8 lg:mt-9 lg:max-w-4xl;
     }
 
     .about-showcase-line {
         font-family: var(--font-source);
-        @apply text-base font-normal leading-relaxed text-white/92 sm:text-lg lg:text-xl;
+        @apply text-base font-normal leading-normal text-white/92 sm:text-lg sm:leading-relaxed;
     }
 
     .services-page {
@@ -1604,67 +1615,63 @@
     .team-grid {
         display: grid;
         gap: 2rem;
+        justify-content: start;
     }
 
     .team-grid--single {
-        grid-template-columns: minmax(0, 1fr);
-        max-width: 36rem;
-        justify-content: start;
+        grid-template-columns: repeat(auto-fill, minmax(11rem, 15rem));
     }
 
     @media (min-width: 640px) {
         .team-grid--single {
-            max-width: 42rem;
+            grid-template-columns: repeat(auto-fill, minmax(12rem, 15rem));
         }
 
         .team-grid--triple {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(12rem, 15rem));
             gap: 2.25rem;
-            justify-items: stretch;
         }
 
         .team-grid--duo {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            justify-content: start;
-            gap: 2.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(12rem, 15rem));
+            gap: 2.25rem;
         }
     }
 
     @media (min-width: 1024px) {
         .team-grid--triple {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(3, 15rem);
             gap: 2.5rem;
         }
 
         .team-grid--duo {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 3rem;
+            grid-template-columns: repeat(2, 15rem);
+            gap: 2.5rem;
         }
 
         .team-grid--single {
-            max-width: 48rem;
+            grid-template-columns: 15rem;
         }
     }
 
     .team-profile {
-        @apply w-full text-left;
+        @apply w-full max-w-[15rem] text-left;
     }
 
     .team-profile-photo {
-        @apply w-full overflow-hidden border border-[#f4f0ea]/10 bg-[#111111];
+        @apply aspect-[3/4] w-full overflow-hidden border border-[#f4f0ea]/10 bg-[#111111];
     }
 
     .team-profile-placeholder {
-        @apply flex min-h-64 w-full items-center justify-center bg-[#1a1a1a] sm:min-h-80;
+        @apply flex h-full w-full items-center justify-center bg-[#1a1a1a];
     }
 
     .team-profile-placeholder i {
-        @apply size-16 text-white/25 sm:size-20;
+        @apply size-12 text-white/25 sm:size-14;
     }
 
     .team-profile-img {
-        @apply block h-auto w-full max-w-full grayscale;
-        object-fit: contain;
+        @apply block h-full w-full object-cover object-top grayscale;
     }
 
     .team-profile-name {
@@ -1709,6 +1716,7 @@
         .section-label,
         .text-drift,
         .hero-divider,
+        .hero-create-word,
         .about-index,
         .page-hero-index,
         .card-loop,

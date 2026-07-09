@@ -47,6 +47,7 @@ Alpine.data('logoLoader', (duration = 4000) => ({
         document.documentElement.classList.add('loader-done');
         document.documentElement.classList.remove('site-loading');
         document.body.style.overflow = '';
+        window.dispatchEvent(new CustomEvent('hero-video-start'));
     },
 }));
 
@@ -100,6 +101,38 @@ Alpine.data('heroVideoBackground', () => ({
     ready: false,
     fallbackTimer: null,
     init() {
+        const video = this.$el.querySelector('video');
+        const iframe = this.$el.querySelector('iframe');
+        const waitForLoader = document.documentElement.classList.contains('site-loading');
+
+        if (iframe && waitForLoader && iframe.src) {
+            iframe.dataset.src = iframe.src;
+            iframe.removeAttribute('src');
+        }
+
+        if (waitForLoader) {
+            window.addEventListener('hero-video-start', () => this.start(video, iframe), { once: true });
+
+            return;
+        }
+
+        this.start(video, iframe);
+    },
+    start(video, iframe) {
+        if (video) {
+            const play = () => video.play().catch(() => {});
+
+            video.currentTime = 0;
+            play();
+            video.addEventListener('canplay', play, { once: true });
+        }
+
+        if (iframe) {
+            if (! iframe.src && iframe.dataset.src) {
+                iframe.src = iframe.dataset.src;
+            }
+        }
+
         this.fallbackTimer = window.setTimeout(() => {
             this.ready = true;
         }, 3500);
@@ -118,13 +151,10 @@ Alpine.data('heroVideoBackground', () => ({
 Alpine.data('heroCreateRotator', (words = ['Ads.', 'Documentaries', 'Films', 'AI Contents', 'Reels']) => ({
     words,
     index: 0,
-    leaving: false,
+    visible: true,
     timer: null,
     get current() {
         return this.words[this.index] ?? 'Ads.';
-    },
-    get upcoming() {
-        return this.words[(this.index + 1) % this.words.length] ?? 'Ads.';
     },
     init() {
         this.timer = window.setInterval(() => this.rotate(), 3000);
@@ -135,16 +165,16 @@ Alpine.data('heroCreateRotator', (words = ['Ads.', 'Documentaries', 'Films', 'AI
         }
     },
     rotate() {
-        if (this.leaving || this.words.length < 2) {
+        if (this.words.length < 2 || !this.visible) {
             return;
         }
 
-        this.leaving = true;
+        this.visible = false;
 
         window.setTimeout(() => {
             this.index = (this.index + 1) % this.words.length;
-            this.leaving = false;
-        }, 520);
+            this.visible = true;
+        }, 450);
     },
 }));
 
