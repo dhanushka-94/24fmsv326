@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Arr;
 
 class DirectorResource extends Resource
 {
@@ -31,8 +32,7 @@ class DirectorResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Hidden::make('photo'),
-                Forms\Components\FileUpload::make('photo_upload')
+                Forms\Components\FileUpload::make('photo')
                     ->label('Photo')
                     ->image()
                     ->disk('public')
@@ -40,18 +40,18 @@ class DirectorResource extends Resource
                     ->visibility('public')
                     ->imageEditor()
                     ->maxSize(4096)
-                    ->dehydrated(false)
+                    ->maxFiles(1)
                     ->helperText('Upload a portrait photo for the services page director grid.')
-                    ->afterStateUpdated(function ($state, Forms\Set $set): void {
-                        if (blank($state)) {
-                            $set('photo', null);
-
-                            return;
+                    ->formatStateUsing(function (?string $state): array {
+                        if (blank($state) || ! Director::isStoredUpload($state)) {
+                            return [];
                         }
 
-                        $path = is_array($state) ? ($state[0] ?? null) : $state;
-                        $set('photo', Director::normalizePhotoPath($path));
-                    }),
+                        $path = Director::normalizePhotoPath($state);
+
+                        return filled($path) ? [$path] : [];
+                    })
+                    ->dehydrateStateUsing(fn ($state): ?string => is_array($state) ? Arr::first($state) : Director::normalizePhotoPath($state)),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
                     ->default(0)

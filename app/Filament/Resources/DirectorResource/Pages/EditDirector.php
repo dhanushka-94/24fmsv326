@@ -19,9 +19,4 @@ class EditDirector extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-
-    protected function mutateFormDataBeforeSave(array $data): array
-    {
-        return $this->normalizeDirectorData($data);
-    }
 }

@@ -11,9 +11,4 @@ class CreateDirector extends CreateRecord
     use HandlesDirectorPhoto;
 
     protected static string $resource = DirectorResource::class;
-
-    protected function mutateFormDataBeforeCreate(array $data): array
-    {
-        return $this->normalizeDirectorData($data);
-    }
 }

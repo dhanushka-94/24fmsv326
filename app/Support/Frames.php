@@ -23,9 +23,9 @@ class Frames
         }
 
         if (str_starts_with($path, '/')) {
-            return asset($path);
+            return $path;
         }
 
-        return asset('storage/'.$path);
+        return '/storage/'.ltrim($path, '/');
     }
 }

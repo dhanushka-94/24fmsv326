@@ -6,18 +6,21 @@ use App\Models\Director;
 
 trait HandlesDirectorPhoto
 {
-    protected function mutateFormDataBeforeFill(array $data): array
+    protected function mutateFormDataBeforeSave(array $data): array
     {
-        $path = Director::normalizePhotoPath($data['photo'] ?? null);
-
-        if (filled($path) && Director::isStoredUpload($path)) {
-            $data['photo_upload'] = [$path];
+        if (filled($data['photo'] ?? null)) {
+            $data['photo'] = Director::normalizePhotoPath($data['photo']);
+        } elseif (
+            filled($this->record->photo)
+            && ! Director::isStoredUpload($this->record->photo)
+        ) {
+            $data['photo'] = $this->record->photo;
         }
 
         return $data;
     }
 
-    protected function normalizeDirectorData(array $data): array
+    protected function mutateFormDataBeforeCreate(array $data): array
     {
         if (filled($data['photo'] ?? null)) {
             $data['photo'] = Director::normalizePhotoPath($data['photo']);

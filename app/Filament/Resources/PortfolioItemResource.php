@@ -9,6 +9,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Arr;
 
 class PortfolioItemResource extends Resource
 {
@@ -48,7 +49,7 @@ class PortfolioItemResource extends Resource
                             return;
                         }
 
-                        $path = is_array($state) ? ($state[0] ?? null) : $state;
+                        $path = is_array($state) ? Arr::first($state) : $state;
                         $set('thumbnail_url', PortfolioItem::normalizeMediaPath($path));
                     }),
                 Forms\Components\TextInput::make('youtube_url')
