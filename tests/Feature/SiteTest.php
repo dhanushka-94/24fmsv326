@@ -168,6 +168,24 @@ class SiteTest extends TestCase
         $response->assertSee('services-pipeline-item-label', false);
     }
 
+    public function test_services_page_shows_uploaded_director_photo(): void
+    {
+        $director = \App\Models\Director::query()->published()->first();
+        $director->update([
+            'photo' => 'directors/test-director.jpg',
+            'is_published' => true,
+        ]);
+
+        $url = $director->fresh()->photoUrl();
+
+        $this->assertNotNull($url);
+        $this->assertStringContainsString('storage/directors/test-director.jpg', $url);
+
+        $this->get('/services')
+            ->assertOk()
+            ->assertSee($url, false);
+    }
+
     public function test_contact_form_persists_submission(): void
     {
         Mail::fake();

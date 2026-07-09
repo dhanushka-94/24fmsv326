@@ -31,24 +31,26 @@ class DirectorResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('photo')
-                    ->label('Photo URL')
-                    ->url()
-                    ->maxLength(2048)
-                    ->helperText('Paste an external image URL, or upload a file below.'),
+                Forms\Components\Hidden::make('photo'),
                 Forms\Components\FileUpload::make('photo_upload')
-                    ->label('Upload photo')
+                    ->label('Photo')
                     ->image()
                     ->disk('public')
                     ->directory('directors')
                     ->visibility('public')
                     ->imageEditor()
+                    ->maxSize(4096)
                     ->dehydrated(false)
+                    ->helperText('Upload a portrait photo for the services page director grid.')
                     ->afterStateUpdated(function ($state, Forms\Set $set): void {
-                        if (filled($state)) {
-                            $path = is_array($state) ? ($state[0] ?? null) : $state;
-                            $set('photo', $path);
+                        if (blank($state)) {
+                            $set('photo', null);
+
+                            return;
                         }
+
+                        $path = is_array($state) ? ($state[0] ?? null) : $state;
+                        $set('photo', Director::normalizePhotoPath($path));
                     }),
                 Forms\Components\TextInput::make('sort_order')
                     ->numeric()
@@ -66,7 +68,10 @@ class DirectorResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('photo')
                     ->label('Photo')
-                    ->getStateUsing(fn (Director $record): ?string => $record->photo_url)
+                    ->disk('public')
+                    ->visibility('public')
+                    ->getStateUsing(fn (Director $record): ?string => $record->storedPhotoPath())
+                    ->defaultImageUrl(fn (Director $record): ?string => $record->photoUrl())
                     ->square(),
                 Tables\Columns\TextColumn::make('name')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('sort_order')->sortable(),
