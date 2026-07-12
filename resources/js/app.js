@@ -18,6 +18,49 @@ Alpine.data('floatingActions', () => ({
     },
 }));
 
+Alpine.data('clientCarousel', () => ({
+    raf: null,
+    init() {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) {
+            return;
+        }
+
+        const tick = () => {
+            const viewport = this.$refs.viewport;
+            const track = this.$refs.track;
+            if (!viewport || !track) {
+                this.raf = requestAnimationFrame(tick);
+                return;
+            }
+
+            const bounds = viewport.getBoundingClientRect();
+            const centerX = bounds.left + bounds.width / 2;
+            const halfWidth = Math.max(bounds.width / 2, 1);
+
+            track.querySelectorAll('.client-carousel-item').forEach((item) => {
+                const rect = item.getBoundingClientRect();
+                const itemCenter = rect.left + rect.width / 2;
+                const distance = Math.abs(itemCenter - centerX) / halfWidth;
+                const t = Math.min(Math.max(distance, 0), 1);
+                // Center ~1.28, edges ~0.62 — larger in middle, smaller at sides
+                const scale = 1.28 - t * 0.66;
+                item.style.setProperty('--logo-scale', scale.toFixed(3));
+            });
+
+            this.raf = requestAnimationFrame(tick);
+        };
+
+        this.raf = requestAnimationFrame(tick);
+    },
+    destroy() {
+        if (this.raf) {
+            cancelAnimationFrame(this.raf);
+            this.raf = null;
+        }
+    },
+}));
+
 Alpine.data('logoLoader', (duration = 4000) => ({
     visible: true,
     leaving: false,

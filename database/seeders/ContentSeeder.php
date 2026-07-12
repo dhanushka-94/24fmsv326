@@ -161,10 +161,35 @@ class ContentSeeder extends Seeder
             );
         }
 
+        $clientLogos = [
+            'Softlogic' => '/images/clients/softlogic.png',
+            'DFCC Bank' => '/images/clients/dfcc-bank.png',
+            'Union Assurance' => '/images/clients/union-assurance.png',
+            'Seylan Bank' => '/images/clients/seylan-bank.png',
+            'Dialog' => '/images/clients/dialog.png',
+            'Sustagen' => '/images/clients/sustagen.png',
+            'Airtel' => '/images/clients/airtel.png',
+            'Daraz' => '/images/clients/daraz.png',
+            'Sunquick' => '/images/clients/sunquick.png',
+            'Unilever' => '/images/clients/unilever.png',
+            'Uber Eats' => '/images/clients/uber-eats.png',
+            'Nestlé' => '/images/clients/nestle.png',
+            'Fonterra' => '/images/clients/fonterra.png',
+            'Maliban' => '/images/clients/maliban.png',
+            'Dilmah' => '/images/clients/dilmah.png',
+            'Causeway Paints' => '/images/clients/causeway-paints.png',
+            'Janashakthi' => '/images/clients/janashakthi.png',
+            'Coca-Cola' => '/images/clients/coca-cola.png',
+        ];
+
         foreach (config('frames.brands', []) as $index => $name) {
             Client::updateOrCreate(
                 ['name' => $name],
-                ['sort_order' => $index, 'is_published' => true]
+                [
+                    'logo' => $clientLogos[$name] ?? null,
+                    'sort_order' => $index,
+                    'is_published' => true,
+                ]
             );
         }
 

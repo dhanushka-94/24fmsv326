@@ -27,14 +27,14 @@
 
     html.has-client-bar,
     body.has-client-bar {
-        --client-bar-height: 3.75rem;
+        --client-bar-height: 5.5rem;
         padding-bottom: var(--client-bar-height);
     }
 
     @media (min-width: 640px) {
         html.has-client-bar,
         body.has-client-bar {
-            --client-bar-height: 4.25rem;
+            --client-bar-height: 6.25rem;
         }
     }
 
@@ -1162,12 +1162,12 @@
         right: 0;
         z-index: 65;
         width: 100%;
-        padding: 0.65rem 0;
+        padding: 0.85rem 0;
     }
 
     @media (min-width: 640px) {
         .client-carousel-fixed {
-            padding: 0.85rem 0;
+            padding: 1.1rem 0;
         }
     }
 
@@ -1190,30 +1190,48 @@
 
     .client-carousel-viewport {
         @apply overflow-hidden;
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            #000 25%,
+            #000 75%,
+            transparent 100%
+        );
+        mask-image: linear-gradient(
+            to right,
+            transparent 0%,
+            #000 25%,
+            #000 75%,
+            transparent 100%
+        );
     }
 
     .client-carousel-track {
         display: flex;
         width: max-content;
         align-items: center;
-        gap: 3.5rem;
-        padding: 0.5rem 0;
+        gap: 4.5rem;
+        padding: 0.85rem 0;
         animation: marquee-scroll 50s linear infinite;
+        will-change: transform;
     }
 
     .client-carousel-item {
         @apply flex shrink-0 items-center justify-center px-2;
-        min-width: 8rem;
+        min-width: 11rem;
+        transform: scale(var(--logo-scale, 0.85));
+        transform-origin: center center;
+        will-change: transform;
     }
 
     .client-carousel-logo {
-        @apply h-10 w-auto max-w-[9rem] object-contain opacity-70 grayscale transition duration-300 sm:h-12 sm:max-w-[11rem];
+        @apply h-14 w-auto max-w-[12rem] object-contain opacity-70 transition-[filter,opacity] duration-300 sm:h-16 sm:max-w-[14rem] lg:h-[4.5rem] lg:max-w-[16rem];
         filter: brightness(0) invert(1);
     }
 
     .client-carousel-item:hover .client-carousel-logo {
         @apply opacity-100;
-        filter: brightness(0) invert(1) drop-shadow(0 0 12px rgba(255, 77, 61, 0.35));
+        filter: none;
     }
 
     .client-carousel-name {

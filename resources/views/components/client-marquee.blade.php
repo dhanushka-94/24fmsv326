@@ -4,9 +4,10 @@
     <aside
         {{ $attributes->merge(['class' => 'client-carousel-fixed']) }}
         aria-label="Our clients"
+        x-data="clientCarousel()"
     >
-        <div class="client-carousel-viewport">
-            <div class="client-carousel-track">
+        <div class="client-carousel-viewport" x-ref="viewport">
+            <div class="client-carousel-track" x-ref="track">
                 @foreach ([1, 2] as $loopPass)
                     @foreach ($clients as $client)
                         <div class="client-carousel-item">

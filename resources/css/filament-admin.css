@@ -8,20 +8,20 @@
     --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
     --font-display: 'Syne', ui-sans-serif, system-ui, sans-serif;
 
-    --frames-bg: #f8fafc;
-    --frames-surface: #ffffff;
-    --frames-surface-raised: #f1f5f9;
-    --frames-sidebar: #ffffff;
-    --frames-text: #1e293b;
-    --frames-text-muted: #64748b;
-    --frames-text-subtle: #94a3b8;
-    --frames-text-heading: #0f172a;
-    --frames-text-accent: #e03e2f;
-    --frames-border: #e2e8f0;
-    --frames-border-strong: #cbd5e1;
+    --frames-bg: #080808;
+    --frames-surface: #111111;
+    --frames-surface-raised: #1a1a1a;
+    --frames-sidebar: #0c0c0c;
+    --frames-text: #e2e8f0;
+    --frames-text-muted: #94a3b8;
+    --frames-text-subtle: #64748b;
+    --frames-text-heading: #f8fafc;
+    --frames-text-accent: #ff6b5e;
+    --frames-border: rgba(255, 255, 255, 0.08);
+    --frames-border-strong: rgba(255, 255, 255, 0.14);
     --frames-primary: #ff4d3d;
     --frames-primary-soft: #e03e2f;
-    --frames-primary-glow: rgba(255, 77, 61, 0.08);
+    --frames-primary-glow: rgba(255, 77, 61, 0.14);
     --frames-radius: 0.5rem;
 }
 
@@ -41,9 +41,9 @@
 
 .fi-main-ctn {
     background-image:
-        radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 77, 61, 0.06), transparent 55%),
-        linear-gradient(to right, rgba(148, 163, 184, 0.12) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(148, 163, 184, 0.12) 1px, transparent 1px) !important;
+        radial-gradient(ellipse 90% 55% at 50% -10%, rgba(255, 77, 61, 0.08), transparent 55%),
+        linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px) !important;
     background-size: auto, 64px 64px, 64px 64px !important;
 }
 
@@ -52,7 +52,7 @@
 .fi-sidebar {
     background: var(--frames-sidebar) !important;
     border-right: 1px solid var(--frames-border) !important;
-    box-shadow: 1px 0 0 rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 1px 0 0 rgba(0, 0, 0, 0.35) !important;
 }
 
 .fi-sidebar-header {
@@ -97,7 +97,7 @@
 }
 
 .fi-sidebar-item-button:hover {
-    background: #f8fafc !important;
+    background: var(--frames-surface-raised) !important;
 }
 
 .fi-sidebar-item-button:hover .fi-sidebar-item-label {
@@ -119,7 +119,7 @@
 /* ── Top bar ───────────────────────────────────────────── */
 
 .fi-topbar {
-    background: rgba(255, 255, 255, 0.92) !important;
+    background: rgba(12, 12, 12, 0.92) !important;
     border-bottom: 1px solid var(--frames-border) !important;
     backdrop-filter: blur(10px);
 }
@@ -175,7 +175,7 @@
 .fi-wi-stats-overview-stat {
     border: 1px solid var(--frames-border) !important;
     background: var(--frames-surface) !important;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) !important;
 }
 
 .fi-section-header {
@@ -226,7 +226,7 @@
 .fi-input-wrp {
     border-radius: var(--frames-radius) !important;
     border: 1px solid var(--frames-border-strong) !important;
-    background: #ffffff !important;
+    background: var(--frames-surface-raised) !important;
     min-height: 2.75rem;
 }
 
@@ -269,7 +269,14 @@
     background: var(--frames-primary-glow) !important;
 }
 
-/* ── Buttons ───────────────────────────────────────────── */
+/* ── Buttons (dark mode) ───────────────────────────────── */
+
+:root {
+    --frames-btn-bg: #1a1a1a;
+    --frames-btn-bg-hover: #242424;
+    --frames-btn-border: rgba(255, 255, 255, 0.12);
+    --frames-btn-text: #f8fafc;
+}
 
 .fi-btn {
     border-radius: var(--frames-radius) !important;
@@ -279,50 +286,58 @@
     min-height: 2.5rem;
 }
 
+.fi-btn.fi-btn-color-gray,
+.fi-btn:not([class*='fi-btn-color-']) {
+    background: var(--frames-btn-bg) !important;
+    border-color: var(--frames-btn-border) !important;
+    color: var(--frames-btn-text) !important;
+}
+
+.fi-btn.fi-btn-color-gray:hover,
+.fi-btn:not([class*='fi-btn-color-']):hover,
+.fi-btn.fi-btn-color-gray:focus,
+.fi-btn:not([class*='fi-btn-color-']):focus,
+.fi-btn.fi-btn-color-gray:focus-visible,
+.fi-btn:not([class*='fi-btn-color-']):focus-visible {
+    background: var(--frames-btn-bg-hover) !important;
+    color: var(--frames-btn-text) !important;
+}
+
+.fi-btn.fi-btn-color-gray .fi-btn-label,
+.fi-btn.fi-btn-color-gray svg,
+.fi-btn.fi-btn-color-gray .fi-icon,
+.fi-btn:not([class*='fi-btn-color-']) .fi-btn-label,
+.fi-btn:not([class*='fi-btn-color-']) svg,
+.fi-btn:not([class*='fi-btn-color-']) .fi-icon {
+    color: var(--frames-btn-text) !important;
+}
+
 .fi-btn.fi-btn-color-primary {
     font-family: var(--font-sans) !important;
-    box-shadow: 0 1px 2px rgba(255, 77, 61, 0.25);
+    background: var(--frames-primary) !important;
+    border-color: var(--frames-primary) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 16px rgba(255, 77, 61, 0.28) !important;
+}
+
+.fi-btn.fi-btn-color-primary:hover,
+.fi-btn.fi-btn-color-primary:focus,
+.fi-btn.fi-btn-color-primary:focus-visible {
+    background: var(--frames-primary-soft) !important;
+    border-color: var(--frames-primary-soft) !important;
+    color: #ffffff !important;
+}
+
+.fi-btn.fi-btn-color-primary .fi-btn-label,
+.fi-btn.fi-btn-color-primary svg,
+.fi-btn.fi-btn-color-primary .fi-icon {
+    color: #ffffff !important;
 }
 
 .fi-btn.fi-btn-size-lg {
     min-height: 2.85rem;
     padding-inline: 1.25rem !important;
     font-size: 0.9375rem !important;
-}
-
-/* Dark buttons + light text (backend request) */
-
-:root {
-    --frames-btn-bg: #0b0f19;
-    --frames-btn-bg-hover: #121a2a;
-    --frames-btn-border: rgba(15, 23, 42, 0.55);
-    --frames-btn-text: #f8fafc;
-}
-
-.fi-btn,
-.fi-btn:visited {
-    background: var(--frames-btn-bg) !important;
-    border-color: var(--frames-btn-border) !important;
-    color: var(--frames-btn-text) !important;
-}
-
-.fi-btn:hover,
-.fi-btn:focus,
-.fi-btn:focus-visible {
-    background: var(--frames-btn-bg-hover) !important;
-    color: var(--frames-btn-text) !important;
-}
-
-.fi-btn .fi-btn-label,
-.fi-btn svg,
-.fi-btn .fi-icon {
-    color: var(--frames-btn-text) !important;
-}
-
-/* Keep primary accent but still dark button */
-.fi-btn.fi-btn-color-primary {
-    border-color: rgba(255, 77, 61, 0.55) !important;
-    box-shadow: 0 6px 22px rgba(255, 77, 61, 0.15) !important;
 }
 
 /* Table action buttons */
@@ -366,7 +381,7 @@
 }
 
 .fi-ta-row:nth-child(even) {
-    background: #f8fafc !important;
+    background: rgba(255, 255, 255, 0.02) !important;
 }
 
 .fi-ta-row:hover {
@@ -459,7 +474,7 @@
 .fi-dropdown-panel {
     border: 1px solid var(--frames-border) !important;
     background: var(--frames-surface) !important;
-    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12) !important;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
 }
 
 /* ── Pagination ────────────────────────────────────────── */
@@ -473,11 +488,11 @@
     border-radius: var(--frames-radius) !important;
 }
 
-/* ── Logo (dark on white admin) ────────────────────────── */
+/* ── Logo (dark admin) ─────────────────────────────────── */
 
 .fi-logo {
     mix-blend-mode: normal !important;
-    filter: brightness(0) saturate(100%) !important;
+    filter: none !important;
 }
 
 /* ── Dashboard quick actions ───────────────────────────── */
