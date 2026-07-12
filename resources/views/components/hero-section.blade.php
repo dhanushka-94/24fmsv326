@@ -11,7 +11,7 @@
         <div class="absolute inset-0 hero-video-overlay"></div>
     </div>
 
-    <div class="hero-bottom-copy reveal reveal-slow relative z-10 w-full px-4 pb-16 pt-28 text-center sm:px-6 sm:pb-20 lg:pb-24">
+    <div class="hero-bottom-copy reveal reveal-slow relative z-10 w-full px-4 pt-28 text-center sm:px-6">
         <h1 class="sr-only">24 Frames — We Create Ads, Documentaries, Films, AI Contents, and Reels</h1>
         <p class="hero-bottom-line" data-stagger-item>{{ $trustedLine }}</p>
         <p class="hero-bottom-line" data-stagger-item>

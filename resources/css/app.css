@@ -367,6 +367,14 @@
     .hero-bottom-copy {
         font-family: var(--font-source);
         @apply mx-auto max-w-4xl space-y-2;
+        /* Keep last wording above the fixed client carousel */
+        padding-bottom: calc(var(--client-bar-height, 5.5rem) + 1.75rem);
+    }
+
+    @media (min-width: 640px) {
+        .hero-bottom-copy {
+            padding-bottom: calc(var(--client-bar-height, 6.25rem) + 2.25rem);
+        }
     }
 
     .hero-bottom-line {
