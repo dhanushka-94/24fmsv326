@@ -31,7 +31,7 @@
         </a>
 
         <div class="ml-auto flex items-center justify-end gap-4">
-            <nav class="hidden items-center justify-end gap-6 md:flex lg:gap-10 xl:gap-12" aria-label="Main">
+            <nav class="hidden items-center justify-end gap-1.5 md:flex lg:gap-2 xl:gap-2.5" aria-label="Main">
                 @foreach ($navItems as $item)
                     <a
                         href="{{ route($item['route']) }}"

@@ -11,17 +11,19 @@
                 @foreach ([1, 2] as $loopPass)
                     @foreach ($clients as $client)
                         <div class="client-carousel-item">
-                            @if ($client->logoUrl())
-                                <img
-                                    src="{{ $client->logoUrl() }}"
-                                    alt="{{ $loopPass === 1 ? $client->name : '' }}"
-                                    class="client-carousel-logo"
-                                    loading="lazy"
-                                    decoding="async"
-                                />
-                            @else
-                                <span class="client-carousel-name">{{ $client->name }}</span>
-                            @endif
+                            <div class="client-carousel-card">
+                                @if ($client->logoUrl())
+                                    <img
+                                        src="{{ $client->logoUrl() }}"
+                                        alt="{{ $loopPass === 1 ? $client->name : '' }}"
+                                        class="client-carousel-logo"
+                                        loading="lazy"
+                                        decoding="async"
+                                    />
+                                @else
+                                    <span class="client-carousel-name">{{ $client->name }}</span>
+                                @endif
+                            </div>
                         </div>
                     @endforeach
                 @endforeach

@@ -27,14 +27,14 @@
 
     html.has-client-bar,
     body.has-client-bar {
-        --client-bar-height: 5.5rem;
+        --client-bar-height: 9.5rem;
         padding-bottom: var(--client-bar-height);
     }
 
     @media (min-width: 640px) {
         html.has-client-bar,
         body.has-client-bar {
-            --client-bar-height: 6.25rem;
+            --client-bar-height: 11rem;
         }
     }
 
@@ -423,37 +423,83 @@
     }
 
     .nav-link {
-        font-family: var(--font-sans);
-        @apply relative text-sm font-medium uppercase tracking-[0.14em] text-[#f4f0ea]/60 transition-all duration-200 hover:text-[#f4f0ea] lg:text-base;
+        font-family: var(--font-display);
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 0.45rem 0.85rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: rgba(244, 240, 234, 0.55);
+        transition:
+            color 0.2s ease,
+            background 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    @media (min-width: 1024px) {
+        .nav-link {
+            font-size: 0.78rem;
+            padding: 0.5rem 1rem;
+        }
     }
 
     .nav-link::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -6px;
-        width: 0;
-        height: 3px;
-        background: #ff4d3d;
-        transition: width 0.25s ease;
+        content: none;
     }
 
-    .nav-link:hover::after,
-    .nav-link-active::after {
-        width: 100%;
+    .nav-link:hover {
+        color: #f4f0ea;
+        background: rgba(244, 240, 234, 0.06);
     }
 
     .nav-link-active {
-        @apply text-[#f4f0ea];
+        color: #ff4d3d !important;
+        background: rgba(255, 77, 61, 0.12);
+        box-shadow: inset 0 0 0 1px rgba(255, 77, 61, 0.35);
+    }
+
+    .nav-link-active:hover {
+        color: #ff6b5e !important;
+        background: rgba(255, 77, 61, 0.16);
     }
 
     .nav-link-mobile {
         font-family: var(--font-display);
-        @apply block border-b border-[#f4f0ea]/10 py-4 text-3xl font-semibold uppercase leading-none tracking-[-0.02em] text-[#f4f0ea]/85 transition-all hover:pl-3 hover:text-[#f4f0ea] sm:text-4xl;
+        display: block;
+        padding: 1rem 0.25rem;
+        border-bottom: 1px solid rgba(244, 240, 234, 0.08);
+        font-size: 1.85rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        line-height: 1.1;
+        color: rgba(244, 240, 234, 0.78);
+        transition:
+            color 0.2s ease,
+            padding-left 0.2s ease,
+            border-color 0.2s ease;
+    }
+
+    @media (min-width: 640px) {
+        .nav-link-mobile {
+            font-size: 2.25rem;
+        }
+    }
+
+    .nav-link-mobile:hover {
+        color: #f4f0ea;
+        padding-left: 0.75rem;
+        border-color: rgba(255, 77, 61, 0.35);
     }
 
     .nav-link-mobile.nav-link-active {
-        @apply pl-3 text-[#ff4d3d];
+        color: #ff4d3d;
+        padding-left: 0.75rem;
+        border-color: rgba(255, 77, 61, 0.55);
     }
 
     .site-logo {
@@ -1158,11 +1204,6 @@
         @apply max-w-2xl text-base leading-relaxed text-[#c8c4be] sm:text-lg;
     }
 
-    .client-carousel-full,
-    .client-carousel-fixed {
-        @apply border-t border-[#f4f0ea]/10 bg-[#080808]/95 backdrop-blur-md;
-    }
-
     .client-carousel-fixed {
         position: fixed;
         bottom: 0;
@@ -1170,12 +1211,34 @@
         right: 0;
         z-index: 65;
         width: 100%;
-        padding: 0.85rem 0;
+        border: 0 !important;
+        border-top: 0 !important;
+        outline: none;
+        box-shadow: none;
+        padding: 3.25rem 0 1.25rem;
+        overflow: hidden;
+        background: linear-gradient(
+            to top,
+            rgba(8, 8, 8, 0.9) 0%,
+            rgba(8, 8, 8, 0.45) 48%,
+            rgba(8, 8, 8, 0.1) 78%,
+            transparent 100%
+        );
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        pointer-events: none;
+    }
+
+    .client-carousel-fixed .client-carousel-viewport,
+    .client-carousel-fixed .client-carousel-track,
+    .client-carousel-fixed .client-carousel-item,
+    .client-carousel-fixed .client-carousel-card {
+        pointer-events: auto;
     }
 
     @media (min-width: 640px) {
         .client-carousel-fixed {
-            padding: 1.1rem 0;
+            padding: 3.75rem 0 1.5rem;
         }
     }
 
@@ -1197,57 +1260,89 @@
     }
 
     .client-carousel-viewport {
-        @apply overflow-hidden;
-        -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            #000 25%,
-            #000 75%,
-            transparent 100%
-        );
-        mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            #000 25%,
-            #000 75%,
-            transparent 100%
-        );
+        position: relative;
+        z-index: 1;
+        overflow: visible;
+        mask-image: none;
+        -webkit-mask-image: none;
     }
 
     .client-carousel-track {
         display: flex;
         width: max-content;
         align-items: center;
-        gap: 4.5rem;
-        padding: 0.85rem 0;
-        animation: marquee-scroll 50s linear infinite;
+        gap: 1.75rem;
+        padding: 1.75rem 0 1.5rem;
+        animation: marquee-scroll 55s linear infinite;
         will-change: transform;
+    }
+
+    @media (min-width: 640px) {
+        .client-carousel-track {
+            gap: 2.25rem;
+            padding: 2rem 0 1.75rem;
+        }
     }
 
     .client-carousel-item {
-        @apply flex shrink-0 items-center justify-center px-2;
-        min-width: 11rem;
-        transform: scale(var(--logo-scale, 0.85));
+        @apply flex shrink-0 items-center justify-center;
+        transform: scale(var(--logo-scale, 0.72));
         transform-origin: center center;
         will-change: transform;
+        opacity: calc(0.55 + (var(--logo-focus, 0) * 0.45));
+    }
+
+    .client-carousel-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 4.75rem;
+        height: 4.75rem;
+        padding: 0.65rem;
+        border-radius: 1rem;
+        background: #141414;
+        border: 1px solid rgba(244, 240, 234, 0.1);
+        box-shadow:
+            0 8px 18px rgba(0, 0, 0, 0.35),
+            0 2px 6px rgba(0, 0, 0, 0.25);
+        transition:
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+    }
+
+    @media (min-width: 640px) {
+        .client-carousel-card {
+            width: 5.5rem;
+            height: 5.5rem;
+            padding: 0.75rem;
+            border-radius: 1.15rem;
+        }
+    }
+
+    .client-carousel-item.is-focus .client-carousel-card {
+        background: #0a0a0a;
+        border-color: rgba(255, 77, 61, 0.45);
+        box-shadow:
+            0 14px 28px rgba(0, 0, 0, 0.45),
+            0 0 0 1px rgba(255, 77, 61, 0.18),
+            0 0 24px rgba(255, 77, 61, 0.18);
     }
 
     .client-carousel-logo {
-        @apply h-14 w-auto max-w-[12rem] object-contain opacity-70 transition-[filter,opacity] duration-300 sm:h-16 sm:max-w-[14rem] lg:h-[4.5rem] lg:max-w-[16rem];
-        filter: brightness(0) invert(1);
-    }
-
-    .client-carousel-item:hover .client-carousel-logo {
-        @apply opacity-100;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
         filter: none;
+        opacity: 1;
     }
 
     .client-carousel-name {
         font-family: var(--font-display);
-        @apply whitespace-nowrap text-lg font-semibold uppercase tracking-[0.14em] text-[#f4f0ea]/60 transition-colors sm:text-xl;
+        @apply text-center text-[0.65rem] font-semibold uppercase leading-tight tracking-[0.12em] text-[#f4f0ea]/75 sm:text-xs;
     }
 
-    .client-carousel-item:hover .client-carousel-name {
+    .client-carousel-item.is-focus .client-carousel-name {
         @apply text-[#f4f0ea];
     }
 

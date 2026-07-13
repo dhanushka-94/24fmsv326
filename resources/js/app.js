@@ -37,16 +37,37 @@ Alpine.data('clientCarousel', () => ({
             const bounds = viewport.getBoundingClientRect();
             const centerX = bounds.left + bounds.width / 2;
             const halfWidth = Math.max(bounds.width / 2, 1);
+            let closest = null;
+            let closestDist = Infinity;
 
             track.querySelectorAll('.client-carousel-item').forEach((item) => {
                 const rect = item.getBoundingClientRect();
                 const itemCenter = rect.left + rect.width / 2;
                 const distance = Math.abs(itemCenter - centerX) / halfWidth;
                 const t = Math.min(Math.max(distance, 0), 1);
-                // Center ~1.28, edges ~0.62 — larger in middle, smaller at sides
-                const scale = 1.28 - t * 0.66;
+                // Stronger fisheye: center large, edges smaller
+                const eased = t * t;
+                const scale = 1.35 - eased * 0.72;
+                const focus = Math.max(0, 1 - t * 1.35);
+
                 item.style.setProperty('--logo-scale', scale.toFixed(3));
+                item.style.setProperty('--logo-focus', focus.toFixed(3));
+
+                if (distance < closestDist) {
+                    closestDist = distance;
+                    closest = item;
+                }
             });
+
+            track.querySelectorAll('.client-carousel-item.is-focus').forEach((item) => {
+                if (item !== closest) {
+                    item.classList.remove('is-focus');
+                }
+            });
+
+            if (closest && closestDist < 0.18) {
+                closest.classList.add('is-focus');
+            }
 
             this.raf = requestAnimationFrame(tick);
         };
