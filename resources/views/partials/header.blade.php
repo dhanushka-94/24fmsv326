@@ -25,40 +25,39 @@
     x-effect="document.body.style.overflow = menuOpen ? 'hidden' : ''"
     @keydown.escape.window="close()"
 >
-    <div class="flex w-full items-center justify-between gap-6 px-4 py-4 sm:px-8 sm:py-5 lg:px-12 xl:px-16">
+    <div class="site-header-bar">
         <a href="{{ route('home') }}" class="group flex shrink-0 items-center justify-start">
             <x-site-logo size="sm" class="transition-opacity group-hover:opacity-90" />
         </a>
 
-        <div class="ml-auto flex items-center justify-end gap-4">
-            <nav class="hidden items-center justify-end gap-1.5 md:flex lg:gap-2 xl:gap-2.5" aria-label="Main">
-                @foreach ($navItems as $item)
-                    <a
-                        href="{{ route($item['route']) }}"
-                        class="nav-link {{ request()->routeIs($item['route']) ? 'nav-link-active' : '' }}"
-                    >
-                        {{ $item['label'] }}
-                    </a>
-                @endforeach
-            </nav>
-
-            <button
-                type="button"
-                class="inline-flex items-center justify-center border-2 border-[#f4f0ea]/40 p-2 text-[#f4f0ea] md:hidden"
-                :aria-expanded="menuOpen"
-                aria-controls="mobile-navigation"
-                :aria-label="menuOpen ? 'Close menu' : 'Open menu'"
-                @click="toggle()"
-            >
-                <i data-lucide="menu" class="size-5" x-show="!menuOpen"></i>
-                <i data-lucide="x" class="size-5" x-show="menuOpen" x-cloak></i>
-            </button>
-        </div>
+        <button
+            type="button"
+            class="site-header-toggle md:hidden"
+            :aria-expanded="menuOpen"
+            aria-controls="mobile-navigation"
+            :aria-label="menuOpen ? 'Close menu' : 'Open menu'"
+            @click="toggle()"
+        >
+            <i data-lucide="menu" class="size-5" x-show="!menuOpen"></i>
+            <i data-lucide="x" class="size-5" x-show="menuOpen" x-cloak></i>
+        </button>
     </div>
+
+    <nav class="site-side-nav" aria-label="Main">
+        @foreach ($navItems as $item)
+            <a
+                href="{{ route($item['route']) }}"
+                class="nav-link {{ request()->routeIs($item['route']) ? 'nav-link-active' : '' }}"
+            >
+                <span class="nav-link-dot" aria-hidden="true"></span>
+                <span class="nav-link-label">{{ $item['label'] }}</span>
+            </a>
+        @endforeach
+    </nav>
 
     <div x-show="menuOpen" x-cloak class="md:hidden">
         <button type="button" aria-hidden tabindex="-1" class="fixed inset-0 z-40 bg-[#080808]/97" @click="close()"></button>
-        <div id="mobile-navigation" class="relative z-50 border-t-2 border-[#f4f0ea]/10 bg-[#080808] px-6 py-10 sm:px-8">
+        <div id="mobile-navigation" class="relative z-50 border-t border-[#f4f0ea]/10 bg-[#080808] px-6 py-10 sm:px-8">
             <nav class="flex flex-col gap-2" aria-label="Mobile">
                 <a href="{{ route('home') }}" class="nav-link-mobile {{ request()->routeIs('home') ? 'nav-link-active' : '' }}" @click="close()">Home</a>
                 @foreach ($navItems as $item)

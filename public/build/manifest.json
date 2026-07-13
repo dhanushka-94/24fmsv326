@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-BBdacuhc.css",
+    "file": "assets/app-DgL6nZoY.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -9,7 +9,7 @@
     ]
   },
   "resources/css/filament-admin.css": {
-    "file": "assets/filament-admin-lO-WWdIh.css",
+    "file": "assets/filament-admin-DE_Ldgz6.css",
     "src": "resources/css/filament-admin.css",
     "isEntry": true,
     "name": "filament-admin",
@@ -18,7 +18,7 @@
     ]
   },
   "resources/css/filament-auth.css": {
-    "file": "assets/filament-auth-DgSabD_1.css",
+    "file": "assets/filament-auth-C7iD1g-U.css",
     "src": "resources/css/filament-auth.css",
     "isEntry": true,
     "name": "filament-auth",
